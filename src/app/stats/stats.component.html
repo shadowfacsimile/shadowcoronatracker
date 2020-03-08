@@ -1,0 +1,43 @@
+<div class="corona-header">💀💀💀 YET ANOTHER COVID-19 CORONA OUTBREAK LIVE STATISTICS TRACKER 💀💀💀</div>
+<br>
+<br>
+<table align="center">
+  <tr>
+    <th><button type="button" class="btn btn-warning">Total Cases {{coronaStatsResponse.coronaSummaryStats.totalCases | number}}</button></th>
+    <th></th>
+    <th><button type="button" class="btn btn-warning">New Cases {{coronaStatsResponse.coronaSummaryStats.totalCasesSinceYesterday | number}}</button></th>
+    <th></th>
+    <th><button type="button" class="btn btn-danger">Total Deaths {{coronaStatsResponse.coronaSummaryStats.totalDeaths | number}}</button></th>
+    <th></th>
+    <th></th>
+    <th><button type="button" class="btn btn-danger">Mortality Rate {{coronaStatsResponse.coronaSummaryStats.mortalityRate}}</button></th>
+    <th></th>
+    <th><button type="button" class="btn btn-danger">New Deaths {{coronaStatsResponse.coronaSummaryStats.totalDeathsSinceYesterday | number}}</button></th>
+    <th></th>
+    <th><button type="button" class="btn btn-success">Total Recoveries {{coronaStatsResponse.coronaSummaryStats.totalRecoveries | number}}</button></th>
+  </tr>
+</table>
+<br>
+<br>
+<table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Country</th>
+        <th scope="col">Cases Reported</th>
+        <th scope="col">New Cases</th>
+        <th scope="col">Deaths Reported</th>
+        <th scope="col">New Deaths</th>
+        <th scope="col">Recoveries Reported</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let stat of coronaStatsResponse.coronaStats">
+        <td>{{stat.country}}</td>
+        <td>{{stat.cases | number}}</td>
+        <td>{{stat.casesSinceYesterday | number}}</td>
+        <td>{{stat.deaths | number}}</td>
+        <td>{{stat.deathsSinceYesterday | number}}</td>
+        <td>{{stat.recoveries | number}}</td>
+      </tr>
+    </tbody>
+  </table>
