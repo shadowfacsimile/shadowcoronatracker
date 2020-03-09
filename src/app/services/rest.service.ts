@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -14,9 +14,17 @@ const httpOptions = {
 })
 export class RestService {
 
-  constructor(private http: HttpClient) { }
+  coronaStatsResponse: Observable<any>;
 
-  getCoronaData(): Observable<any> {
-    return this.http.get<any>(`https://shadowcoronatracker-api.eu-gb.mybluemix.net/ShadowCoronaTracker/api/fetchstats`, httpOptions);
+  constructor(private http: HttpClient) { 
+    this.getCoronaStatsResponse();
+  }
+
+  getCoronaStatsResponse() {
+    if(!this.coronaStatsResponse) {
+        this.coronaStatsResponse = this.http.get(`https://shadowcoronatracker-api.eu-gb.mybluemix.net/ShadowCoronaTracker/api/fetchstats`, httpOptions);
+        return this.coronaStatsResponse;
+    }    
+    return this.coronaStatsResponse;
   }
 }

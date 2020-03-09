@@ -13,9 +13,9 @@ export class AlertsComponent implements OnInit {
   constructor(private restService: RestService) { }
 
   ngOnInit() {
-    this.restService.getCoronaData().subscribe((data) => {
-      this.coronaStatsResponse = data['coronaStats'].filter(stat => stat.country === 'India')[0];
-    })
+    this.restService.getCoronaStatsResponse().subscribe(data =>{
+      this.coronaStatsResponse = data['coronaStats'].filter(stat => stat.country === 'India')[0];    
+    });
   }
 
 }

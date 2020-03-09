@@ -1,7 +1,7 @@
 .corona-header {
-    background-color: red;
+    background-color: rgb(131, 172, 226);
     color: white;
-    font-size: xx-large;
+    font-size: 30px;
     font-family: monospace;
     text-align: center;
 }

@@ -13,9 +13,9 @@ export class StatsComponent implements OnInit {
   constructor(private restService: RestService) { }
 
   ngOnInit() {
-    this.restService.getCoronaData().subscribe((data) => {
+    this.restService.getCoronaStatsResponse().subscribe(data =>{
       this.coronaStatsResponse = data['coronaStats'];
-    })
+    });
   }
 
 }

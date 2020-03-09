@@ -11,12 +11,12 @@ export class SummaryComponent implements OnInit {
     coronaStatsResponse;
   
     constructor(private restService: RestService) { }
-  
+
     ngOnInit() {
-      this.restService.getCoronaData().subscribe((data) => {
-        this.coronaStatsResponse = data['coronaSummaryStats'];
-      })
+      this.restService.getCoronaStatsResponse().subscribe(data =>{
+        this.coronaStatsResponse = data['coronaSummaryStats']; 
+      });
     }
-  
+
   }
   
