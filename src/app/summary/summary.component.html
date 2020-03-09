@@ -1,0 +1,16 @@
+<table align="center">
+  <tr>
+    <th><button type="button" class="btn btn-warning">Total Cases {{coronaStatsResponse?.totalCases | number}}</button></th>
+    <th></th>
+    <th><button type="button" class="btn btn-warning">New Cases {{coronaStatsResponse?.totalCasesSinceYesterday | number}}</button></th>
+    <th></th>
+    <th><button type="button" class="btn btn-danger">Total Deaths {{coronaStatsResponse?.totalDeaths | number}}</button></th>
+    <th></th>
+    <th></th>
+    <th><button type="button" class="btn btn-danger">Mortality Rate {{coronaStatsResponse?.mortalityRate}}</button></th>
+    <th></th>
+    <th><button type="button" class="btn btn-danger">New Deaths {{coronaStatsResponse?.totalDeathsSinceYesterday | number}}</button></th>
+    <th></th>
+    <th><button type="button" class="btn btn-success">Total Recoveries {{coronaStatsResponse?.totalRecoveries | number}}</button></th>
+  </tr>
+</table>
