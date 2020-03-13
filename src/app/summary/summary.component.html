@@ -9,16 +9,16 @@
       <div class="total-deaths-data">{{coronaStatsResponse?.totalDeaths | number}}</div>
     </td>
     <td>
-      <div class="mortality-rate-header">Mortality</div> 
-      <div class="mortality-rate-data">{{coronaStatsResponse?.mortalityRate}}</div>
+      <div class="mortality-rate-header">Mortality Rate</div> 
+      <div class="mortality-rate-data">{{coronaStatsResponse?.mortalityRate | percent:'1.2'}}</div>
     </td>
     <td>
       <div class="total-recoveries-header">Recoveries</div> 
       <div class="total-recoveries-data">{{coronaStatsResponse?.totalRecoveries | number}}</div>
     </td>
     <td>
-      <div class="total-recoveries-header">Recovery Rate</div> 
-      <div class="total-recoveries-data">{{coronaStatsResponse?.recoveryRate}}</div>
+      <div class="recovery-rate-header">Recovery Rate</div> 
+      <div class="recovery-rate-data">{{coronaStatsResponse?.recoveryRate | percent:'1.2'}}</div>
     </td>    
   </tr> 
 </table>

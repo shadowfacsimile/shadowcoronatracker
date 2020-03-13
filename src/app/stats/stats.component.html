@@ -17,10 +17,10 @@
         <td>{{stat.cases | number}}</td>
         <td>{{stat.casesSinceYesterday | number}}</td>
         <td>{{stat.deaths | number}}</td>
-        <td>{{stat.mortalityRate}}</td>
+        <td>{{stat.mortalityRate | percent:'1.2'}}</td>
         <td>{{stat.deathsSinceYesterday | number}}</td>
         <td>{{stat.recoveries | number}}</td>
-        <td>{{stat.recoveryRate}}</td>
+        <td>{{stat.recoveryRate | percent:'1.2'}}</td>
       </tr>
     </tbody>
   </table>
