@@ -1,4 +1,4 @@
-<table class="table table-borderless">
+<table class="table table-bordered">
   <tr>
     <td>
       <div class="total-cases-header">Cases Reported</div> 
@@ -10,11 +10,28 @@
     </td>
     <td>
       <div class="mortality-rate-header">Mortality</div> 
-      <div class="mortality-rate-data">{{coronaStatsResponse?.mortalityRate.replace(" ", "")}}</div>
+      <div class="mortality-rate-data">{{coronaStatsResponse?.mortalityRate}}</div>
     </td>
     <td>
       <div class="total-recoveries-header">Recoveries</div> 
       <div class="total-recoveries-data">{{coronaStatsResponse?.totalRecoveries | number}}</div>
     </td>
-  </tr>
+    <td>
+      <div class="total-recoveries-header">Recovery Rate</div> 
+      <div class="total-recoveries-data">{{coronaStatsResponse?.recoveryRate}}</div>
+    </td>    
+  </tr> 
+</table>
+
+<table class="table table-bordered">
+  <tr>
+    <td>
+      <div class="total-newcases-header">Countries with first cases</div> 
+      <div class="total-newcases-data" *ngFor="let country of coronaStatsResponse?.countriesWithFirstCase">{{country}}</div>
+    </td>
+    <td>
+      <div class="total-newdeaths-header">Countries with first deaths</div> 
+      <div class="total-newdeaths-data" *ngFor="let country of coronaStatsResponse?.countriesWithFirstDeath">{{country}}</div>
+    </td>
+  </tr>  
 </table>

@@ -23,6 +23,7 @@ export class RestService {
   getCoronaStatsResponse() {
     if(!this.coronaStatsResponse) {
         this.coronaStatsResponse = this.http.get(`https://shadowcoronatracker-api.eu-gb.mybluemix.net/ShadowCoronaTracker/api/fetchstats`, httpOptions);
+        //this.coronaStatsResponse = this.http.get(`http://localhost:9080/ShadowCoronaTracker/api/fetchstats`, httpOptions);
         return this.coronaStatsResponse;
     }    
     return this.coronaStatsResponse;

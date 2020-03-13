@@ -5,8 +5,10 @@
         <th scope="col">Cases Reported</th>
         <th scope="col">New Cases</th>
         <th scope="col">Deaths Reported</th>
+        <th scope="col">Mortality Rate</th>
         <th scope="col">New Deaths</th>
         <th scope="col">Recoveries Reported</th>
+        <th scope="col">Recovery Rate</th>
       </tr>
     </thead>
     <tbody>
@@ -15,8 +17,10 @@
         <td>{{stat.cases | number}}</td>
         <td>{{stat.casesSinceYesterday | number}}</td>
         <td>{{stat.deaths | number}}</td>
+        <td>{{stat.mortalityRate}}</td>
         <td>{{stat.deathsSinceYesterday | number}}</td>
         <td>{{stat.recoveries | number}}</td>
+        <td>{{stat.recoveryRate}}</td>
       </tr>
     </tbody>
   </table>
