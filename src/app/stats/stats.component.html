@@ -1,14 +1,25 @@
 <div class="stats-header-div">Novel Coronovirus COVID-19 Confirmed Cases, Deaths by Country</div>
-<br>
-<div style="padding: 3px">
-  <span class="stats-red-highlight-span">Highlighted in red</span> 
-  <span class="stats-red-highlight-desc-span">= delta of cases reported between yesterday and today</span>
-</div>  
-<div style="padding: 3px">
-  <span class="stats-beige-highlight-span">Highlighted in beige</span>
-  <span class="stats-beige-highlight-desc-span">= delta of deaths reported between yesterday and today</span>
-</div>  
-<br>
+<table class="table table-borderless">
+  <thead>    
+    <tr>  
+      <td>
+        <div style="padding: 3px">
+        <span class="stats-red-highlight-span">Highlighted in red</span> 
+        <span class="stats-red-highlight-desc-span">= delta of cases reported between yesterday and today</span>
+        </div>  
+        <div style="padding: 3px">
+        <span class="stats-beige-highlight-span">Highlighted in beige</span>
+        <span class="stats-beige-highlight-desc-span">= delta of deaths reported between yesterday and today</span>
+        </div>  
+      </td>
+    </tr>
+    <tr>      
+      <td>
+        <input class="stats-search-text" type="text" (ngModelChange)="searchByCountry($event)" [ngModel]="country" placeholder="  Search by country..." />
+      </td>
+    </tr>
+  </thead>
+</table>
 <table class="table table-bordered">
     <thead class="stat-table-header">
       <tr>
