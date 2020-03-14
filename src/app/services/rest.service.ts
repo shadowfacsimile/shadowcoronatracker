@@ -1,6 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from './../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -22,8 +23,7 @@ export class RestService {
 
   getCoronaStatsResponse() {
     if(!this.coronaStatsResponse) {
-        this.coronaStatsResponse = this.http.get(`https://shadowcoronatracker-api.eu-gb.mybluemix.net/ShadowCoronaTracker/api/fetchstats`, httpOptions);
-        //this.coronaStatsResponse = this.http.get(`http://localhost:9080/ShadowCoronaTracker/api/fetchstats`, httpOptions);
+        this.coronaStatsResponse = this.http.get(environment.apiUrl, httpOptions);
         return this.coronaStatsResponse;
     }    
     return this.coronaStatsResponse;

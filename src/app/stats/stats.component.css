@@ -1,0 +1,12 @@
+.stat-table-td {
+    text-align: center;
+    font-weight: bolder;
+}
+
+.stat-table-header {
+    color: gray;
+}
+
+.stat-table-country-td {
+    font-weight: bolder;
+}

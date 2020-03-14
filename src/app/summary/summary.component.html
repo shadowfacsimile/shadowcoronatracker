@@ -1,3 +1,5 @@
+<div class="source-header">Updated daily from the data provided by <a href="https://github.com/CSSEGISandData/COVID-19">JHU CSSE Github repo</a></div>
+<br>
 <table class="table table-bordered">
   <tr>
     <td>
@@ -26,11 +28,11 @@
 <table class="table table-bordered">
   <tr>
     <td>
-      <div class="total-newcases-header">Countries with first cases</div> 
+      <div class="total-newcases-header">Countries with latest cases</div> 
       <div class="total-newcases-data" *ngFor="let country of coronaStatsResponse?.countriesWithFirstCase">{{country}}</div>
     </td>
     <td>
-      <div class="total-newdeaths-header">Countries with first deaths</div> 
+      <div class="total-newdeaths-header">Countries with latest deaths</div> 
       <div class="total-newdeaths-data" *ngFor="let country of coronaStatsResponse?.countriesWithFirstDeath">{{country}}</div>
     </td>
   </tr>  
