@@ -5,3 +5,16 @@
     font-family: monospace;
     text-align: center;
 }
+
+.source-header {
+    text-align: center;
+}
+
+.route-links {
+    text-align: center;
+    text-decoration: underline;
+}
+
+.nav-of-routes {
+    text-align: center;
+}

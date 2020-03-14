@@ -1,7 +1,18 @@
 <div class="corona-header">Yet Another Novel Coronavirus COVID-19 Outbreak Statistics Tracker</div>
 <app-alerts></app-alerts>
 <br>
-<app-summary></app-summary>
+<!--<app-summary></app-summary>
 <br>
 <br>
-<app-stats></app-stats>
+<app-stats></app-stats>-->
+<div class="source-header">Updated daily from the data provided by <a href="https://github.com/CSSEGISandData/COVID-19">JHU CSSE Github repo</a></div>
+<br>
+
+<nav class="nav-of-routes">
+    <a class="route-links" routerLink="/summarystats">Summary Statistics</a> -
+    <a class="route-links" routerLink="/statsbycountry">Statistics By Countries</a>
+</nav>
+
+<br>
+
+<router-outlet></router-outlet>
