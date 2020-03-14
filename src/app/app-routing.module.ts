@@ -2,16 +2,18 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SummaryComponent } from './summary/summary.component';
 import { StatsComponent } from './stats/stats.component';
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 
 
 const routes: Routes = [
-  {path: '', component: SummaryComponent},
-  {path: 'summarystats', component: SummaryComponent},
-  {path: 'statsbycountry', component: StatsComponent}
+  {path: 'summary-stats', component: SummaryComponent},
+  {path: 'stats-by-country', component: StatsComponent},
+  {path: '', redirectTo: '/summary-stats', pathMatch: 'full'},
+  {path: '**', component: PagenotfoundComponent}
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {useHash: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

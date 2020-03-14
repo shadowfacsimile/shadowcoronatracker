@@ -1,3 +1,8 @@
+.summary-header-div {
+    font-size: x-large;
+    font-weight: normal;
+}
+
 .total-cases-header, .total-deaths-header, .mortality-rate-header, .total-recoveries-header, .recovery-rate-header, .total-newcases-header, .total-newdeaths-header {
     text-align: center;
     font-size: 30px;

@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { StatsComponent } from './stats/stats.component';
 import { AlertsComponent } from './alerts/alerts.component';
 import { SummaryComponent } from './summary/summary.component';
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     StatsComponent,
     AlertsComponent,
-    SummaryComponent
+    SummaryComponent,
+    PagenotfoundComponent
   ],
   imports: [
     BrowserModule,

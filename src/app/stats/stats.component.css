@@ -1,3 +1,31 @@
+.stats-header-div {
+    font-size: x-large;
+    font-weight: normal;
+}
+
+.stats-red-highlight-span {
+    padding: 3px;
+    background-color: red;
+    color: white;
+    font-size: small;
+}
+
+.stats-red-highlight-desc-span {
+    padding: 3px;
+    font-size: small;
+}
+
+.stats-beige-highlight-span {
+    padding: 3px;
+    background-color: beige;
+    font-size: small;
+}
+
+.stats-beige-highlight-desc-span {
+    padding: 3px;
+    font-size: small;
+}
+
 .stat-table-td {
     text-align: center;
     font-weight: bolder;
