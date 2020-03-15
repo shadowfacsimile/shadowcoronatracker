@@ -10,9 +10,19 @@
     text-align: center;
 }
 
+.external-links {
+    text-align: center;
+    text-decoration: underline;    
+    color: limegreen;
+}
+
 .route-links {
     text-align: center;
     text-decoration: underline;
+}
+
+.nav-of-external-links {
+    text-align: center;
 }
 
 .nav-of-routes {

@@ -1,40 +1,44 @@
-<div class="summary-header-div">Novel Coronovirus COVID-19 Summary of Cases, Deaths and Recoveries</div>
+<div class="summary-header-div"><span class="summary-header-span">Novel Coronavirus COVID-19 Summary of Cases, Deaths and Recoveries</span></div>
 <br>
-<table class="table table-bordered">
+<table class="table table-borderless">
   <tr>
     <td colspan="2">
       <div class="total-cases-header">Cases Reported</div> 
-      <div class="total-cases-data">{{coronaStatsResponse?.totalCases | number}}</div>
+      <div class="total-cases-data">{{coronaStatsResponse?.totalCases | number}} <span class="total-new-cases-data">(+{{coronaStatsResponse?.totalCasesSinceYesterday | number}})</span></div>
     </td>
   </tr>
   <tr>
-    <td>
+    <td colspan="2">
       <div class="total-deaths-header">Deaths</div> 
-      <div class="total-deaths-data">{{coronaStatsResponse?.totalDeaths | number}}</div>
+      <div class="total-deaths-data">{{coronaStatsResponse?.totalDeaths | number}} <span class="total-new-deaths-data">(+{{coronaStatsResponse?.totalDeathsSinceYesterday | number}})</span></div>
     </td>
-    <td>
+  </tr>
+  <tr>
+    <td colspan="2">
       <div class="mortality-rate-header">Mortality Rate</div> 
       <div class="mortality-rate-data">{{coronaStatsResponse?.mortalityRate | percent:'1.2'}}</div>
     </td>
   </tr>
   <tr>
-    <td>
+    <td colspan="2">
       <div class="total-recoveries-header">Recoveries</div> 
       <div class="total-recoveries-data">{{coronaStatsResponse?.totalRecoveries | number}}</div>
     </td>
-    <td>
+  </tr>
+  <tr>
+    <td colspan="2">
       <div class="recovery-rate-header">Recovery Rate</div> 
       <div class="recovery-rate-data">{{coronaStatsResponse?.recoveryRate | percent:'1.2'}}</div>
     </td>    
   </tr> 
   <tr>
     <td>
-      <div class="total-newcases-header">Countries with latest cases</div> 
-      <div class="total-newcases-data" *ngFor="let country of coronaStatsResponse?.countriesWithFirstCase">{{country}}</div>
+      <div class="new-country-cases-header">{{coronaStatsResponse?.countriesWithFirstCase.length > 0 ? coronaStatsResponse?.countriesWithFirstCase.length : 'No'}} countries reported their first case</div> 
+      <div class="new-country-cases-data" *ngFor="let country of coronaStatsResponse?.countriesWithFirstCase">{{country}}</div>
     </td>
     <td>
-      <div class="total-newdeaths-header">Countries with latest deaths</div> 
-      <div class="total-newdeaths-data" *ngFor="let country of coronaStatsResponse?.countriesWithFirstDeath">{{country}}</div>
+      <div class="new-country-deaths-header">{{coronaStatsResponse?.countriesWithFirstDeath.length > 0 ? coronaStatsResponse?.countriesWithFirstDeath.length : 'No'}} countries reported their first death</div> 
+      <div class="new-country-deaths-data" *ngFor="let country of coronaStatsResponse?.countriesWithFirstDeath">{{country}}</div>
     </td>
   </tr>  
 </table>

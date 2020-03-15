@@ -1,9 +1,20 @@
-.summary-header-div {
+.summary-header-span {
+    background-color: rgb(243, 243, 243);
+    border-radius: 5px;
+    text-align: center;
     font-size: x-large;
     font-weight: normal;
+    padding-right: 30px;
+    padding-left: 30px;
+    padding-top: 1px;
+    padding-bottom: 1px;
 }
 
-.total-cases-header, .total-deaths-header, .mortality-rate-header, .total-recoveries-header, .recovery-rate-header, .total-newcases-header, .total-newdeaths-header {
+.summary-header-div {
+    text-align: center;
+}
+
+.total-cases-header, .total-deaths-header, .mortality-rate-header, .total-recoveries-header, .recovery-rate-header, .new-country-cases-header, .new-country-deaths-header {
     text-align: center;
     font-size: 30px;
     font-weight: 100;
@@ -29,14 +40,29 @@
     color: limegreen;
 }
 
-.total-newcases-data {
+.total-new-cases-data {
+    text-align: center;
+    font-size: 20px;
+    color: gray;
+    background-color: lightyellow;
+}
+
+.total-new-deaths-data {
+    text-align: center;
+    font-size: 20px;
+    color: red;
+    background-color: lightyellow;
+}
+
+.new-country-cases-data {
     text-align: center;
     font-size: 15px;
     color: gray;
 }
 
-.total-newdeaths-data {
+.new-country-deaths-data {
     text-align: center;
     font-size: 15px;
     color: gray;
 }
+
