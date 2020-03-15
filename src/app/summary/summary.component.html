@@ -2,10 +2,12 @@
 <br>
 <table class="table table-bordered">
   <tr>
-    <td>
+    <td colspan="2">
       <div class="total-cases-header">Cases Reported</div> 
       <div class="total-cases-data">{{coronaStatsResponse?.totalCases | number}}</div>
     </td>
+  </tr>
+  <tr>
     <td>
       <div class="total-deaths-header">Deaths</div> 
       <div class="total-deaths-data">{{coronaStatsResponse?.totalDeaths | number}}</div>
@@ -14,6 +16,8 @@
       <div class="mortality-rate-header">Mortality Rate</div> 
       <div class="mortality-rate-data">{{coronaStatsResponse?.mortalityRate | percent:'1.2'}}</div>
     </td>
+  </tr>
+  <tr>
     <td>
       <div class="total-recoveries-header">Recoveries</div> 
       <div class="total-recoveries-data">{{coronaStatsResponse?.totalRecoveries | number}}</div>
@@ -23,9 +27,6 @@
       <div class="recovery-rate-data">{{coronaStatsResponse?.recoveryRate | percent:'1.2'}}</div>
     </td>    
   </tr> 
-</table>
-
-<table class="table table-bordered">
   <tr>
     <td>
       <div class="total-newcases-header">Countries with latest cases</div> 

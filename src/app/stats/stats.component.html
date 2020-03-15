@@ -23,14 +23,14 @@
 <table class="table table-bordered">
     <thead class="stat-table-header">
       <tr>
-        <th scope="col">Country</th>
-        <th scope="col">Cases Reported</th>
-        <th scope="col">New Cases</th>
-        <th scope="col">Deaths Reported</th>
-        <th scope="col">New Deaths</th>
-        <th scope="col">Mortality Rate</th>
-        <th scope="col">Recoveries Reported</th>
-        <th scope="col">Recovery Rate</th>
+        <th scope="col">Country <span class="sort-span" (click)="sortByCountry($event)" [ngModel]="country">⇅</span></th>
+        <th scope="col">Cases <span class="sort-span" (click)="sortByCases($event)" [ngModel]="country">⇅</span></th>
+        <th scope="col">New Cases <span class="sort-span" (click)="sortByNewCases($event)" [ngModel]="country">⇅</span></th>
+        <th scope="col">Deaths <span class="sort-span" (click)="sortByDeaths($event)" [ngModel]="country">⇅</span></th>
+        <th scope="col">New Deaths <span class="sort-span" (click)="sortByNewDeaths($event)" [ngModel]="country">⇅</span></th>
+        <th scope="col">Mortality Rate <span class="sort-span" (click)="sortByMortalityRate($event)" [ngModel]="country">⇅</span></th>
+        <th scope="col">Recoveries <span class="sort-span" (click)="sortByRecoveries($event)" [ngModel]="country">⇅</span></th>
+        <th scope="col">Recovery Rate <span class="sort-span" (click)="sortByRecoveryRate($event)" [ngModel]="country">⇅</span></th>
       </tr>
     </thead>
     <tbody>
