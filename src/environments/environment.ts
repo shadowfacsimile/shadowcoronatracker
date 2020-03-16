@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:9080/ShadowCoronaTracker/api/fetchstats'
+  apiUrl: 'http://localhost:9080/ShadowCoronaTracker/api/stats'
 };
 
 /*
