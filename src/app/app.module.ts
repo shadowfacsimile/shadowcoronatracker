@@ -9,6 +9,7 @@ import { StatsComponent } from './stats/stats.component';
 import { AlertsComponent } from './alerts/alerts.component';
 import { SummaryComponent } from './summary/summary.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { CasegrowthComponent } from './casegrowth/casegrowth.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
     StatsComponent,
     AlertsComponent,
     SummaryComponent,
-    PagenotfoundComponent
+    PagenotfoundComponent,
+    CasegrowthComponent
   ],
   imports: [
     BrowserModule,

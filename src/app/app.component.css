@@ -15,16 +15,16 @@
 .external-links {
     text-align: center;
     text-decoration: underline;
-    font-size: 12px;
-    font-weight: 500;    
+    font-size: 13px;
+    font-weight: 450;    
     color: limegreen;
 }
 
 .route-links {
     text-align: center;
     text-decoration: underline;
-    font-size: 12px;
-    font-weight: 500; 
+    font-size: 13px;
+    font-weight: 450; 
 }
 
 .nav-of-external-links {

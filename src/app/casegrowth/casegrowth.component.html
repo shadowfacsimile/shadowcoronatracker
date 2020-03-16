@@ -1,0 +1,14 @@
+<table class="table table-bordered">
+    <thead class="growth-table-header">
+        <tr>
+            <th>Date</th> 
+            <th>Growth Factor</th> 
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let stat of coronaStatsResponse">
+            <td>{{stat.date |  date:'dd/MM/yyyy'}}</td>
+            <td>{{stat.growthFactor | number}}</td>
+      </tr>
+    </tbody>
+</table>
