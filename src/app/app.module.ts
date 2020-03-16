@@ -10,6 +10,7 @@ import { AlertsComponent } from './alerts/alerts.component';
 import { SummaryComponent } from './summary/summary.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { CasegrowthComponent } from './casegrowth/casegrowth.component';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { CasegrowthComponent } from './casegrowth/casegrowth.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,7 @@
 <div class="summary-header-div"><span class="summary-header-span">Novel Coronavirus COVID-19 Summary of Cases, Deaths and Recoveries</span></div>
 <br>
+<div *ngIf=!coronaStatsResponse class="data-loading-div"><span class="data-loading-span">Data Loading...</span></div>
+<div *ngIf=coronaStatsResponse>
 <table class="table table-borderless">
   <tr>
     <td colspan="2">
@@ -42,3 +44,4 @@
     </td>
   </tr>  
 </table>
+</div>

@@ -1,14 +1,17 @@
-<table class="table table-bordered">
-    <thead class="growth-table-header">
-        <tr>
-            <th>Date</th> 
-            <th>Growth Factor</th> 
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let stat of coronaStatsResponse">
-            <td>{{stat.date |  date:'dd/MM/yyyy'}}</td>
-            <td>{{stat.growthFactor | number}}</td>
-      </tr>
-    </tbody>
-</table>
+<div class="growth-header-div"><span class="growth-header-span">Novel Coronavirus COVID-19 Cases Growth Factor</span></div>
+<br>
+<div *ngIf=!dates class="data-loading-div"><span class="data-loading-span">Data Loading...</span></div>
+<span class="growth-beige-highlight-span">Growth Factor Today - {{growthFactoryToday.growthFactor | number}}</span>
+<br>
+<br>
+<div class="chart-container" *ngIf=dates>
+    <div style="position: relative; height:10vh; width:60vw">
+      <canvas baseChart
+              [datasets]="lineGraphData"
+              [labels]="lineGraphLabels"
+              [options]="lineGraphOptions"
+              [legend]="lineGraphLegend"
+              [chartType]="lineGraphType">
+      </canvas>
+    </div>
+</div>

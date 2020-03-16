@@ -14,6 +14,22 @@
     text-align: center;
 }
 
+.data-loading-div{
+    text-align: center;
+}
+
+.data-loading-span {
+    background-color: rgb(243, 243, 243);
+    border-radius: 5px;
+    text-align: center;
+    font-size: x-large;
+    font-weight: normal;
+    padding-right: 30px;
+    padding-left: 30px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
 .total-cases-header, .total-deaths-header, .mortality-rate-header, .total-recoveries-header, .recovery-rate-header, .new-country-cases-header, .new-country-deaths-header {
     text-align: center;
     font-size: 30px;
