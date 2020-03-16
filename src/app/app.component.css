@@ -14,13 +14,17 @@
 
 .external-links {
     text-align: center;
-    text-decoration: underline;    
+    text-decoration: underline;
+    font-size: 12px;
+    font-weight: 500;    
     color: limegreen;
 }
 
 .route-links {
     text-align: center;
     text-decoration: underline;
+    font-size: 12px;
+    font-weight: 500; 
 }
 
 .nav-of-external-links {
