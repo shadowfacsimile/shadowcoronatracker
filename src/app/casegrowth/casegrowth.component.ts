@@ -12,7 +12,12 @@ export class CasegrowthComponent implements OnInit{
   coronaStatsResponse;
   dates;
   growthFactors;
-  growthFactoryToday;
+  growthFactorToday;
+  growthFactorYesterday;
+  growthFactorWeek;
+  growthFactorThreeWeeks;
+  growthFactorMonth;
+
   public lineGraphLabels;
   public lineGraphType = 'line';
   public lineGraphLegend = true;
@@ -28,10 +33,14 @@ export class CasegrowthComponent implements OnInit{
           this.dates = this.coronaStatsResponse.map(x => this.getFormattedDate(x.date));
           this.growthFactors = this.coronaStatsResponse.map(x => x.growthFactor.toFixed(4));
           this.lineGraphLabels =  this.dates;
-          this.growthFactoryToday = this.coronaStatsResponse[this.coronaStatsResponse.length - 1];
+          this.growthFactorToday = this.coronaStatsResponse[this.coronaStatsResponse.length - 1];
+          this.growthFactorYesterday = this.coronaStatsResponse[this.coronaStatsResponse.length - 2];
+          this.growthFactorWeek = this.coronaStatsResponse[this.coronaStatsResponse.length - 8];
+          this.growthFactorThreeWeeks = this.coronaStatsResponse[this.coronaStatsResponse.length - 22];
+          this.growthFactorMonth = this.coronaStatsResponse[this.coronaStatsResponse.length - 31];
           this.lineGraphData = [{
             data: this.growthFactors, 
-            label: 'Novel Coronavirus COVID-19 Cases Growth Factor',            
+            label: 'Growth Factor',            
             borderColor: "#3e95cd",
             fill: false
           }];
