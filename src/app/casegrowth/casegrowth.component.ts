@@ -12,47 +12,95 @@ export class CasegrowthComponent implements OnInit{
   coronaStatsResponse;
   dates;
   growthFactors;
+  growths;
   growthFactorToday;
   growthFactorYesterday;
   growthFactorWeek;
   growthFactorThreeWeeks;
   growthFactorMonth;
 
-  public lineGraphLabels;
-  public lineGraphType = 'line';
-  public lineGraphLegend = true;
-  
-  public lineGraphData;
-  
+  public lineGraphGrowthFactorLabels;
+  public lineGraphGrowthFactorType = 'line';
+  public lineGraphGrowthFactorLegend = true;  
+  public lineGraphGrowthFactorData;
+  public lineGraphGrowthLabels;
+  public lineGraphGrowthType = 'line';
+  public lineGraphGrowthLegend = true;  
+  public lineGraphGrowthData;
+
   constructor(private restService: RestService) { }
 
   ngOnInit() {  
       this.restService.getCoronaStatsResponse().subscribe(data =>
         {
-          this.coronaStatsResponse = data['coronaCaseGrowthStats'];          
-          this.dates = this.coronaStatsResponse.map(x => this.getFormattedDate(x.date));
-          this.growthFactors = this.coronaStatsResponse.map(x => x.growthFactor.toFixed(4));
-          this.lineGraphLabels =  this.dates;
+          this.coronaStatsResponse = data['coronaCaseGrowthFactorStats'];
+
           this.growthFactorToday = this.coronaStatsResponse[this.coronaStatsResponse.length - 1];
           this.growthFactorYesterday = this.coronaStatsResponse[this.coronaStatsResponse.length - 2];
           this.growthFactorWeek = this.coronaStatsResponse[this.coronaStatsResponse.length - 8];
           this.growthFactorThreeWeeks = this.coronaStatsResponse[this.coronaStatsResponse.length - 22];
-          this.growthFactorMonth = this.coronaStatsResponse[this.coronaStatsResponse.length - 31];
-          this.lineGraphData = [{
+          this.growthFactorMonth = this.coronaStatsResponse[this.coronaStatsResponse.length - 31]; 
+
+          this.dates = this.coronaStatsResponse.map(x => this.getFormattedDate(x.date));
+          this.growthFactors = this.coronaStatsResponse.map(x => x.growthFactor.toFixed(4));
+
+          this.lineGraphGrowthFactorLabels =  this.dates;
+          this.lineGraphGrowthFactorData = [{
             data: this.growthFactors, 
             label: 'Growth Factor',            
+            borderColor: "#3e95cd",
+            fill: false
+          }];
+
+          this.coronaStatsResponse = data['coronaCaseGrowthStats']; 
+
+          this.dates = this.coronaStatsResponse.map(x => this.getFormattedDate(x.date));           
+          this.growths = this.coronaStatsResponse.map(x => x.growth); 
+
+          this.lineGraphGrowthLabels =  this.dates;
+          this.lineGraphGrowthData = [{
+            data: this.growths, 
+            label: 'Cases',            
             borderColor: "#3e95cd",
             fill: false
           }];
     });
   }
 
-  public lineGraphOptions = {
+  public lineGraphGrowthFactorOptions = {
     scaleShowVerticalLines: false,
-    responsive: true,
+    responsive: false,
     responsiveAnimationDuration: 0,
     legend: {
       display: false
+    },
+    title: {
+      display: true,
+      text: 'Growth Factor Trend',
+      fontSize: 12,
+      fontStyle: 'normal'
+    },
+    scales: {
+      xAxes: [{
+              ticks: {
+                display: false
+            }
+        }]
+    }
+  };
+
+  public lineGraphGrowthOptions = {
+    scaleShowVerticalLines: false,
+    responsive: false,
+    responsiveAnimationDuration: 0,
+    legend: {
+      display: false
+    },
+    title: {
+      display: true,
+      text: 'Cases Growth Trend',
+      fontSize: 12,
+      fontStyle: 'normal'
     },
     scales: {
       xAxes: [{
@@ -68,7 +116,6 @@ export class CasegrowthComponent implements OnInit{
     var year = dt.getFullYear();
     var month = ("0" + (dt.getMonth() + 1)).slice(-2);
     var day = ("0" + dt.getDate()).slice(-2);
-    console.log(`${year}-${month}-${day}`);
     return `${year}-${month}-${day}`;
   }
 }

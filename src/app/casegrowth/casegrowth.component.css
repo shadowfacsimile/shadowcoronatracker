@@ -40,7 +40,23 @@
     color: red;
 }
 
-.chart-container {
+canvas {
+    width: 80% !important;
+    height: auto !important;
+}
+
+.chart-growthfactor-container {
     padding-bottom: 20px;
     text-align: center;
+    position: relative;
+}
+
+.chart-growth-container {
+    padding-bottom: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.growth-factor-text {
+    font-size: small;
 }
