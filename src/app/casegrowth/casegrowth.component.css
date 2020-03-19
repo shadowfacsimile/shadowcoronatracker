@@ -57,6 +57,12 @@ canvas {
     position: relative;
 }
 
+.chart-growth-country-container {
+    padding-bottom: 20px;
+    text-align: center;
+    position: relative;
+}
+
 .growth-factor-text {
     font-size: small;
 }
