@@ -16,7 +16,7 @@ export class StatsComponent implements OnInit {
   constructor(private restService: RestService) { }
 
   ngOnInit() {
-    this.restService.getCoronaStatsResponse().subscribe(data =>{
+    this.restService.getCoronaStatsResponse().subscribe(data => {
       this.coronaStatsResponse = data['coronaStats'];
       this.tempCoronaStatsResponse = this.coronaStatsResponse;
     });
@@ -25,7 +25,7 @@ export class StatsComponent implements OnInit {
   searchByCountry(value) {
     this.coronaStatsResponse = this.tempCoronaStatsResponse;
     this.coronaStatsResponse = this.coronaStatsResponse.filter(stat => stat.country.toLowerCase().indexOf(value.toLowerCase()) >= 0);
-   }
+  }
 
   sortByCountry(value) {
     this.sort = !this.sort;
@@ -61,7 +61,7 @@ export class StatsComponent implements OnInit {
     this.sort = !this.sort;
     this.coronaStatsResponse = this.tempCoronaStatsResponse;
     this.coronaStatsResponse = this.coronaStatsResponse.sort((a, b) => this.sortByItem(a.mortalityRate, b.mortalityRate));
-  }  
+  }
 
   sortByRecoveries(value) {
     this.sort = !this.sort;
@@ -76,9 +76,9 @@ export class StatsComponent implements OnInit {
   }
 
   sortByItem(a, b) {
-     if((this.sort && a < b) || (!this.sort && a > b)) return 1;
-     if((this.sort && a > b) || (!this.sort && a < b)) return -1;
-     return 0;
+    if ((this.sort && a < b) || (!this.sort && a > b)) return 1;
+    if ((this.sort && a > b) || (!this.sort && a < b)) return -1;
+    return 0;
   }
 
 }

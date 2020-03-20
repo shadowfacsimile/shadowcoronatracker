@@ -6,7 +6,7 @@ import { environment } from './../../environments/environment';
 const httpOptions = {
   headers: new HttpHeaders({
     //'Access-Control-Allow-Origin': '*'
-    'Content-Type':  'application/json'
+    'Content-Type': 'application/json'
   })
 }
 
@@ -17,15 +17,15 @@ export class RestService {
 
   coronaStatsResponse: Observable<any>;
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
     this.getCoronaStatsResponse();
   }
 
   getCoronaStatsResponse() {
-    if(!this.coronaStatsResponse) {
-        this.coronaStatsResponse = this.http.get(environment.apiUrl, httpOptions);
-        return this.coronaStatsResponse;
-    }    
+    if (!this.coronaStatsResponse) {
+      this.coronaStatsResponse = this.http.get(environment.apiUrl, httpOptions);
+      return this.coronaStatsResponse;
+    }
     return this.coronaStatsResponse;
   }
 }

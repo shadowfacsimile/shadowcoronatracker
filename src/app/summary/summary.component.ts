@@ -8,15 +8,14 @@ import { RestService } from '../services/rest.service';
 })
 export class SummaryComponent implements OnInit {
 
-    coronaStatsResponse;
-  
-    constructor(private restService: RestService) { }
+  coronaStatsResponse;
 
-    ngOnInit() {
-      this.restService.getCoronaStatsResponse().subscribe(data =>{
-        this.coronaStatsResponse = data['coronaSummaryStats']; 
-      });
-    }
+  constructor(private restService: RestService) { }
 
+  ngOnInit() {
+    this.restService.getCoronaStatsResponse().subscribe(data => {
+      this.coronaStatsResponse = data['coronaSummaryStats'];
+    });
   }
-  
+
+}

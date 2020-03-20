@@ -23,14 +23,6 @@ export class CasegrowthComponent implements OnInit{
   public lineGraphGrowthFactorType = 'line';
   public lineGraphGrowthFactorLegend = true;  
   public lineGraphGrowthFactorData;
-  public lineGraphGrowthLabels;
-  public lineGraphGrowthType = 'line';
-  public lineGraphGrowthLegend = true;  
-  public lineGraphGrowthData;  
-  public lineGraphGrowthCountryLabels;
-  public lineGraphGrowthCountryType = 'line';
-  public lineGraphGrowthCountryLegend = true;  
-  public lineGraphGrowthCountryData;
 
   constructor(private restService: RestService) { }
 
@@ -54,33 +46,7 @@ export class CasegrowthComponent implements OnInit{
             label: 'Growth Factor',            
             borderColor: "#3e95cd",
             fill: false
-          }];
-
-          this.coronaStatsResponse = data['coronaCaseGrowthStats']; 
-
-          this.dates = this.coronaStatsResponse.map(x => this.getFormattedDate(x.date));           
-          this.growths = this.coronaStatsResponse.map(x => x.growth); 
-
-          this.lineGraphGrowthLabels =  this.dates;
-          this.lineGraphGrowthData = [{
-            data: this.growths, 
-            label: 'Cases',            
-            borderColor: "#3e95cd",
-            fill: false
-          }];
-
-          this.coronaStatsResponse = data['coronaCaseGrowthCountryStats']; 
-
-          this.dates = this.coronaStatsResponse.map(x => this.getFormattedDate(x.date));           
-          this.growths = this.coronaStatsResponse.map(x => x.growth); 
-
-          this.lineGraphGrowthCountryLabels =  this.dates;
-          this.lineGraphGrowthCountryData = [{
-            data: this.growths, 
-            label: 'Cases',            
-            borderColor: "#3e95cd",
-            fill: false
-          }];
+          }];         
     });
   }
 
@@ -94,50 +60,6 @@ export class CasegrowthComponent implements OnInit{
     title: {
       display: true,
       text: 'Growth Factor Trend',
-      fontSize: 12,
-      fontStyle: 'normal'
-    },
-    scales: {
-      xAxes: [{
-              ticks: {
-                display: false
-            }
-        }]
-    }
-  };
-
-  public lineGraphGrowthOptions = {
-    scaleShowVerticalLines: false,
-    responsive: false,
-    responsiveAnimationDuration: 0,
-    legend: {
-      display: false
-    },
-    title: {
-      display: true,
-      text: 'Cases Growth Trend',
-      fontSize: 12,
-      fontStyle: 'normal'
-    },
-    scales: {
-      xAxes: [{
-              ticks: {
-                display: false
-            }
-        }]
-    }
-  };
-
-  public lineGraphGrowthCountryOptions = {
-    scaleShowVerticalLines: false,
-    responsive: false,
-    responsiveAnimationDuration: 0,
-    legend: {
-      display: false
-    },
-    title: {
-      display: true,
-      text: 'Cases Growth Trend For India',
       fontSize: 12,
       fontStyle: 'normal'
     },

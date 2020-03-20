@@ -8,9 +8,9 @@ describe('CasegrowthComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CasegrowthComponent ]
+      declarations: [CasegrowthComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

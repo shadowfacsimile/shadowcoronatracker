@@ -1,51 +1,68 @@
-<div class="stats-header-div"><span class="stats-header-span">Novel Coronavirus COVID-19 Confirmed Cases, Deaths by Country</span></div>
+<div class="stats-header-div"><span class="stats-header-span">Novel Coronavirus COVID-19 Confirmed Cases, Deaths by
+    Country</span></div>
 <br>
 <div *ngIf=!coronaStatsResponse class="data-loading-div"><span class="data-loading-span">Data Loading...</span></div>
 <div *ngIf=coronaStatsResponse>
-<table class="table table-borderless">
-  <thead>    
-    <tr>  
-      <td>
-        <div style="padding: 3px">
-        <span class="stats-red-highlight-span">Highlighted in red</span> 
-        <span class="stats-red-highlight-desc-span">= delta of cases reported between yesterday and today</span>
-        </div>  
-        <div style="padding: 3px">
-        <span class="stats-beige-highlight-span">Highlighted in beige</span>
-        <span class="stats-beige-highlight-desc-span">= delta of deaths reported between yesterday and today</span>
-        </div>  
-      </td>
-    </tr>
-    <tr>      
-      <td>
-        <input class="stats-search-text" type="text"  name="country" (ngModelChange)="searchByCountry($event)" [ngModel]="country" placeholder="  Search by country..." ngDefaultControl/>
-      </td>
-    </tr>
-  </thead>
-</table>
-<table class="table table-bordered">
+  <table class="table table-borderless">
+    <thead>
+      <tr>
+        <td>
+          <div style="padding: 3px">
+            <span class="stats-red-highlight-span">Highlighted in red</span>
+            <span class="stats-red-highlight-desc-span">= delta of cases reported between yesterday and today</span>
+          </div>
+          <div style="padding: 3px">
+            <span class="stats-beige-highlight-span">Highlighted in beige</span>
+            <span class="stats-beige-highlight-desc-span">= delta of deaths reported between yesterday and today</span>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input class="stats-search-text" type="text" name="country" (ngModelChange)="searchByCountry($event)"
+            [ngModel]="country" placeholder="  Search by country..." ngDefaultControl />
+        </td>
+      </tr>
+    </thead>
+  </table>
+  <table class="table table-bordered">
     <thead class="stat-table-header">
       <tr>
-        <th scope="col">Country <span class="sort-span" (click)="sortByCountry($event)" [ngModel]="country" ngDefaultControl>⇅</span></th>
-        <th scope="col">Cases <span class="sort-span" (click)="sortByCases($event)" [ngModel]="country" ngDefaultControl>⇅</span></th>
-        <th scope="col">New Cases <span class="sort-span" (click)="sortByNewCases($event)" [ngModel]="country" ngDefaultControl>⇅</span></th>
-        <th scope="col">Deaths <span class="sort-span" (click)="sortByDeaths($event)" [ngModel]="country" ngDefaultControl>⇅</span></th>
-        <th scope="col">New Deaths <span class="sort-span" (click)="sortByNewDeaths($event)" [ngModel]="country" ngDefaultControl>⇅</span></th>
-        <th scope="col">Mortality Rate <span class="sort-span" (click)="sortByMortalityRate($event)" [ngModel]="country" ngDefaultControl>⇅</span></th>
-        <th scope="col">Recoveries <span class="sort-span" (click)="sortByRecoveries($event)" [ngModel]="country" ngDefaultControl>⇅</span></th>
-        <th scope="col">Recovery Rate <span class="sort-span" (click)="sortByRecoveryRate($event)" [ngModel]="country" ngDefaultControl>⇅</span></th>
+        <th scope="col">Country <span class="sort-span" (click)="sortByCountry($event)" [ngModel]="country"
+            ngDefaultControl>⇅</span></th>
+        <th scope="col">Cases <span class="sort-span" (click)="sortByCases($event)" [ngModel]="country"
+            ngDefaultControl>⇅</span></th>
+        <th scope="col">New Cases <span class="sort-span" (click)="sortByNewCases($event)" [ngModel]="country"
+            ngDefaultControl>⇅</span></th>
+        <th scope="col">Deaths <span class="sort-span" (click)="sortByDeaths($event)" [ngModel]="country"
+            ngDefaultControl>⇅</span></th>
+        <th scope="col">New Deaths <span class="sort-span" (click)="sortByNewDeaths($event)" [ngModel]="country"
+            ngDefaultControl>⇅</span></th>
+        <th scope="col">Mortality Rate <span class="sort-span" (click)="sortByMortalityRate($event)" [ngModel]="country"
+            ngDefaultControl>⇅</span></th>
+        <th scope="col">Recoveries <span class="sort-span" (click)="sortByRecoveries($event)" [ngModel]="country"
+            ngDefaultControl>⇅</span></th>
+        <th scope="col">Recovery Rate <span class="sort-span" (click)="sortByRecoveryRate($event)" [ngModel]="country"
+            ngDefaultControl>⇅</span></th>
       </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let stat of coronaStatsResponse">
-          <td class="stat-table-country-td">{{stat.country}}</td>
-          <td class="stat-table-td">{{stat.cases | number}}</td>
-          <td class="stat-table-td" [ngStyle]="{'background-color': stat.casesSinceYesterday > 0 ? 'beige' : 'white', 'font-size' : stat.casesSinceYesterday > 0 ? '10' : '0', 'color': 'black'}">+{{stat.casesSinceYesterday | number}}</td>
-          <td class="stat-table-td" [ngStyle]="{'font-size' : stat.deaths > 0 ? '10' : '0'}">{{stat.deaths | number}}</td>
-          <td class="stat-table-td" [ngStyle]="{'background-color': stat.deathsSinceYesterday > 0 ? 'red' : 'white', 'font-size' : stat.deathsSinceYesterday > 0 ? '10' : '0', 'color' : 'white'}">+{{stat.deathsSinceYesterday | number}}</td>
-          <td class="stat-table-td" [ngStyle]="{'font-size' : stat.mortalityRate > 0 ? '10' : '0'}">{{stat.mortalityRate | percent:'1.2'}}</td>
-          <td class="stat-table-td" [ngStyle]="{'font-size' : stat.recoveries > 0 ? '10' : '0'}">{{stat.recoveries | number}}</td>
-          <td class="stat-table-td" [ngStyle]="{'font-size' : stat.recoveryRate > 0 ? '10' : '0'}">{{stat.recoveryRate | percent:'1.2'}}</td>
+      <tr *ngFor="let stat of coronaStatsResponse">
+        <td class="stat-table-country-td">{{stat.country}}</td>
+        <td class="stat-table-td">{{stat.cases | number}}</td>
+        <td class="stat-table-td"
+          [ngStyle]="{'background-color': stat.casesSinceYesterday > 0 ? 'beige' : 'white', 'font-size' : stat.casesSinceYesterday > 0 ? '10' : '0', 'color': 'black'}">
+          +{{stat.casesSinceYesterday | number}}</td>
+        <td class="stat-table-td" [ngStyle]="{'font-size' : stat.deaths > 0 ? '10' : '0'}">{{stat.deaths | number}}</td>
+        <td class="stat-table-td"
+          [ngStyle]="{'background-color': stat.deathsSinceYesterday > 0 ? 'red' : 'white', 'font-size' : stat.deathsSinceYesterday > 0 ? '10' : '0', 'color' : 'white'}">
+          +{{stat.deathsSinceYesterday | number}}</td>
+        <td class="stat-table-td" [ngStyle]="{'font-size' : stat.mortalityRate > 0 ? '10' : '0'}">
+          {{stat.mortalityRate | percent:'1.2'}}</td>
+        <td class="stat-table-td" [ngStyle]="{'font-size' : stat.recoveries > 0 ? '10' : '0'}">
+          {{stat.recoveries | number}}</td>
+        <td class="stat-table-td" [ngStyle]="{'font-size' : stat.recoveryRate > 0 ? '10' : '0'}">
+          {{stat.recoveryRate | percent:'1.2'}}</td>
       </tr>
     </tbody>
   </table>
