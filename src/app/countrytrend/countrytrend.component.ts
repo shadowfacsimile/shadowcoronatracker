@@ -14,6 +14,7 @@ export class CountrytrendComponent implements OnInit {
   growths;
   countries;
   country;
+  totalCase;
   showCountry = false;
   showTotal = true;
 
@@ -68,11 +69,12 @@ export class CountrytrendComponent implements OnInit {
         this.countryStat = this.coronaStatsResponse.filter(x => x.country.indexOf(value) >= 0);
         this.dates = this.countryStat[0].growthStats.map(x => this.getFormattedDate(x.date));
         this.growths = this.countryStat[0].growthStats.map(x => x.growth);
+        this.totalCase = this.growths[this.growths.length - 1];
         this.lineGraphGrowthCountryLabels = this.dates;
         this.lineGraphGrowthCountryData = [{
           data: this.growths,
           label: 'Cases',
-          borderColor: "#3e95cd",
+          borderColor: "#5093eb",
           fill: false
         }];
 
@@ -85,9 +87,10 @@ export class CountrytrendComponent implements OnInit {
           },
           title: {
             display: true,
-            text: 'Cases Growth Trend Of ' + value.charAt(0).toUpperCase() + value.slice(1),
-            fontSize: 12,
-            fontStyle: 'normal'
+            text: 'Cases growth trend of ' + value.charAt(0).toUpperCase() + value.slice(1) + ' with total ' + this.totalCase + ' cases reported',
+            fontSize: 14,
+            fontStyle: 'normal',
+            fontColor: '#5093eb'
           },
           scales: {
             xAxes: [{
@@ -112,15 +115,15 @@ export class CountrytrendComponent implements OnInit {
       this.coronaStatsResponse = data['coronaCaseGrowthStats'];
       this.dates = this.coronaStatsResponse.map(x => this.getFormattedDate(x.date));
       this.growths = this.coronaStatsResponse.map(x => x.growth);
+      this.totalCase = this.growths[this.growths.length - 1];
 
       this.lineGraphGrowthLabels = this.dates;
       this.lineGraphGrowthData = [{
         data: this.growths,
         label: 'Cases',
-        borderColor: "#3e95cd",
+        borderColor: "#5093eb",
         fill: false
       }];
-    });
 
     this.lineGraphGrowthOptions = {
       scaleShowVerticalLines: false,
@@ -131,9 +134,10 @@ export class CountrytrendComponent implements OnInit {
       },
       title: {
         display: true,
-        text: 'Cases Growth Trend Of The World',
-        fontSize: 12,
-        fontStyle: 'normal'
+        text: 'Cases growth trend of the world ' + 'with total ' + this.totalCase + ' cases reported',
+        fontSize: 14,
+        fontStyle: 'normal',
+        fontColor: "#5093eb"
       },
       scales: {
         xAxes: [{
@@ -142,8 +146,9 @@ export class CountrytrendComponent implements OnInit {
           }
         }]
       }
-    };
-  }
+    };    
+  });
+}
 
   getFormattedDate(date) {
     var dt = new Date(date);

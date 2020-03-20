@@ -3,20 +3,17 @@
 <br>
 <div *ngIf=!dates class="data-loading-div"><span class="data-loading-span">Data Loading...</span></div>
 <br>
+<div class="dropdown">
+    <select class="country-selector" [(ngModel)]="country" (ngModelChange)="trendSearchByCountry($event)">
+        <option selected>All Countries</option>
+        <option *ngFor="let ctry of countries">
+            {{ctry}}
+        </option>
+    </select>
+</div>
+<br>
+<br>
 <table>
-    <tr>
-        <td>
-            <!--<input class="trend-search-text" type="text"  name="country" (ngModelChange)="trendSearchByCountry($event)" [ngModel]="country" placeholder="  Search by country..." ngDefaultControl/>-->
-            <div class="dropdown">
-                <select class="country-selector" [(ngModel)]="country" (ngModelChange)="trendSearchByCountry($event)">
-                    <option selected>All Countries</option>
-                    <option *ngFor="let ctry of countries">
-                        {{ctry}}
-                    </option>
-                </select>
-            </div>
-        </td>
-    </tr>
     <tr>
         <td>
             <div class="chart-growth-container" *ngIf=showTotal&&dates>
