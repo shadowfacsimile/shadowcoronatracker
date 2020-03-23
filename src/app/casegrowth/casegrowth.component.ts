@@ -44,7 +44,7 @@ export class CasegrowthComponent implements OnInit{
           this.lineGraphGrowthFactorData = [{
             data: this.growthFactors, 
             label: 'Growth Factor',            
-            borderColor: "#5093eb",
+            borderColor: "darkslategrey",
             fill: false
           }];         
     });
@@ -59,10 +59,10 @@ export class CasegrowthComponent implements OnInit{
     },
     title: {
       display: true,
-      text: 'Growth Factor Trend',
+      text: 'Cases Growth Factor',
       fontSize: 14,
       fontStyle: 'normal',
-      fontColor: '#5093eb'
+      fontColor: 'darkslategrey'
     },
     scales: {
       xAxes: [{

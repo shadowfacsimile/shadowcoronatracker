@@ -1,2 +1,4 @@
-<div *ngIf=coronaStatsResponse class="india-stats-header">{{coronaStatsResponse?.cases}} cases and
-    {{coronaStatsResponse?.deaths}} deaths reported in {{coronaStatsResponse?.country}}</div>
+<div class="india-stats-header-div">
+    <span *ngIf=coronaStatsResponse class="india-stats-header-span">(India - {{coronaStatsResponse?.cases}} cases and
+        {{coronaStatsResponse?.deaths}} deaths)</span>
+</div>

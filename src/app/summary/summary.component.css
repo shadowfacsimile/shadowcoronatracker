@@ -1,13 +1,15 @@
 .summary-header-span {
-    background-color: rgb(243, 243, 243);
+    background-color: #008dc9;/*rgb(243, 243, 243);*/
+    color: white;
     border-radius: 5px;
     text-align: center;
-    font-size: x-large;
+    font-size: large;
     font-weight: normal;
     padding-right: 30px;
     padding-left: 30px;
-    padding-top: 1px;
-    padding-bottom: 1px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    font-family: Helvetica;
 }
 
 .summary-header-div {
@@ -30,28 +32,31 @@
 
 .total-cases-header, .total-deaths-header, .mortality-rate-header, .total-recoveries-header, .recovery-rate-header, .new-country-cases-header, .new-country-deaths-header {
     text-align: center;
-    font-size: 30px;
-    font-weight: 100;
-    color: black;
-    font-family: Segoe UI;
+    font-size: 25px;
+    font-weight: normal;
+    color: #555555;
+    font-family: Helvetica;
 }
 
 .total-cases-data, .total-deaths-data {
     text-align: center;
     font-size: 50px;
     color: gray;
+    font-family: Helvetica;
 }
 
 .total-deaths-data, .mortality-rate-data  {
     text-align: center;
     font-size: 50px;
     color: red;
+    font-family: Helvetica;
 }
 
 .total-recoveries-data, .recovery-rate-data  {
     text-align: center;
     font-size: 50px;
     color: limegreen;
+    font-family: Helvetica;
 }
 
 .total-new-cases-data {
@@ -59,6 +64,7 @@
     font-size: 20px;
     color: gray;
     background-color: lightyellow;
+    font-family: Helvetica;
 }
 
 .total-new-deaths-data {
@@ -66,17 +72,20 @@
     font-size: 20px;
     color: red;
     background-color: lightyellow;
+    font-family: Helvetica;
 }
 
 .new-country-cases-data {
     text-align: center;
     font-size: 15px;
     color: gray;
+    font-family: monospace;
 }
 
 .new-country-deaths-data {
     text-align: center;
     font-size: 15px;
     color: gray;
+    font-family: monospace;
 }
 

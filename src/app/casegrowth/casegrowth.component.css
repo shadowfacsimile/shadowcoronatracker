@@ -7,15 +7,17 @@
 }
 
 .growth-header-span {
-    background-color: rgb(243, 243, 243);
+    background-color: #008dc9;/*rgb(243, 243, 243);*/
+    color: white;
     border-radius: 5px;
     text-align: center;
-    font-size: x-large;
+    font-size: large;
     font-weight: normal;
     padding-right: 30px;
     padding-left: 30px;
-    padding-top: 1px;
-    padding-bottom: 1px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    font-family: Helvetica;
 }
 
 .data-loading-div{
