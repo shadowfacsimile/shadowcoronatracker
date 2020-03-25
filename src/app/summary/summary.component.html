@@ -1,5 +1,7 @@
 <div class="summary-header-div"><span class="summary-header-span">Cases, Deaths
-    and Recoveries Summary</span></div>
+    and Recoveries Summary</span>
+    <div><app-alerts></app-alerts></div>
+</div>
 <br>
 <div *ngIf=!coronaStatsResponse class="data-loading-div"><span class="data-loading-span">Data Loading...</span></div>
 <div *ngIf=coronaStatsResponse>
@@ -9,8 +11,8 @@
         <div class="total-cases-header">Cases Reported</div>
         <div class="total-cases-data">{{coronaStatsResponse?.totalCases | number}} <span
             class="total-new-cases-data">(+{{coronaStatsResponse?.totalCasesSinceYesterday | number}})</span></div>
-          <app-alerts></app-alerts>
-          <div style="text-align:center; font-size: smaller;"><a class="route-links" routerLink="/stats-by-country">(statistics by country)</a></div>
+          
+          <div style="text-align:center; font-size: smaller;text-decoration: underline;"><a class="route-links" routerLink="/stats-by-country">statistics by country</a></div>
       </td>
     </tr>
     <tr>

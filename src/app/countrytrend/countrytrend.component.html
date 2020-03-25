@@ -17,7 +17,7 @@
     <tr>
         <td>
             <div class="chart-growth-container" *ngIf=showTotal&&dates>
-                <canvas baseChart #chartGrowthCanvas [datasets]="lineGraphGrowthData" [labels]="lineGraphGrowthLabels"
+                <canvas baseChart #lineChartGrowthCanvas [datasets]="lineGraphGrowthData" [labels]="lineGraphGrowthLabels"
                     [options]="lineGraphGrowthOptions" [legend]="lineGraphGrowthLegend"
                     [chartType]="lineGraphGrowthType" width="800" height="400">
                 </canvas>
@@ -26,8 +26,18 @@
     </tr>
     <tr>
         <td>
+            <div class="chart-growth-container" *ngIf=showTotal&&dates>
+                <canvas baseChart #barChartGrowthCanvas [datasets]="barGraphGrowthData" [labels]="barGraphGrowthLabels"
+                    [options]="barGraphGrowthOptions" [legend]="barGraphGrowthLegend"
+                    [chartType]="barGraphGrowthType" width="800" height="400">
+                </canvas>
+            </div>
+        </td>
+    </tr>    
+    <tr>
+        <td>
             <div class="chart-growth-country-container" *ngIf=showCountry>
-                <canvas #chartGrowthCountryCanvas baseChart [datasets]="lineGraphGrowthCountryData"
+                <canvas #lineChartGrowthCountryCanvas baseChart [datasets]="lineGraphGrowthCountryData"
                     [labels]="lineGraphGrowthCountryLabels" [options]="lineGraphGrowthCountryOptions"
                     [legend]="lineGraphGrowthCountryLegend" [chartType]="lineGraphGrowthCountryType" width="800"
                     height="400">
@@ -35,4 +45,15 @@
             </div>
         </td>
     </tr>
+    <tr>
+        <td>
+            <div class="chart-growth-country-container" *ngIf=showCountry>
+                <canvas #barChartGrowthCountryCanvas baseChart [datasets]="barGraphGrowthCountryData"
+                    [labels]="barGraphGrowthCountryLabels" [options]="barGraphGrowthCountryOptions"
+                    [legend]="barGraphGrowthCountryLegend" [chartType]="barGraphGrowthCountryType" width="800"
+                    height="400">
+                </canvas>
+            </div>
+        </td>
+    </tr>    
 </table>

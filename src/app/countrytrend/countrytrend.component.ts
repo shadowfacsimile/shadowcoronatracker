@@ -12,9 +12,11 @@ export class CountrytrendComponent implements OnInit {
   countryStat;
   dates;
   growths;
+  deltas;
   countries;
   country;
   totalCase;
+  newCases;
   showCountry = false;
   showTotal = true;
 
@@ -29,11 +31,28 @@ export class CountrytrendComponent implements OnInit {
   public lineGraphGrowthCountryOptions;
   public lineGraphGrowthOptions;
 
-  @ViewChild('chartGrowthCountryCanvas', { static: false }) chartGrowthCountryCanvas: ElementRef;
-  public growthCountryCanvasContext: CanvasRenderingContext2D;
+  public barGraphGrowthLabels;
+  public barGraphGrowthType = 'bar';
+  public barGraphGrowthLegend = true;
+  public barGraphGrowthData;
+  public barGraphGrowthCountryLabels;
+  public barGraphGrowthCountryType = 'bar';
+  public barGraphGrowthCountryLegend = true;
+  public barGraphGrowthCountryData;
+  public barGraphGrowthCountryOptions;
+  public barGraphGrowthOptions;
 
-  @ViewChild('chartGrowthCanvas', { static: false }) chartGrowthCanvas: ElementRef;
-  public growthCanvasContext: CanvasRenderingContext2D;
+  @ViewChild('lineChartGrowthCountryCanvas', { static: false }) lineChartGrowthCountryCanvas: ElementRef;
+  public lineGrowthCountryCanvasContext: CanvasRenderingContext2D;
+
+  @ViewChild('lineChartGrowthCanvas', { static: false }) lineChartGrowthCanvas: ElementRef;
+  public lineGrowthCanvasContext: CanvasRenderingContext2D;
+
+  @ViewChild('barChartGrowthCountryCanvas', { static: false }) barChartGrowthCountryCanvas: ElementRef;
+  public barGrowthCountryCanvasContext: CanvasRenderingContext2D;
+
+  @ViewChild('barChartGrowthCanvas', { static: false }) barChartGrowthCanvas: ElementRef;
+  public barGrowthCanvasContext: CanvasRenderingContext2D;
 
   constructor(private restService: RestService) { }
 
@@ -43,20 +62,20 @@ export class CountrytrendComponent implements OnInit {
 
   trendSearchByCountry(value) {
 
-    if (this.chartGrowthCanvas) {
-      this.growthCanvasContext = (<HTMLCanvasElement>this.chartGrowthCanvas.nativeElement).getContext('2d');
+    if (this.lineChartGrowthCanvas) {
+      this.lineGrowthCanvasContext = (<HTMLCanvasElement>this.lineChartGrowthCanvas.nativeElement).getContext('2d');
     }
 
-    if (this.growthCountryCanvasContext) {
-      this.growthCountryCanvasContext = (<HTMLCanvasElement>this.chartGrowthCountryCanvas.nativeElement).getContext('2d');
+    if (this.lineGrowthCountryCanvasContext) {
+      this.lineGrowthCountryCanvasContext = (<HTMLCanvasElement>this.lineChartGrowthCountryCanvas.nativeElement).getContext('2d');
     }
 
-    if (this.growthCanvasContext) {
-      this.growthCanvasContext.clearRect(0, 0, this.growthCanvasContext.canvas.width, this.growthCanvasContext.canvas.height);
+    if (this.lineGrowthCanvasContext) {
+      this.lineGrowthCanvasContext.clearRect(0, 0, this.lineGrowthCanvasContext.canvas.width, this.lineGrowthCanvasContext.canvas.height);
     }
 
-    if (this.growthCountryCanvasContext) {
-      this.growthCountryCanvasContext.clearRect(0, 0, this.growthCountryCanvasContext.canvas.width, this.growthCountryCanvasContext.canvas.height);
+    if (this.lineGrowthCountryCanvasContext) {
+      this.lineGrowthCountryCanvasContext.clearRect(0, 0, this.lineGrowthCountryCanvasContext.canvas.width, this.lineGrowthCountryCanvasContext.canvas.height);
     }
 
     if (value.indexOf("All Countries") >= 0) {
@@ -69,7 +88,9 @@ export class CountrytrendComponent implements OnInit {
         this.countryStat = this.coronaStatsResponse.filter(x => x.country.indexOf(value) >= 0);
         this.dates = this.countryStat[0].growthStats.map(x => this.getFormattedDate(x.date));
         this.growths = this.countryStat[0].growthStats.map(x => x.growth);
+        this.deltas = this.countryStat[0].growthStats.map(x => x.delta);
         this.totalCase = this.growths[this.growths.length - 1].toLocaleString("us-US");
+        this.newCases = this.deltas[this.deltas.length - 1].toLocaleString("us-US");
         this.lineGraphGrowthCountryLabels = this.dates;
         this.lineGraphGrowthCountryData = [{
           data: this.growths,
@@ -101,6 +122,38 @@ export class CountrytrendComponent implements OnInit {
           }
         };
 
+        this.barGraphGrowthCountryLabels = this.dates;
+        this.barGraphGrowthCountryData = [{
+          data: this.deltas,
+          label: 'Cases',
+          borderColor: "#008dc9",
+          backgroundColor: "#008dc9",
+          fill: false
+        }];
+
+        this.barGraphGrowthCountryOptions = {
+          scaleShowVerticalLines: false,
+          responsive: false,
+          responsiveAnimationDuration: 0,
+          legend: {
+            display: false
+          },
+          title: {
+            display: true,
+            text: value.charAt(0).toUpperCase() + value.slice(1) + ' / New Cases ' + this.newCases,
+            fontSize: 14,
+            fontStyle: 'normal',
+            fontColor: 'darkslategrey'
+          },
+          scales: {
+            xAxes: [{
+              ticks: {
+                display: false
+              }
+            }]
+          }
+        };
+
         this.showTotal = false;
         this.showCountry = true;
       });
@@ -115,7 +168,9 @@ export class CountrytrendComponent implements OnInit {
       this.coronaStatsResponse = data['coronaCaseGrowthStats'];
       this.dates = this.coronaStatsResponse.map(x => this.getFormattedDate(x.date));
       this.growths = this.coronaStatsResponse.map(x => x.growth);
+      this.deltas = this.coronaStatsResponse.map(x => x.delta);
       this.totalCase = this.growths[this.growths.length - 1].toLocaleString("us-US");
+      this.newCases = this.deltas[this.deltas.length - 1].toLocaleString("us-US");
 
       this.lineGraphGrowthLabels = this.dates;
       this.lineGraphGrowthData = [{
@@ -125,30 +180,64 @@ export class CountrytrendComponent implements OnInit {
         fill: false
       }];
 
-    this.lineGraphGrowthOptions = {
-      scaleShowVerticalLines: false,
-      responsive: false,
-      responsiveAnimationDuration: 0,
-      legend: {
-        display: false
-      },
-      title: {
-        display: true,
-        text: 'All Countries / Total Cases ' + this.totalCase,
-        fontSize: 14,
-        fontStyle: 'normal',
-        fontColor: 'darkslategrey'
-      },
-      scales: {
-        xAxes: [{
-          ticks: {
-            display: false
-          }
-        }]
-      }
-    };    
-  });
-}
+      this.lineGraphGrowthOptions = {
+        scaleShowVerticalLines: false,
+        responsive: false,
+        responsiveAnimationDuration: 0,
+        legend: {
+          display: false
+        },
+        title: {
+          display: true,
+          text: 'All Countries / Total Cases ' + this.totalCase,
+          fontSize: 14,
+          fontStyle: 'normal',
+          fontColor: 'darkslategrey'
+        },
+        scales: {
+          xAxes: [{
+            ticks: {
+              display: false
+            }
+          }]
+        }
+      };
+
+      this.growths = this.coronaStatsResponse.map(x => x.delta);
+
+      this.barGraphGrowthLabels = this.dates;
+      this.barGraphGrowthData = [{
+        data: this.deltas,
+        label: 'Cases',
+        borderColor: "#008dc9",
+        backgroundColor: "#008dc9",
+        fill: false
+      }];
+
+      this.barGraphGrowthOptions = {
+        scaleShowVerticalLines: false,
+        responsive: false,
+        responsiveAnimationDuration: 0,
+        legend: {
+          display: false
+        },
+        title: {
+          display: true,
+          text: 'All Countries / New Cases ' + this.newCases,
+          fontSize: 14,
+          fontStyle: 'normal',
+          fontColor: 'darkslategrey'
+        },
+        scales: {
+          xAxes: [{
+            ticks: {
+              display: false
+            }
+          }]
+        }
+      };
+    });
+  }
 
   getFormattedDate(date) {
     var dt = new Date(date);
