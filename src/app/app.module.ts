@@ -12,6 +12,7 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { CasegrowthComponent } from './casegrowth/casegrowth.component';
 import { ChartsModule } from 'ng2-charts';
 import { CountrytrendComponent } from './countrytrend/countrytrend.component';
+import { CountrydeathtrendComponent } from './countrydeathtrend/countrydeathtrend.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { CountrytrendComponent } from './countrytrend/countrytrend.component';
     SummaryComponent,
     PagenotfoundComponent,
     CasegrowthComponent,
-    CountrytrendComponent
+    CountrytrendComponent,
+    CountrydeathtrendComponent
   ],
   imports: [
     BrowserModule,
