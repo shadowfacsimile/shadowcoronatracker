@@ -9,6 +9,8 @@
   of growth ahead.</div>
 <br>
 <div *ngIf=!dates class="data-loading-div"><span class="data-loading-span">Data Loading...</span></div>
+
+<div class="growth-beige-highlight-div">
 <span *ngIf=growthFactorToday class="growth-beige-highlight-span">Growth Factor Trend : Today -
   {{growthFactorToday.growthFactor | number}} / </span>
 <span *ngIf=growthFactorToday class="growth-beige-highlight-span">Yesterday -
@@ -19,6 +21,7 @@
   {{growthFactorThreeWeeks.growthFactor | number}} / </span>
 <span *ngIf=growthFactorToday class="growth-beige-highlight-span">Month Back -
   {{growthFactorMonth.growthFactor | number}} / </span>
+</div>
 <br>
 <br>
 <table>

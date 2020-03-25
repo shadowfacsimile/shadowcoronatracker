@@ -42,6 +42,10 @@
     color: red;
 }
 
+.growth-beige-highlight-div {
+    padding-left: 10px;
+}
+
 canvas {
     width: 80% !important;
     height: auto !important;
@@ -67,4 +71,5 @@ canvas {
 
 .growth-factor-text {
     font-size: small;
+    padding-left: 10px;
 }
