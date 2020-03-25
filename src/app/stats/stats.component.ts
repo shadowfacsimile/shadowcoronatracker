@@ -17,7 +17,7 @@ export class StatsComponent implements OnInit {
 
   ngOnInit() {
     this.restService.getCoronaStatsResponse().subscribe(data => {
-      this.coronaStatsResponse = data['coronaStats'];
+      this.coronaStatsResponse = data['coronaCountryStats'];
       this.tempCoronaStatsResponse = this.coronaStatsResponse;
     });
   }

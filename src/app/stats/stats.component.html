@@ -1,5 +1,4 @@
-<div class="stats-header-div"><span class="stats-header-span">Cases, Deaths and Recoveries by
-    Countries</span></div>
+<div class="stats-header-div"><span class="stats-header-span">COVID-19 / Cases and Deaths by Country</span></div>
 <br>
 <div *ngIf=!coronaStatsResponse class="data-loading-div"><span class="data-loading-span">Data Loading...</span></div>
 <div *ngIf=coronaStatsResponse>
@@ -40,10 +39,10 @@
             ngDefaultControl>⇅</span></th>
         <th scope="col">Mortality Rate <span class="sort-span" (click)="sortByMortalityRate($event)" [ngModel]="country"
             ngDefaultControl>⇅</span></th>
-        <th scope="col">Recoveries <span class="sort-span" (click)="sortByRecoveries($event)" [ngModel]="country"
+        <!--<th scope="col">Recoveries <span class="sort-span" (click)="sortByRecoveries($event)" [ngModel]="country"
             ngDefaultControl>⇅</span></th>
         <th scope="col">Recovery Rate <span class="sort-span" (click)="sortByRecoveryRate($event)" [ngModel]="country"
-            ngDefaultControl>⇅</span></th>
+            ngDefaultControl>⇅</span></th>-->
       </tr>
     </thead>
     <tbody>
@@ -59,10 +58,10 @@
           +{{stat.deathsSinceYesterday | number}}</td>
         <td class="stat-table-td" [ngStyle]="{'font-size' : stat.mortalityRate > 0 ? '10' : '0'}">
           {{stat.mortalityRate | percent:'1.2'}}</td>
-        <td class="stat-table-td" [ngStyle]="{'font-size' : stat.recoveries > 0 ? '10' : '0'}">
+        <!--<td class="stat-table-td" [ngStyle]="{'font-size' : stat.recoveries > 0 ? '10' : '0'}">
           {{stat.recoveries | number}}</td>
         <td class="stat-table-td" [ngStyle]="{'font-size' : stat.recoveryRate > 0 ? '10' : '0'}">
-          {{stat.recoveryRate | percent:'1.2'}}</td>
+          {{stat.recoveryRate | percent:'1.2'}}</td>-->
       </tr>
     </tbody>
   </table>

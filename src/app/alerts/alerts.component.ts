@@ -15,8 +15,8 @@ export class AlertsComponent implements OnInit {
 
   ngOnInit() {
     this.restService.getCoronaStatsResponse().subscribe(data => {
-      this.countries = data['coronaStats'].filter(stat => stat.country !== "Cruise Ship").map(stat => stat.country.replace(",", " ")).filter(this.onlyUnique).length;
-      this.coronaStatsResponse = data['coronaStats'].filter(stat => stat.country === 'India')[0];
+      this.countries = data['coronaCountryStats'].filter(stat => stat.country !== "Cruise Ship").map(stat => stat.country.replace(",", " ")).filter(this.onlyUnique).length;
+      this.coronaStatsResponse = data['coronaCountryStats'].filter(stat => stat.country === 'India')[0];
     });
   }
 
