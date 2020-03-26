@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { RestService } from '../services/rest.service';
 
 @Component({
   selector: 'app-alerts',
@@ -8,20 +7,17 @@ import { RestService } from '../services/rest.service';
 })
 export class AlertsComponent implements OnInit {
 
-  coronaStatsResponse;
-  countries;
-
-  constructor(private restService: RestService) { }
+  alertText;
 
   ngOnInit() {
-    this.restService.getCoronaStatsResponse().subscribe(data => {
-      this.countries = data['coronaCountryStats'].filter(stat => stat.country !== "Cruise Ship").map(stat => stat.country.replace(",", " ")).filter(this.onlyUnique).length;
-      this.coronaStatsResponse = data['coronaCountryStats'].filter(stat => stat.country === 'India')[0];
-    });
+    console.log(new Date())
+    this.alertText = 'DAY ' + (Math.floor(this.getDaysIntoLockdown()) + 1) + ' OF 21 DAYS LOCKDOWN IN INDIA'
   }
 
-  onlyUnique(value, index, self) {
-    return self.indexOf(value) === index;
+  getDaysIntoLockdown() {
+    let date1 = new Date("03/25/2020");
+    let date2 = new Date();
+    let diff = date2.getTime() - date1.getTime();
+    return diff / (1000 * 3600 * 24);
   }
-
 }

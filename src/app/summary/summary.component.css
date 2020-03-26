@@ -89,3 +89,17 @@
     font-family: monospace;
 }
 
+.india-stats-header-span {
+    /*background-color: rgb(210, 223, 241);*/
+    color: darkslategrey;
+    font-size: small;
+    font-family: Helvetica;
+    text-align: center;    
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 5px;
+}
+
+.india-stats-header-div {
+    text-align: center;
+}
