@@ -1,24 +1,27 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { RestService } from '../services/rest.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-countrydeathtrend',
   templateUrl: './countrydeathtrend.component.html',
   styleUrls: ['./countrydeathtrend.component.css']
 })
-export class CountrydeathtrendComponent implements OnInit {
+export class CountrydeathtrendComponent implements OnInit, OnDestroy {
 
-  coronaStatsResponse;
-  countryStat;
-  dates;
-  growths;
-  deltas;
-  countries;
-  country;
-  totalDeath;
-  newDeaths;
-  showCountry = false;
-  showTotal = true;
+  public coronaAllCountriesTrendSubscription: Subscription;
+  public coronaSearchByCountryTrendSubscription: Subscription;
+  public coronaStatsResponse: any;
+  public countryStat: any;
+  public dates: any;
+  public growths: any;
+  public deltas: any;
+  public countries: any;
+  public country: any;
+  public totalDeath: any;
+  public newDeaths: any;
+  public showCountry: boolean = false;
+  public showTotal: boolean = true;
 
   public lineGraphGrowthLabels;
   public lineGraphGrowthType = 'line';
@@ -54,189 +57,214 @@ export class CountrydeathtrendComponent implements OnInit {
   @ViewChild('barChartGrowthCanvas', { static: false }) barChartGrowthCanvas: ElementRef;
   public barGrowthCanvasContext: CanvasRenderingContext2D;
 
-  constructor(private restService: RestService) { }
+  constructor(public restService: RestService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.trendAllCountries();
   }
 
-  trendSearchByCountry(value) {
+  ngOnDestroy(): void {
+    this.coronaAllCountriesTrendSubscription.unsubscribe();
 
-    if (this.lineChartGrowthCanvas) {
-      this.lineGrowthCanvasContext = (<HTMLCanvasElement>this.lineChartGrowthCanvas.nativeElement).getContext('2d');
-    }
+    if (this.coronaSearchByCountryTrendSubscription)
+      this.coronaSearchByCountryTrendSubscription.unsubscribe();
+  }
 
-    if (this.lineGrowthCountryCanvasContext) {
-      this.lineGrowthCountryCanvasContext = (<HTMLCanvasElement>this.lineChartGrowthCountryCanvas.nativeElement).getContext('2d');
-    }
+  trendAllCountries(): void {
+    this.coronaAllCountriesTrendSubscription = this.restService.getCoronaStatsResponse().subscribe(data => this.processTrendAllCountries(data));
+  }
 
-    if (this.lineGrowthCanvasContext) {
-      this.lineGrowthCanvasContext.clearRect(0, 0, this.lineGrowthCanvasContext.canvas.width, this.lineGrowthCanvasContext.canvas.height);
-    }
+  processTrendAllCountries(data: any): void {
+    this.processAllCountriesForGraphs(data);
+    this.setAllCountriesLineGraphConfiguration();
+    this.growths = this.coronaStatsResponse.map(x => x.delta);
+    this.setAllCountriesBarGraphConfiguration();
+  }
 
-    if (this.lineGrowthCountryCanvasContext) {
-      this.lineGrowthCountryCanvasContext.clearRect(0, 0, this.lineGrowthCountryCanvasContext.canvas.width, this.lineGrowthCountryCanvasContext.canvas.height);
-    }
+  public processAllCountriesForGraphs(data: any): void {
+    this.coronaStatsResponse = data['coronaDeathGrowthCountryStats'];
+    this.countries = this.coronaStatsResponse.map(x => x.country);
+    this.coronaStatsResponse = data['coronaDeathGrowthStats'];
+    this.dates = this.coronaStatsResponse.map(x => this.getFormattedDate(x.date));
+    this.growths = this.coronaStatsResponse.map(x => x.growth);
+    this.deltas = this.coronaStatsResponse.map(x => x.delta);
+    this.totalDeath = this.growths[this.growths.length - 1].toLocaleString("us-US");
+    this.newDeaths = this.deltas[this.deltas.length - 1].toLocaleString("us-US");
+  }
+
+  public setAllCountriesLineGraphConfiguration(): void {
+    this.lineGraphGrowthLabels = this.dates;
+    this.lineGraphGrowthData = [{
+      data: this.growths,
+      label: 'Deaths',
+      borderColor: "darkslategrey",
+      fill: false
+    }];
+    this.lineGraphGrowthOptions = {
+      scaleShowVerticalLines: false,
+      responsive: false,
+      responsiveAnimationDuration: 0,
+      legend: {
+        display: false
+      },
+      title: {
+        display: true,
+        text: 'All Countries / Total Deaths ' + this.totalDeath,
+        fontSize: 14,
+        fontStyle: 'normal',
+        fontColor: 'darkslategrey'
+      },
+      scales: {
+        xAxes: [{
+          ticks: {
+            display: false
+          }
+        }]
+      }
+    };
+  }
+
+  public setAllCountriesBarGraphConfiguration(): void {
+    this.barGraphGrowthLabels = this.dates;
+    this.barGraphGrowthData = [{
+      data: this.deltas,
+      label: 'Deaths',
+      borderColor: "#008dc9",
+      backgroundColor: "#008dc9",
+      fill: false
+    }];
+    this.barGraphGrowthOptions = {
+      scaleShowVerticalLines: false,
+      responsive: false,
+      responsiveAnimationDuration: 0,
+      legend: {
+        display: false
+      },
+      title: {
+        display: true,
+        text: 'All Countries / New Deaths ' + this.newDeaths,
+        fontSize: 14,
+        fontStyle: 'normal',
+        fontColor: 'darkslategrey'
+      },
+      scales: {
+        xAxes: [{
+          ticks: {
+            display: false
+          }
+        }]
+      }
+    };
+  }
+
+  trendSearchByCountry(value: string): void {
+    this.clearExistingGraphs();
 
     if (value.indexOf("All Countries") >= 0) {
       this.showTotal = true;
       this.showCountry = false;
       this.trendAllCountries();
     } else {
-      this.restService.getCoronaStatsResponse().subscribe(data => {
-        this.coronaStatsResponse = data['coronaDeathGrowthCountryStats'];
-        this.countryStat = this.coronaStatsResponse.filter(x => x.country.indexOf(value) >= 0);
-        this.dates = this.countryStat[0].growthStats.map(x => this.getFormattedDate(x.date));
-        this.growths = this.countryStat[0].growthStats.map(x => x.growth);
-        this.deltas = this.countryStat[0].growthStats.map(x => x.delta);
-        this.totalDeath = this.growths[this.growths.length - 1].toLocaleString("us-US");
-        this.newDeaths = this.deltas[this.deltas.length - 1].toLocaleString("us-US");
-        this.lineGraphGrowthCountryLabels = this.dates;
-        this.lineGraphGrowthCountryData = [{
-          data: this.growths,
-          label: 'Deaths',
-          borderColor: "darkslategrey",
-          fill: false
-        }];
-
-        this.lineGraphGrowthCountryOptions = {
-          scaleShowVerticalLines: false,
-          responsive: false,
-          responsiveAnimationDuration: 0,
-          legend: {
-            display: false
-          },
-          title: {
-            display: true,
-            text: value.charAt(0).toUpperCase() + value.slice(1) + ' / Total Deaths ' + this.totalDeath,
-            fontSize: 14,
-            fontStyle: 'normal',
-            fontColor: 'darkslategrey'
-          },
-          scales: {
-            xAxes: [{
-              ticks: {
-                display: false
-              }
-            }]
-          }
-        };
-
-        this.barGraphGrowthCountryLabels = this.dates;
-        this.barGraphGrowthCountryData = [{
-          data: this.deltas,
-          label: 'Deaths',
-          borderColor: "#008dc9",
-          backgroundColor: "#008dc9",
-          fill: false
-        }];
-
-        this.barGraphGrowthCountryOptions = {
-          scaleShowVerticalLines: false,
-          responsive: false,
-          responsiveAnimationDuration: 0,
-          legend: {
-            display: false
-          },
-          title: {
-            display: true,
-            text: value.charAt(0).toUpperCase() + value.slice(1) + ' / New Deaths ' + this.newDeaths,
-            fontSize: 14,
-            fontStyle: 'normal',
-            fontColor: 'darkslategrey'
-          },
-          scales: {
-            xAxes: [{
-              ticks: {
-                display: false
-              }
-            }]
-          }
-        };
-
-        this.showTotal = false;
-        this.showCountry = true;
-      });
+      this.restService.getCoronaStatsResponse().subscribe(data => this.processTrendSearchByCountry(data, value));
     }
   }
 
-  trendAllCountries() {
-    this.restService.getCoronaStatsResponse().subscribe(data => {
-      this.coronaStatsResponse = data['coronaDeathGrowthCountryStats'];
-      this.countries = this.coronaStatsResponse.map(x => x.country);
+  public clearExistingGraphs() {
+    if (this.lineChartGrowthCanvas) {
+      this.lineGrowthCanvasContext = (<HTMLCanvasElement>this.lineChartGrowthCanvas.nativeElement).getContext('2d');
+    }
+    if (this.lineGrowthCountryCanvasContext) {
+      this.lineGrowthCountryCanvasContext = (<HTMLCanvasElement>this.lineChartGrowthCountryCanvas.nativeElement).getContext('2d');
+    }
+    if (this.lineGrowthCanvasContext) {
+      this.lineGrowthCanvasContext.clearRect(0, 0, this.lineGrowthCanvasContext.canvas.width, this.lineGrowthCanvasContext.canvas.height);
+    }
+    if (this.lineGrowthCountryCanvasContext) {
+      this.lineGrowthCountryCanvasContext.clearRect(0, 0, this.lineGrowthCountryCanvasContext.canvas.width, this.lineGrowthCountryCanvasContext.canvas.height);
+    }
+  }
 
-      this.coronaStatsResponse = data['coronaDeathGrowthStats'];
-      this.dates = this.coronaStatsResponse.map(x => this.getFormattedDate(x.date));
-      this.growths = this.coronaStatsResponse.map(x => x.growth);
-      this.deltas = this.coronaStatsResponse.map(x => x.delta);
-      this.totalDeath = this.growths[this.growths.length - 1].toLocaleString("us-US");
-      this.newDeaths = this.deltas[this.deltas.length - 1].toLocaleString("us-US");
+  public processTrendSearchByCountry(data: any, value: string) {
+    this.processSearchByCountryForGraphs(data, value);
+    this.setSearchByCountryLineGraphConfiguration(value);
+    this.setSearchByCountryBarGraphConfiguration(value);
+    this.showTotal = false;
+    this.showCountry = true;
+  }
 
-      this.lineGraphGrowthLabels = this.dates;
-      this.lineGraphGrowthData = [{
-        data: this.growths,
-        label: 'Deaths',
-        borderColor: "darkslategrey",
-        fill: false
-      }];
+  public processSearchByCountryForGraphs(data: any, value: string): void {
+    this.coronaStatsResponse = data['coronaDeathGrowthCountryStats'];
+    this.countryStat = this.coronaStatsResponse.filter(x => x.country.indexOf(value) >= 0);
+    this.dates = this.countryStat[0].growthStats.map(x => this.getFormattedDate(x.date));
+    this.growths = this.countryStat[0].growthStats.map(x => x.growth);
+    this.deltas = this.countryStat[0].growthStats.map(x => x.delta);
+    this.totalDeath = this.growths[this.growths.length - 1].toLocaleString("us-US");
+    this.newDeaths = this.deltas[this.deltas.length - 1].toLocaleString("us-US");
+  }
 
-      this.lineGraphGrowthOptions = {
-        scaleShowVerticalLines: false,
-        responsive: false,
-        responsiveAnimationDuration: 0,
-        legend: {
-          display: false
-        },
-        title: {
-          display: true,
-          text: 'All Countries / Total Deaths ' + this.totalDeath,
-          fontSize: 14,
-          fontStyle: 'normal',
-          fontColor: 'darkslategrey'
-        },
-        scales: {
-          xAxes: [{
-            ticks: {
-              display: false
-            }
-          }]
-        }
-      };
+  public setSearchByCountryLineGraphConfiguration(value: string): void {
+    this.lineGraphGrowthCountryLabels = this.dates;
+    this.lineGraphGrowthCountryData = [{
+      data: this.growths,
+      label: 'Deaths',
+      borderColor: "darkslategrey",
+      fill: false
+    }];
+    this.lineGraphGrowthCountryOptions = {
+      scaleShowVerticalLines: false,
+      responsive: false,
+      responsiveAnimationDuration: 0,
+      legend: {
+        display: false
+      },
+      title: {
+        display: true,
+        text: value.charAt(0).toUpperCase() + value.slice(1) + ' / Total Deaths ' + this.totalDeath,
+        fontSize: 14,
+        fontStyle: 'normal',
+        fontColor: 'darkslategrey'
+      },
+      scales: {
+        xAxes: [{
+          ticks: {
+            display: false
+          }
+        }]
+      }
+    };
+  }
 
-      this.growths = this.coronaStatsResponse.map(x => x.delta);
-
-      this.barGraphGrowthLabels = this.dates;
-      this.barGraphGrowthData = [{
-        data: this.deltas,
-        label: 'Deaths',
-        borderColor: "#008dc9",
-        backgroundColor: "#008dc9",
-        fill: false
-      }];
-
-      this.barGraphGrowthOptions = {
-        scaleShowVerticalLines: false,
-        responsive: false,
-        responsiveAnimationDuration: 0,
-        legend: {
-          display: false
-        },
-        title: {
-          display: true,
-          text: 'All Countries / New Deaths ' + this.newDeaths,
-          fontSize: 14,
-          fontStyle: 'normal',
-          fontColor: 'darkslategrey'
-        },
-        scales: {
-          xAxes: [{
-            ticks: {
-              display: false
-            }
-          }]
-        }
-      };
-    });
+  public setSearchByCountryBarGraphConfiguration(value: string) {
+    this.barGraphGrowthCountryLabels = this.dates;
+    this.barGraphGrowthCountryData = [{
+      data: this.deltas,
+      label: 'Deaths',
+      borderColor: "#008dc9",
+      backgroundColor: "#008dc9",
+      fill: false
+    }];
+    this.barGraphGrowthCountryOptions = {
+      scaleShowVerticalLines: false,
+      responsive: false,
+      responsiveAnimationDuration: 0,
+      legend: {
+        display: false
+      },
+      title: {
+        display: true,
+        text: value.charAt(0).toUpperCase() + value.slice(1) + ' / New Deaths ' + this.newDeaths,
+        fontSize: 14,
+        fontStyle: 'normal',
+        fontColor: 'darkslategrey'
+      },
+      scales: {
+        xAxes: [{
+          ticks: {
+            display: false
+          }
+        }]
+      }
+    };
   }
 
   getFormattedDate(date) {
@@ -247,3 +275,4 @@ export class CountrydeathtrendComponent implements OnInit {
     return `${year}-${month}-${day}`;
   }
 }
+

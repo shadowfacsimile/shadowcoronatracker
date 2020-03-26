@@ -7,14 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AlertsComponent implements OnInit {
 
-  alertText;
+  public alertText: string;
 
-  ngOnInit() {
-    console.log(new Date())
+  ngOnInit(): void {
     this.alertText = 'DAY ' + (Math.floor(this.getDaysIntoLockdown()) + 1) + ' OF 21 DAYS LOCKDOWN IN INDIA'
   }
 
-  getDaysIntoLockdown() {
+  getDaysIntoLockdown(): number {
     let date1 = new Date("03/25/2020");
     let date2 = new Date();
     let diff = date2.getTime() - date1.getTime();

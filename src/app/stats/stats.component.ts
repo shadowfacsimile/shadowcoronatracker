@@ -1,81 +1,89 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RestService } from '../services/rest.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-stats',
   templateUrl: './stats.component.html',
   styleUrls: ['./stats.component.css']
 })
-export class StatsComponent implements OnInit {
+export class StatsComponent implements OnInit, OnDestroy {
 
-  coronaStatsResponse;
-  tempCoronaStatsResponse;
-  country;
-  sort = false;
+  public coronaStatsSubscription: Subscription;
+  public coronaStatsResponse: any;
+  public tempCoronaStatsResponse: any;
+  public sort: boolean = false;
+  public country: string;
 
-  constructor(private restService: RestService) { }
+  constructor(public restService: RestService) { }
 
-  ngOnInit() {
-    this.restService.getCoronaStatsResponse().subscribe(data => {
-      this.coronaStatsResponse = data['coronaCountryStats'];
-      this.tempCoronaStatsResponse = this.coronaStatsResponse;
-    });
+  ngOnInit(): void {
+    this.coronaStatsSubscription = this.restService.getCoronaStatsResponse().subscribe(data => this.processStatsData(data));
   }
 
-  searchByCountry(value) {
+  ngOnDestroy(): void {
+    this.coronaStatsSubscription.unsubscribe();
+  }
+
+  processStatsData(data: any): void {
+    this.coronaStatsResponse = data['coronaCountryStats'];
+    this.tempCoronaStatsResponse = this.coronaStatsResponse;
+  }
+
+  searchByCountry(value: string): void {
     this.coronaStatsResponse = this.tempCoronaStatsResponse;
     this.coronaStatsResponse = this.coronaStatsResponse.filter(stat => stat.country.toLowerCase().indexOf(value.toLowerCase()) >= 0);
   }
 
-  sortByCountry(value) {
+  sortByCountry(): void {
     this.sort = !this.sort;
     this.coronaStatsResponse = this.tempCoronaStatsResponse;
     this.coronaStatsResponse = this.coronaStatsResponse.sort((a, b) => this.sortByItem(a.country.toLowerCase(), b.country.toLowerCase()));
   }
 
-  sortByCases(value) {
+  sortByCases(): void {
     this.sort = !this.sort;
     this.coronaStatsResponse = this.tempCoronaStatsResponse;
     this.coronaStatsResponse = this.coronaStatsResponse.sort((a, b) => this.sortByItem(a.cases, b.cases));
   }
 
-  sortByNewCases(value) {
+  sortByNewCases(): void {
     this.sort = !this.sort;
     this.coronaStatsResponse = this.tempCoronaStatsResponse;
     this.coronaStatsResponse = this.coronaStatsResponse.sort((a, b) => this.sortByItem(a.casesSinceYesterday, b.casesSinceYesterday));
   }
 
-  sortByDeaths(value) {
+  sortByDeaths(): void {
     this.sort = !this.sort;
     this.coronaStatsResponse = this.tempCoronaStatsResponse;
     this.coronaStatsResponse = this.coronaStatsResponse.sort((a, b) => this.sortByItem(a.deaths, b.deaths));
   }
 
-  sortByNewDeaths(value) {
+  sortByNewDeaths(): void {
     this.sort = !this.sort;
     this.coronaStatsResponse = this.tempCoronaStatsResponse;
     this.coronaStatsResponse = this.coronaStatsResponse.sort((a, b) => this.sortByItem(a.deathsSinceYesterday, b.deathsSinceYesterday));
   }
 
-  sortByMortalityRate(value) {
+  sortByMortalityRate(): void {
     this.sort = !this.sort;
     this.coronaStatsResponse = this.tempCoronaStatsResponse;
     this.coronaStatsResponse = this.coronaStatsResponse.sort((a, b) => this.sortByItem(a.mortalityRate, b.mortalityRate));
   }
 
-  sortByRecoveries(value) {
+  sortByRecoveries(): void {
     this.sort = !this.sort;
     this.coronaStatsResponse = this.tempCoronaStatsResponse;
     this.coronaStatsResponse = this.coronaStatsResponse.sort((a, b) => this.sortByItem(a.recoveries, b.recoveries));
   }
 
-  sortByRecoveryRate(value) {
+  sortByRecoveryRate(): void {
     this.sort = !this.sort;
     this.coronaStatsResponse = this.tempCoronaStatsResponse;
     this.coronaStatsResponse = this.coronaStatsResponse.sort((a, b) => this.sortByItem(a.recoveryRate, b.recoveryRate));
   }
 
-  sortByItem(a, b) {
+  sortByItem(a, b): number {
     if ((this.sort && a < b) || (!this.sort && a > b)) return 1;
     if ((this.sort && a > b) || (!this.sort && a < b)) return -1;
     return 0;

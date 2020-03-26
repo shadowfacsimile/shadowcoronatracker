@@ -1,11 +1,10 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from './../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    //'Access-Control-Allow-Origin': '*'
     'Content-Type': 'application/json'
   })
 }
@@ -15,13 +14,11 @@ const httpOptions = {
 })
 export class RestService {
 
-  coronaStatsResponse: Observable<any>;
+  public coronaStatsResponse: Observable<any>;
 
-  constructor(private http: HttpClient) {
-    this.getCoronaStatsResponse();
-  }
+  constructor(public http: HttpClient) { }
 
-  getCoronaStatsResponse() {
+  getCoronaStatsResponse(): any {
     if (!this.coronaStatsResponse) {
       this.coronaStatsResponse = this.http.get(environment.apiUrl, httpOptions);
       return this.coronaStatsResponse;

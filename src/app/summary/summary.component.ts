@@ -1,29 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RestService } from '../services/rest.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-summary',
   templateUrl: './summary.component.html',
   styleUrls: ['./summary.component.css']
 })
-export class SummaryComponent implements OnInit {
+export class SummaryComponent implements OnInit, OnDestroy {
 
-  coronaSummaryStatsResponse;
-  coronaStatsResponse;
-  countries;
+  public coronaSummarySubscription: Subscription;
+  public coronaSummaryStatsResponse: any;
+  public coronaStatsResponse: any;
 
-  constructor(private restService: RestService) { }
+  constructor(public restService: RestService) { }
 
-  ngOnInit() {
-    this.restService.getCoronaStatsResponse().subscribe(data => {
-      this.coronaSummaryStatsResponse = data['coronaSummaryStats'];
-      this.countries = data['coronaCountryStats'].filter(stat => stat.country !== "Cruise Ship").map(stat => stat.country.replace(",", " ")).filter(this.onlyUnique).length;
-      this.coronaStatsResponse = data['coronaCountryStats'].filter(stat => stat.country === 'India')[0];
-    });
+  ngOnInit(): void {
+    this.coronaSummarySubscription = this.restService.getCoronaStatsResponse().subscribe(data => this.processSummaryData(data));
   }
 
-  onlyUnique(value, index, self) {
-    return self.indexOf(value) === index;
+  ngOnDestroy(): void {
+    this.coronaSummarySubscription.unsubscribe();
+  }
+
+  processSummaryData(data: any): void {
+    this.coronaSummaryStatsResponse = data['coronaSummaryStats'];
+    this.coronaStatsResponse = data['coronaCountryStats'].filter(stat => stat.country === 'India')[0];
   }
 
 }
