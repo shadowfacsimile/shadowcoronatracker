@@ -194,7 +194,7 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
 
   public processSearchByCountryForGraphs(data: any, value: string): void {
     this.coronaStatsResponse = data['coronaDeathGrowthCountryStats'];
-    this.countryStat = this.coronaStatsResponse.filter(x => x.location.country.indexOf(value) >= 0);
+    this.countryStat = this.coronaStatsResponse.filter(x => x.country.indexOf(value) >= 0);
     this.dates = this.countryStat[0].growthStats.map(x => this.getFormattedDate(x.date));
     this.growths = this.countryStat[0].growthStats.map(x => x.growth);
     this.deltas = this.countryStat[0].growthStats.map(x => x.delta);

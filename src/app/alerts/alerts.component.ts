@@ -66,10 +66,11 @@ export class AlertsComponent implements OnInit {
     this.alertText.push(this.indiaCases.toLocaleString("us-US") + ' cases and ' + this.indiaDeaths.toLocaleString("us-US") + ' deaths in India');
     this.totalCases = this.coronaSummaryStatsResponse.totalCases;
     this.totalDeaths = this.coronaSummaryStatsResponse.totalDeaths;
-    this.alertText.push(this.totalCases.toLocaleString("us-US") + ' cases and ' + this.totalDeaths.toLocaleString("us-US") + ' deaths worldwide');
     this.alertText.push('Data updated once a day around 23:59 (UTC)')
+    this.alertText.push("Source: <a href='https://github.com/CSSEGISandData/COVID-19'>Johns Hopkins CSSE github repo</a>");
+    this.alertText.push(this.totalCases.toLocaleString("us-US") + ' cases and ' + this.totalDeaths.toLocaleString("us-US") + ' deaths worldwide');
     this.alertText.push(this.usCases.toLocaleString("us-US") + ' cases and ' + this.usDeaths.toLocaleString("us-US") + ' deaths in United States');
     this.alertText.push(this.ukCases.toLocaleString("us-US") + ' cases and ' + this.ukDeaths.toLocaleString("us-US") + ' deaths in United Kingdom');
-    this.alertText.push(this.italyCases.toLocaleString("us-US") + ' cases and ' + this.italyDeaths.toLocaleString("us-US") + ' deaths in Italy');
+    this.alertText.push(this.italyCases.toLocaleString("us-US") + ' cases and ' + this.italyDeaths.toLocaleString("us-US") + ' deaths in Italy');    
   }
 }
