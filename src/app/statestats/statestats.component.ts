@@ -1,21 +1,27 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { RestService } from '../services/rest.service';
 import { Subscription } from 'rxjs';
+import { RestService } from '../services/rest.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-stats',
-  templateUrl: './stats.component.html',
-  styleUrls: ['./stats.component.css']
+  selector: 'app-statestats',
+  templateUrl: './statestats.component.html',
+  styleUrls: ['./statestats.component.css']
 })
-export class StatsComponent implements OnInit, OnDestroy {
+export class StatestatsComponent implements OnInit, OnDestroy {
 
   public coronaStatsSubscription: Subscription;
   public coronaStatsResponse: any;
   public tempCoronaStatsResponse: any;
   public sort: boolean = false;
-  public country: string;
+  public state: string;
+  public filterCountry: string;
 
-  constructor(public restService: RestService) { }
+  constructor(public restService: RestService, private route: ActivatedRoute) {
+    this.route.params.subscribe(params => {
+      this.filterCountry = params.country;
+    });
+  }
 
   ngOnInit(): void {
     this.coronaStatsSubscription = this.restService.getCoronaStatsResponse().subscribe(data => this.processStatsData(data));
@@ -26,19 +32,20 @@ export class StatsComponent implements OnInit, OnDestroy {
   }
 
   processStatsData(data: any): void {
-    this.coronaStatsResponse = data['coronaCountryStats'];
+    console.log("derp: " + this.filterCountry);
+    this.coronaStatsResponse = data['coronaStateStats'].filter(stat => stat.location.country.toLowerCase().indexOf(this.filterCountry.toLowerCase()) >= 0);
     this.tempCoronaStatsResponse = this.coronaStatsResponse;
   }
 
-  searchByCountry(value: string): void {
+  searchByState(value: string): void {
     this.coronaStatsResponse = this.tempCoronaStatsResponse;
-    this.coronaStatsResponse = this.coronaStatsResponse.filter(stat => stat.location.country.toLowerCase().indexOf(value.toLowerCase()) >= 0);
+    this.coronaStatsResponse = this.coronaStatsResponse.filter(stat => stat.location.state.toLowerCase().indexOf(value.toLowerCase()) >= 0);
   }
 
-  sortByCountry(): void {
+  sortByState(): void {
     this.sort = !this.sort;
     this.coronaStatsResponse = this.tempCoronaStatsResponse;
-    this.coronaStatsResponse = this.coronaStatsResponse.sort((a, b) => this.sortByItem(a.location.country.toLowerCase(), b.location.country.toLowerCase()));
+    this.coronaStatsResponse = this.coronaStatsResponse.sort((a, b) => this.sortByItem(a.location.state.toLowerCase(), b.location.state.toLowerCase()));
   }
 
   sortByCases(): void {

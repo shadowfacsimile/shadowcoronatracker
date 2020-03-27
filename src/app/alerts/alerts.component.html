@@ -1,1 +1,3 @@
-<div class="alert-header-div">{{alertText}}</div>
+<div *ngIf=showAlerts class="alert-header-div">
+    <span class="india-stats-header-span">{{alertText[index]}}</span>
+</div>

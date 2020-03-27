@@ -25,7 +25,7 @@ export class SummaryComponent implements OnInit, OnDestroy {
 
   processSummaryData(data: any): void {
     this.coronaSummaryStatsResponse = data['coronaSummaryStats'];
-    this.coronaStatsResponse = data['coronaCountryStats'].filter(stat => stat.country === 'India')[0];
+    this.coronaStatsResponse = data['coronaCountryStats'].filter(stat => stat.location.country === 'India')[0];
   }
 
 }

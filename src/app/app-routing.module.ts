@@ -6,11 +6,13 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { CasegrowthComponent } from './casegrowth/casegrowth.component';
 import { CountrytrendComponent } from './countrytrend/countrytrend.component';
 import { CountrydeathtrendComponent } from './countrydeathtrend/countrydeathtrend.component';
+import { StatestatsComponent } from './statestats/statestats.component';
 
 
 const routes: Routes = [
   {path: 'summary-stats', component: SummaryComponent},
   {path: 'stats-by-country', component: StatsComponent},
+  {path: 'stats-by-state/:country', component: StatestatsComponent, pathMatch: 'full'},
   {path: 'cases-growth-factor', component: CasegrowthComponent},
   {path: 'cases-trend-by-country', component: CountrytrendComponent},
   {path: 'deaths-trend-by-country', component: CountrydeathtrendComponent},

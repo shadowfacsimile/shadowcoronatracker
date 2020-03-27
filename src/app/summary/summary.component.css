@@ -1,14 +1,14 @@
 .summary-header-span {
-    background-color: #008dc9;/*rgb(243, 243, 243);*/
-    color: white;
+    background-color: rgb(243, 243, 243);/*rgb(243, 243, 243); #008dc9;*/
+    color: darkslategray;
     border-radius: 5px;
     text-align: center;
     font-size: large;
     font-weight: normal;
     padding-right: 30px;
     padding-left: 30px;
-    padding-top: 3px;
-    padding-bottom: 3px;
+    padding-top: 4px;
+    padding-bottom: 4px;
     font-family: Helvetica;
 }
 

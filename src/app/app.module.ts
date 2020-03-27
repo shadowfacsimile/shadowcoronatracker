@@ -13,6 +13,7 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { CasegrowthComponent } from './casegrowth/casegrowth.component';
 import { CountrytrendComponent } from './countrytrend/countrytrend.component';
 import { CountrydeathtrendComponent } from './countrydeathtrend/countrydeathtrend.component';
+import { StatestatsComponent } from './statestats/statestats.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { CountrydeathtrendComponent } from './countrydeathtrend/countrydeathtren
     PagenotfoundComponent,
     CasegrowthComponent,
     CountrytrendComponent,
-    CountrydeathtrendComponent
+    CountrydeathtrendComponent,
+    StatestatsComponent
   ],
   imports: [
     BrowserModule,

@@ -7,8 +7,8 @@
 }
 
 .growth-header-span {
-    background-color: #008dc9;/*rgb(243, 243, 243);*/
-    color: white;
+    background-color: rgb(243, 243, 243);/*rgb(243, 243, 243); #008dc9;*/
+    color: darkslategray;
     border-radius: 5px;
     text-align: center;
     font-size: large;
@@ -18,6 +18,12 @@
     padding-top: 3px;
     padding-bottom: 3px;
     font-family: Helvetica;
+}
+
+.summary-link {
+    text-decoration: underline;
+    cursor: pointer;   
+    color: #008dc9;
 }
 
 .data-loading-div{
