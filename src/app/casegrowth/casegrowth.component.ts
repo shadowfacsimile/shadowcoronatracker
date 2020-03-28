@@ -30,7 +30,7 @@ export class CasegrowthComponent implements OnInit, OnDestroy {
   constructor(public restService: RestService) { }
 
   ngOnInit(): void {  
-      this.coronaCaseGrowthSubscription = this.restService.getCoronaStatsResponse().subscribe(data => this.processGrowthFactorData(data));
+      this.coronaCaseGrowthSubscription = this.restService.getCoronaCasesGrowthFactorStats().subscribe(data => this.processGrowthFactorData(data));
   }
 
   ngOnDestroy(): void {
@@ -38,7 +38,7 @@ export class CasegrowthComponent implements OnInit, OnDestroy {
   }
 
   public processGrowthFactorData(data: any): void {
-    this.coronaStatsResponse = data['coronaCaseGrowthFactorStats'];
+    this.coronaStatsResponse = data;
     this.growthFactorToday = this.coronaStatsResponse[this.coronaStatsResponse.length - 1];
     this.growthFactorYesterday = this.coronaStatsResponse[this.coronaStatsResponse.length - 2];
     this.growthFactorWeek = this.coronaStatsResponse[this.coronaStatsResponse.length - 8];

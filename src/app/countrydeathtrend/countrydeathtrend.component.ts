@@ -9,16 +9,17 @@ import { Subscription } from 'rxjs';
 })
 export class CountrydeathtrendComponent implements OnInit, OnDestroy {
 
-  public coronaAllCountriesTrendSubscription: Subscription;
-  public coronaSearchByCountryTrendSubscription: Subscription;
-  public coronaStatsResponse: any;
+  public coronaDeathsGrowthStatsSubscription: Subscription;
+  public coronaDeathsGrowthCountriesStatsSubscription: Subscription;
+  public coronaDeathsGrowthStatsResponse: any;
+  public coronaDeathsGrowthCountriesStatsResponse: any;
   public countryStat: any;
   public dates: any;
   public growths: any;
   public deltas: any;
   public countries: any;
   public country: any;
-  public totalDeath: any;
+  public totalDeaths: any;
   public newDeaths: any;
   public showCountry: boolean = false;
   public showTotal: boolean = true;
@@ -64,35 +65,44 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.coronaAllCountriesTrendSubscription.unsubscribe();
-
-    if (this.coronaSearchByCountryTrendSubscription)
-      this.coronaSearchByCountryTrendSubscription.unsubscribe();
+    this.coronaDeathsGrowthStatsSubscription.unsubscribe();
+    this.coronaDeathsGrowthCountriesStatsSubscription.unsubscribe();
   }
 
   trendAllCountries(): void {
-    this.coronaAllCountriesTrendSubscription = this.restService.getCoronaStatsResponse().subscribe(data => this.processTrendAllCountries(data));
+    if (!this.coronaDeathsGrowthCountriesStatsResponse) {
+      this.coronaDeathsGrowthCountriesStatsSubscription = this.restService.getCoronaDeathsGrowthCountriesStats().subscribe(data => this.storeDeathsGrowthCountriesStats(data));
+    }
+
+    if (!this.coronaDeathsGrowthStatsResponse) {
+      this.coronaDeathsGrowthStatsSubscription = this.restService.getCoronaDeathsGrowthStats().subscribe(data => this.processDeathsGrowthStats(data));
+    } else {
+      this.processDeathsGrowthStats(this.coronaDeathsGrowthStatsResponse);
+    }
   }
 
-  processTrendAllCountries(data: any): void {
-    this.processAllCountriesForGraphs(data);
-    this.setAllCountriesLineGraphConfiguration();
-    this.growths = this.coronaStatsResponse.map(x => x.delta);
-    this.setAllCountriesBarGraphConfiguration();
+  storeDeathsGrowthCountriesStats(data) {
+    this.coronaDeathsGrowthCountriesStatsResponse = data;
+    this.countries = this.countries ? this.countries :  data.map(x => x.country);
   }
 
-  public processAllCountriesForGraphs(data: any): void {
-    this.coronaStatsResponse = data['coronaDeathGrowthCountryStats'];
-    this.countries = this.coronaStatsResponse.map(x => x.country);
-    this.coronaStatsResponse = data['coronaDeathGrowthStats'];
-    this.dates = this.coronaStatsResponse.map(x => this.getFormattedDate(x.date));
-    this.growths = this.coronaStatsResponse.map(x => x.growth);
-    this.deltas = this.coronaStatsResponse.map(x => x.delta);
-    this.totalDeath = this.growths[this.growths.length - 1].toLocaleString("us-US");
+  processDeathsGrowthStats(data: any): void {
+    this.processDeathsGrowthStatsForGraphs(data);
+    this.setGrowthStatsLineGraphConfiguration();
+    this.growths = this.coronaDeathsGrowthStatsResponse.map(x => x.delta);
+    this.setGrowthStatsBarGraphConfiguration();
+  }
+
+  public processDeathsGrowthStatsForGraphs(data: any): void {
+    this.coronaDeathsGrowthStatsResponse = data;
+    this.dates = this.coronaDeathsGrowthStatsResponse.map(x => this.getFormattedDate(x.date));
+    this.growths = this.coronaDeathsGrowthStatsResponse.map(x => x.growth);
+    this.deltas = this.coronaDeathsGrowthStatsResponse.map(x => x.delta);
+    this.totalDeaths = this.growths[this.growths.length - 1].toLocaleString("us-US");
     this.newDeaths = this.deltas[this.deltas.length - 1].toLocaleString("us-US");
   }
 
-  public setAllCountriesLineGraphConfiguration(): void {
+  public setGrowthStatsLineGraphConfiguration(): void {
     this.lineGraphGrowthLabels = this.dates;
     this.lineGraphGrowthData = [{
       data: this.growths,
@@ -109,7 +119,7 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
       },
       title: {
         display: true,
-        text: 'All Countries / Total Deaths ' + this.totalDeath,
+        text: 'All Countries / Total Deaths ' + this.totalDeaths,
         fontSize: 14,
         fontStyle: 'normal',
         fontColor: 'darkslategrey'
@@ -124,7 +134,7 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
     };
   }
 
-  public setAllCountriesBarGraphConfiguration(): void {
+  public setGrowthStatsBarGraphConfiguration(): void {
     this.barGraphGrowthLabels = this.dates;
     this.barGraphGrowthData = [{
       data: this.deltas,
@@ -165,7 +175,11 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
       this.showCountry = false;
       this.trendAllCountries();
     } else {
-      this.restService.getCoronaStatsResponse().subscribe(data => this.processTrendSearchByCountry(data, value));
+      if (this.coronaDeathsGrowthCountriesStatsResponse !== null) {
+        this.processDeathsGrowthCountriesStats(this.coronaDeathsGrowthCountriesStatsResponse, value);
+      } else {
+        this.restService.getCoronaDeathsGrowthCountriesStats().subscribe(data => this.processDeathsGrowthCountriesStats(data, value));
+      }
     }
   }
 
@@ -184,25 +198,25 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
     }
   }
 
-  public processTrendSearchByCountry(data: any, value: string) {
-    this.processSearchByCountryForGraphs(data, value);
-    this.setSearchByCountryLineGraphConfiguration(value);
-    this.setSearchByCountryBarGraphConfiguration(value);
+  public processDeathsGrowthCountriesStats(data: any, value: string) {
+    this.processDeathsGrowthCountriesStatsForGraphs(data, value);
+    this.setDeathsGrowthCountriesStatsLineGraphConfiguration(value);
+    this.setDeathsGrowthCountriesStatsBarGraphConfiguration(value);
     this.showTotal = false;
     this.showCountry = true;
   }
 
-  public processSearchByCountryForGraphs(data: any, value: string): void {
-    this.coronaStatsResponse = data['coronaDeathGrowthCountryStats'];
-    this.countryStat = this.coronaStatsResponse.filter(x => x.country.indexOf(value) >= 0);
+  public processDeathsGrowthCountriesStatsForGraphs(data: any, value: string): void {
+    this.coronaDeathsGrowthCountriesStatsResponse = data;
+    this.countryStat = this.coronaDeathsGrowthCountriesStatsResponse.filter(x => x.country.indexOf(value) >= 0);
     this.dates = this.countryStat[0].growthStats.map(x => this.getFormattedDate(x.date));
     this.growths = this.countryStat[0].growthStats.map(x => x.growth);
     this.deltas = this.countryStat[0].growthStats.map(x => x.delta);
-    this.totalDeath = this.growths[this.growths.length - 1].toLocaleString("us-US");
+    this.totalDeaths = this.growths[this.growths.length - 1].toLocaleString("us-US");
     this.newDeaths = this.deltas[this.deltas.length - 1].toLocaleString("us-US");
   }
 
-  public setSearchByCountryLineGraphConfiguration(value: string): void {
+  public setDeathsGrowthCountriesStatsLineGraphConfiguration(value: string): void {
     this.lineGraphGrowthCountryLabels = this.dates;
     this.lineGraphGrowthCountryData = [{
       data: this.growths,
@@ -219,7 +233,7 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
       },
       title: {
         display: true,
-        text: value.charAt(0).toUpperCase() + value.slice(1) + ' / Total Deaths ' + this.totalDeath,
+        text: value.charAt(0).toUpperCase() + value.slice(1) + ' / Total Deaths ' + this.totalDeaths,
         fontSize: 14,
         fontStyle: 'normal',
         fontColor: 'darkslategrey'
@@ -234,7 +248,7 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
     };
   }
 
-  public setSearchByCountryBarGraphConfiguration(value: string) {
+  public setDeathsGrowthCountriesStatsBarGraphConfiguration(value: string) {
     this.barGraphGrowthCountryLabels = this.dates;
     this.barGraphGrowthCountryData = [{
       data: this.deltas,
@@ -275,4 +289,3 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
     return `${year}-${month}-${day}`;
   }
 }
-

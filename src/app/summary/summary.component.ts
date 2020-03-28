@@ -10,22 +10,16 @@ import { Subscription } from 'rxjs';
 export class SummaryComponent implements OnInit, OnDestroy {
 
   public coronaSummarySubscription: Subscription;
+  public coronaCountriesStatsSubscription: Subscription;
   public coronaSummaryStatsResponse: any;
-  public coronaStatsResponse: any;
 
   constructor(public restService: RestService) { }
 
   ngOnInit(): void {
-    this.coronaSummarySubscription = this.restService.getCoronaStatsResponse().subscribe(data => this.processSummaryData(data));
+    this.coronaSummarySubscription = this.restService.getCoronaSummaryStats().subscribe(data => this.coronaSummaryStatsResponse = data);
   }
 
   ngOnDestroy(): void {
     this.coronaSummarySubscription.unsubscribe();
   }
-
-  processSummaryData(data: any): void {
-    this.coronaSummaryStatsResponse = data['coronaSummaryStats'];
-    this.coronaStatsResponse = data['coronaCountryStats'].filter(stat => stat.location.country === 'India')[0];
-  }
-
 }

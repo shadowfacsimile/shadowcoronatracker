@@ -9,16 +9,17 @@ import { Subscription } from 'rxjs';
 })
 export class CountrytrendComponent implements OnInit, OnDestroy {
 
-  public coronaAllCountriesTrendSubscription: Subscription;
-  public coronaSearchByCountryTrendSubscription: Subscription;
-  public coronaStatsResponse: any;
+  public coronaCasesGrowthStatsSubscription: Subscription;
+  public coronaCasesGrowthCountriesStatsSubscription: Subscription;
+  public coronaCasesGrowthStatsResponse: any;
+  public coronaCasesGrowthCountriesStatsResponse: any;
   public countryStat: any;
   public dates: any;
   public growths: any;
   public deltas: any;
   public countries: any;
   public country: any;
-  public totalCase: any;
+  public totalCases: any;
   public newCases: any;
   public showCountry: boolean = false;
   public showTotal: boolean = true;
@@ -64,32 +65,43 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.coronaAllCountriesTrendSubscription.unsubscribe();
+    this.coronaCasesGrowthStatsSubscription.unsubscribe();
+    this.coronaCasesGrowthCountriesStatsSubscription.unsubscribe();
   }
 
   trendAllCountries(): void {
-    this.coronaAllCountriesTrendSubscription = this.restService.getCoronaStatsResponse().subscribe(data => this.processTrendAllCountries(data));
+    if (!this.coronaCasesGrowthCountriesStatsResponse) {
+      this.coronaCasesGrowthCountriesStatsSubscription = this.restService.getCoronaCasesGrowthCountriesStats().subscribe(data => this.storeCasesGrowthCountriesStats(data));
+    }   
+    if (!this.coronaCasesGrowthStatsResponse) {
+      this.coronaCasesGrowthStatsSubscription = this.restService.getCoronaCasesGrowthStats().subscribe(data => this.processCasesGrowthStats(data));
+    } else {
+      this.processCasesGrowthStats(this.coronaCasesGrowthStatsResponse);
+    }
   }
 
-  processTrendAllCountries(data: any): void {
-    this.processAllCountriesForGraphs(data);
-    this.setAllCountriesLineGraphConfiguration();
-    this.growths = this.coronaStatsResponse.map(x => x.delta);
-    this.setAllCountriesBarGraphConfiguration();
+  storeCasesGrowthCountriesStats(data) {
+    this.coronaCasesGrowthCountriesStatsResponse = data;
+    this.countries = this.countries ? this.countries : data.map(x => x.country);
   }
 
-  public processAllCountriesForGraphs(data: any): void {
-    this.coronaStatsResponse = data['coronaCaseGrowthCountryStats'];
-    this.countries = this.coronaStatsResponse.map(x => x.country);
-    this.coronaStatsResponse = data['coronaCaseGrowthStats'];
-    this.dates = this.coronaStatsResponse.map(x => this.getFormattedDate(x.date));
-    this.growths = this.coronaStatsResponse.map(x => x.growth);
-    this.deltas = this.coronaStatsResponse.map(x => x.delta);
-    this.totalCase = this.growths[this.growths.length - 1].toLocaleString("us-US");
+  processCasesGrowthStats(data: any): void {
+    this.processCasesGrowthStatsForGraphs(data);
+    this.setGrowthStatsLineGraphConfiguration();
+    this.growths = this.coronaCasesGrowthStatsResponse.map(x => x.delta);
+    this.setGrowthStatsBarGraphConfiguration();
+  }
+
+  public processCasesGrowthStatsForGraphs(data: any): void {
+    this.coronaCasesGrowthStatsResponse = data;
+    this.dates = this.coronaCasesGrowthStatsResponse.map(x => this.getFormattedDate(x.date));
+    this.growths = this.coronaCasesGrowthStatsResponse.map(x => x.growth);
+    this.deltas = this.coronaCasesGrowthStatsResponse.map(x => x.delta);
+    this.totalCases = this.growths[this.growths.length - 1].toLocaleString("us-US");
     this.newCases = this.deltas[this.deltas.length - 1].toLocaleString("us-US");
   }
 
-  public setAllCountriesLineGraphConfiguration(): void {
+  public setGrowthStatsLineGraphConfiguration(): void {
     this.lineGraphGrowthLabels = this.dates;
     this.lineGraphGrowthData = [{
       data: this.growths,
@@ -106,7 +118,7 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
       },
       title: {
         display: true,
-        text: 'All Countries / Total Cases ' + this.totalCase,
+        text: 'All Countries / Total Cases ' + this.totalCases,
         fontSize: 14,
         fontStyle: 'normal',
         fontColor: 'darkslategrey'
@@ -121,7 +133,7 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
     };
   }
 
-  public setAllCountriesBarGraphConfiguration(): void {
+  public setGrowthStatsBarGraphConfiguration(): void {
     this.barGraphGrowthLabels = this.dates;
     this.barGraphGrowthData = [{
       data: this.deltas,
@@ -162,7 +174,11 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
       this.showCountry = false;
       this.trendAllCountries();
     } else {
-      this.restService.getCoronaStatsResponse().subscribe(data => this.processTrendSearchByCountry(data, value));
+      if (this.coronaCasesGrowthCountriesStatsResponse !== null) {
+        this.processCasesGrowthCountriesStats(this.coronaCasesGrowthCountriesStatsResponse, value);
+      } else {
+        this.restService.getCoronaCasesGrowthCountriesStats().subscribe(data => this.processCasesGrowthCountriesStats(data, value));
+      }
     }
   }
 
@@ -181,25 +197,25 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
     }
   }
 
-  public processTrendSearchByCountry(data: any, value: string) {
-    this.processSearchByCountryForGraphs(data, value);
-    this.setSearchByCountryLineGraphConfiguration(value);
-    this.setSearchByCountryBarGraphConfiguration(value);
+  public processCasesGrowthCountriesStats(data: any, value: string) {
+    this.processCasesGrowthCountriesStatsForGraphs(data, value);
+    this.setCasesGrowthCountriesStatsLineGraphConfiguration(value);
+    this.setCasesGrowthCountriesStatsBarGraphConfiguration(value);
     this.showTotal = false;
     this.showCountry = true;
   }
 
-  public processSearchByCountryForGraphs(data: any, value: string): void {
-    this.coronaStatsResponse = data['coronaCaseGrowthCountryStats'];
-    this.countryStat = this.coronaStatsResponse.filter(x => x.country.indexOf(value) >= 0);
+  public processCasesGrowthCountriesStatsForGraphs(data: any, value: string): void {
+    this.coronaCasesGrowthCountriesStatsResponse = data;
+    this.countryStat = this.coronaCasesGrowthCountriesStatsResponse.filter(x => x.country.indexOf(value) >= 0);
     this.dates = this.countryStat[0].growthStats.map(x => this.getFormattedDate(x.date));
     this.growths = this.countryStat[0].growthStats.map(x => x.growth);
     this.deltas = this.countryStat[0].growthStats.map(x => x.delta);
-    this.totalCase = this.growths[this.growths.length - 1].toLocaleString("us-US");
+    this.totalCases = this.growths[this.growths.length - 1].toLocaleString("us-US");
     this.newCases = this.deltas[this.deltas.length - 1].toLocaleString("us-US");
   }
 
-  public setSearchByCountryLineGraphConfiguration(value: string): void {
+  public setCasesGrowthCountriesStatsLineGraphConfiguration(value: string): void {
     this.lineGraphGrowthCountryLabels = this.dates;
     this.lineGraphGrowthCountryData = [{
       data: this.growths,
@@ -216,7 +232,7 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
       },
       title: {
         display: true,
-        text: value.charAt(0).toUpperCase() + value.slice(1) + ' / Total Cases ' + this.totalCase,
+        text: value.charAt(0).toUpperCase() + value.slice(1) + ' / Total Cases ' + this.totalCases,
         fontSize: 14,
         fontStyle: 'normal',
         fontColor: 'darkslategrey'
@@ -231,7 +247,7 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
     };
   }
 
-  public setSearchByCountryBarGraphConfiguration(value: string) {
+  public setCasesGrowthCountriesStatsBarGraphConfiguration(value: string) {
     this.barGraphGrowthCountryLabels = this.dates;
     this.barGraphGrowthCountryData = [{
       data: this.deltas,

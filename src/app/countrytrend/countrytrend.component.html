@@ -1,8 +1,8 @@
 <div class="growth-header-div">
     <span class="growth-header-span">
-        <span class="summary-link"  routerLink="/summary-stats">COVID-19</span>
-         / CASES GROWTH TREND
-      </span>
+        <span class="summary-link" routerLink="/summary-stats">COVID-19</span>
+        / CASES GROWTH TREND
+    </span>
 </div>
 <br>
 <div *ngIf=!dates class="data-loading-div"><span class="data-loading-span">Data Loading...</span></div>
@@ -20,9 +20,9 @@
 <table>
     <tr>
         <td>
-            <div class="chart-growth-container" *ngIf=showTotal&&dates>
-                <canvas baseChart #lineChartGrowthCanvas [datasets]="lineGraphGrowthData" [labels]="lineGraphGrowthLabels"
-                    [options]="lineGraphGrowthOptions" [legend]="lineGraphGrowthLegend"
+            <div class="chart-growth-container" *ngIf=showTotal&&dates&&countries>
+                <canvas baseChart #lineChartGrowthCanvas [datasets]="lineGraphGrowthData"
+                    [labels]="lineGraphGrowthLabels" [options]="lineGraphGrowthOptions" [legend]="lineGraphGrowthLegend"
                     [chartType]="lineGraphGrowthType" width="800" height="400">
                 </canvas>
             </div>
@@ -30,14 +30,14 @@
     </tr>
     <tr>
         <td>
-            <div class="chart-growth-container" *ngIf=showTotal&&dates>
+            <div class="chart-growth-container" *ngIf=showTotal&&dates&&countries>
                 <canvas baseChart #barChartGrowthCanvas [datasets]="barGraphGrowthData" [labels]="barGraphGrowthLabels"
-                    [options]="barGraphGrowthOptions" [legend]="barGraphGrowthLegend"
-                    [chartType]="barGraphGrowthType" width="800" height="400">
+                    [options]="barGraphGrowthOptions" [legend]="barGraphGrowthLegend" [chartType]="barGraphGrowthType"
+                    width="800" height="400">
                 </canvas>
             </div>
         </td>
-    </tr>    
+    </tr>
     <tr>
         <td>
             <div class="chart-growth-country-container" *ngIf=showCountry>
@@ -59,5 +59,5 @@
                 </canvas>
             </div>
         </td>
-    </tr>    
+    </tr>
 </table>

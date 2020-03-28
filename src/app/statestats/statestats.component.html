@@ -5,9 +5,9 @@
   </span>
 </div>
 <br>
-<div *ngIf=!coronaStatsResponse class="data-loading-div"><span class="data-loading-span">Data Loading...</span></div>
+<div *ngIf=!coronaStatesStatsResponse class="data-loading-div"><span class="data-loading-span">Data Loading...</span></div>
 
-<div *ngIf=coronaStatsResponse>
+<div *ngIf=coronaStatesStatsResponse>
   <table class="table table-borderless">
     <thead>
       <tr>
@@ -53,7 +53,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let stat of coronaStatsResponse">
+      <tr *ngFor="let stat of coronaStatesStatsResponse">
         <td class="stat-table-state-td">          
           <span>{{stat.location.state}}</span>
         </td>

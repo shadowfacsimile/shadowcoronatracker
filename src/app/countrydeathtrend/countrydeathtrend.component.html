@@ -1,63 +1,63 @@
 <div class="growth-header-div">
     <span class="growth-header-span">
-        <span class="summary-link"  routerLink="/summary-stats">COVID-19</span>
-         / DEATHS GROWTH TREND
-      </span>
+        <span class="summary-link" routerLink="/summary-stats">COVID-19</span>
+        / DEATHS GROWTH TREND
+    </span>
 </div>
 <br>
 <div *ngIf=!dates class="data-loading-div"><span class="data-loading-span">Data Loading...</span></div>
 <br>
 <div class="dropdown">
-<select class="country-selector" [(ngModel)]="country" (ngModelChange)="trendSearchByCountry($event)">
-    <option selected>All Countries</option>
-    <option *ngFor="let ctry of countries">
-        {{ctry}}
-    </option>
-</select>
+    <select class="country-selector" [(ngModel)]="country" (ngModelChange)="trendSearchByCountry($event)">
+        <option selected>All Countries</option>
+        <option *ngFor="let ctry of countries">
+            {{ctry}}
+        </option>
+    </select>
 </div>
 <br>
 <br>
 <table>
-<tr>
-    <td>
-        <div class="chart-growth-container" *ngIf=showTotal&&dates>
-            <canvas baseChart #lineChartGrowthCanvas [datasets]="lineGraphGrowthData" [labels]="lineGraphGrowthLabels"
-                [options]="lineGraphGrowthOptions" [legend]="lineGraphGrowthLegend"
-                [chartType]="lineGraphGrowthType" width="800" height="400">
-            </canvas>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <div class="chart-growth-container" *ngIf=showTotal&&dates>
-            <canvas baseChart #barChartGrowthCanvas [datasets]="barGraphGrowthData" [labels]="barGraphGrowthLabels"
-                [options]="barGraphGrowthOptions" [legend]="barGraphGrowthLegend"
-                [chartType]="barGraphGrowthType" width="800" height="400">
-            </canvas>
-        </div>
-    </td>
-</tr>    
-<tr>
-    <td>
-        <div class="chart-growth-country-container" *ngIf=showCountry>
-            <canvas #lineChartGrowthCountryCanvas baseChart [datasets]="lineGraphGrowthCountryData"
-                [labels]="lineGraphGrowthCountryLabels" [options]="lineGraphGrowthCountryOptions"
-                [legend]="lineGraphGrowthCountryLegend" [chartType]="lineGraphGrowthCountryType" width="800"
-                height="400">
-            </canvas>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <div class="chart-growth-country-container" *ngIf=showCountry>
-            <canvas #barChartGrowthCountryCanvas baseChart [datasets]="barGraphGrowthCountryData"
-                [labels]="barGraphGrowthCountryLabels" [options]="barGraphGrowthCountryOptions"
-                [legend]="barGraphGrowthCountryLegend" [chartType]="barGraphGrowthCountryType" width="800"
-                height="400">
-            </canvas>
-        </div>
-    </td>
-</tr>    
+    <tr>
+        <td>
+            <div class="chart-growth-container" *ngIf=showTotal&&dates&&countries>
+                <canvas baseChart #lineChartGrowthCanvas [datasets]="lineGraphGrowthData"
+                    [labels]="lineGraphGrowthLabels" [options]="lineGraphGrowthOptions" [legend]="lineGraphGrowthLegend"
+                    [chartType]="lineGraphGrowthType" width="800" height="400">
+                </canvas>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="chart-growth-container" *ngIf=showTotal&&dates&&countries>
+                <canvas baseChart #barChartGrowthCanvas [datasets]="barGraphGrowthData" [labels]="barGraphGrowthLabels"
+                    [options]="barGraphGrowthOptions" [legend]="barGraphGrowthLegend" [chartType]="barGraphGrowthType"
+                    width="800" height="400">
+                </canvas>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="chart-growth-country-container" *ngIf=showCountry>
+                <canvas #lineChartGrowthCountryCanvas baseChart [datasets]="lineGraphGrowthCountryData"
+                    [labels]="lineGraphGrowthCountryLabels" [options]="lineGraphGrowthCountryOptions"
+                    [legend]="lineGraphGrowthCountryLegend" [chartType]="lineGraphGrowthCountryType" width="800"
+                    height="400">
+                </canvas>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="chart-growth-country-container" *ngIf=showCountry>
+                <canvas #barChartGrowthCountryCanvas baseChart [datasets]="barGraphGrowthCountryData"
+                    [labels]="barGraphGrowthCountryLabels" [options]="barGraphGrowthCountryOptions"
+                    [legend]="barGraphGrowthCountryLegend" [chartType]="barGraphGrowthCountryType" width="800"
+                    height="400">
+                </canvas>
+            </div>
+        </td>
+    </tr>
 </table>

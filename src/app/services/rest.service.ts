@@ -14,15 +14,78 @@ const httpOptions = {
 })
 export class RestService {
 
-  public coronaStatsResponse: Observable<any>;
+  public coronaSummaryStats: Observable<any>;
+  public coronaCountriesStats: Observable<any>;
+  public coronaStatesStats: Observable<any>;
+  public coronaCasesGrowthStats: Observable<any>;
+  public coronaCasesGrowthCountriesStats: Observable<any>;
+  public coronaCasesGrowthFactorStats: Observable<any>;
+  public coronaDeathsGrowthStats: Observable<any>;
+  public coronaDeathsGrowthCountriesStats: Observable<any>;
 
   constructor(public http: HttpClient) { }
 
-  getCoronaStatsResponse(): any {
-    if (!this.coronaStatsResponse) {
-      this.coronaStatsResponse = this.http.get(environment.apiUrl, httpOptions);
-      return this.coronaStatsResponse;
+  getCoronaSummaryStats(): any {
+    if (!this.coronaSummaryStats) {
+      this.coronaSummaryStats = this.http.get(environment.summaryUrl, httpOptions);
+      return this.coronaSummaryStats;
     }
-    return this.coronaStatsResponse;
+    return this.coronaSummaryStats;
+  }
+
+  getCoronaCountriesStats(): any {
+    if (!this.coronaCountriesStats) {
+      this.coronaCountriesStats = this.http.get(environment.countriesStatsUrl, httpOptions);
+      return this.coronaCountriesStats;
+    }
+    return this.coronaCountriesStats;
+  }
+
+  getCoronaStatesStats(): any {
+    if (!this.coronaStatesStats) {
+      this.coronaStatesStats = this.http.get(environment.statesStatsUrl, httpOptions);
+      return this.coronaStatesStats;
+    }
+    return this.coronaStatesStats;
+  }
+
+  getCoronaCasesGrowthStats(): any {
+    if (!this.coronaCasesGrowthStats) {
+      this.coronaCasesGrowthStats = this.http.get(environment.casesGrowthStatsUrl, httpOptions);
+      return this.coronaCasesGrowthStats;
+    }
+    return this.coronaCasesGrowthStats;
+  }
+
+  getCoronaCasesGrowthCountriesStats(): any {
+    if (!this.coronaCasesGrowthCountriesStats) {
+      this.coronaCasesGrowthCountriesStats = this.http.get(environment.casesGrowthCountriesStatsUrl, httpOptions);
+      return this.coronaCasesGrowthCountriesStats;
+    }
+    return this.coronaCasesGrowthCountriesStats;
+  }
+
+  getCoronaCasesGrowthFactorStats(): any {
+    if (!this.coronaCasesGrowthFactorStats) {
+      this.coronaCasesGrowthFactorStats = this.http.get(environment.casesGrowthFactorStatsUrl, httpOptions);
+      return this.coronaCasesGrowthFactorStats;
+    }
+    return this.coronaCasesGrowthFactorStats;
+  }
+
+  getCoronaDeathsGrowthStats(): any {
+    if (!this.coronaDeathsGrowthStats) {
+      this.coronaDeathsGrowthStats = this.http.get(environment.deathsGrowthStatsUrl, httpOptions);
+      return this.coronaDeathsGrowthStats;
+    }
+    return this.coronaDeathsGrowthStats;
+  }
+
+  getCoronaDeathsGrowthCountriesStats(): any {
+    if (!this.coronaDeathsGrowthCountriesStats) {
+      this.coronaDeathsGrowthCountriesStats = this.http.get(environment.deathsGrowthCountriesStatsUrl, httpOptions);
+      return this.coronaDeathsGrowthCountriesStats;
+    }
+    return this.coronaDeathsGrowthCountriesStats;
   }
 }
