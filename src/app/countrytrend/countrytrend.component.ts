@@ -46,6 +46,19 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
   public barGraphGrowthCountryOptions;
   public barGraphGrowthOptions;
 
+  public scatterGraphGrowthLabels;
+  public scatterGraphGrowthType = 'scatter';
+  public scatterGraphGrowthLegend = true;
+  public scatterGraphGrowthData;
+  public scatterGraphGrowthCountryLabels;
+  public scatterGraphGrowthCountryType = 'scatter';
+  public scatterGraphGrowthCountryLegend = true;
+  public scatterGraphGrowthCountryData;
+  public scatterGraphGrowthCountryOptions;
+  public scatterGraphGrowthOptions;
+  public scatterDataSet = [];
+  public scatterCountryDataSet = [];
+
   @ViewChild('lineChartGrowthCountryCanvas', { static: false }) lineChartGrowthCountryCanvas: ElementRef;
   public lineGrowthCountryCanvasContext: CanvasRenderingContext2D;
 
@@ -57,6 +70,12 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
 
   @ViewChild('barChartGrowthCanvas', { static: false }) barChartGrowthCanvas: ElementRef;
   public barGrowthCanvasContext: CanvasRenderingContext2D;
+
+  @ViewChild('scatterChartGrowthCountryCanvas', { static: false }) scatterChartGrowthCountryCanvas: ElementRef;
+  public scatterGrowthCountryCanvasContext: CanvasRenderingContext2D;
+
+  @ViewChild('scatterChartGrowthCanvas', { static: false }) scatterChartGrowthCanvas: ElementRef;
+  public scatterGrowthCanvasContext: CanvasRenderingContext2D;
 
   constructor(public restService: RestService) { }
 
@@ -85,6 +104,7 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
     this.setGrowthStatsLineGraphConfiguration();
     this.growths = this.coronaCasesGrowthStatsResponse.map(x => x.delta);
     this.setGrowthStatsBarGraphConfiguration();
+    this.setGrowthStatsScatterGraphConfiguration();
   }
 
   public processCasesGrowthStatsForGraphs(data: any): void {
@@ -94,6 +114,8 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
     this.deltas = this.coronaCasesGrowthStatsResponse.map(x => x.delta);
     this.totalCases = this.growths[this.growths.length - 1].toLocaleString("us-US");
     this.newCases = this.deltas[this.deltas.length - 1].toLocaleString("us-US");
+    this.scatterDataSet = [];
+    this.coronaCasesGrowthStatsResponse.forEach(element => { this.scatterDataSet.push({ x: element.growth, y: element.delta }) });
   }
 
   public setGrowthStatsLineGraphConfiguration(): void {
@@ -161,6 +183,57 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
     };
   }
 
+  public setGrowthStatsScatterGraphConfiguration(): void {
+    this.scatterGraphGrowthData = [{
+      data: this.scatterDataSet,
+      label: 'Cases',
+      borderColor: "#008dc9",
+      backgroundColor: "#008dc9",
+      showLine: true,
+      fill: false,
+      borderDash: [10,5]
+    }];
+    this.scatterGraphGrowthOptions = {
+      scaleShowVerticalLines: false,
+      responsive: false,
+      responsiveAnimationDuration: 0,
+      legend: {
+        display: false
+      },
+      title: {
+        display: true,
+        text: 'All Countries / Total Cases vs New Cases',
+        fontSize: 14,
+        fontStyle: 'normal',
+        fontColor: 'darkslategrey'
+      },
+      scales: {
+        xAxes: [{
+          type: 'logarithmic',
+          ticks: {
+            display: true,
+            callback: function (value, index, values) {
+              if (value == 10 || value == 100 || value == 1000 || value == 10000 || value == 100000 || value == 1000000) {
+                return value;
+              }
+            }
+          }
+        }],
+        yAxes: [{
+          type: 'logarithmic',
+          ticks: {
+            display: true,
+            callback: function (value, index, values) {
+              if (value == 10 || value == 100 || value == 1000 || value == 10000 || value == 100000 || value == 1000000) {
+                return value;
+              }
+            }
+          }
+        }]
+      }
+    };
+  }
+
   trendSearchByCountry(country: string): void {
     this.clearExistingGraphs();
 
@@ -195,12 +268,37 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
     if (this.lineGrowthCountryCanvasContext) {
       this.lineGrowthCountryCanvasContext.clearRect(0, 0, this.lineGrowthCountryCanvasContext.canvas.width, this.lineGrowthCountryCanvasContext.canvas.height);
     }
+    if (this.barChartGrowthCanvas) {
+      this.barGrowthCanvasContext = (<HTMLCanvasElement>this.barChartGrowthCanvas.nativeElement).getContext('2d');
+    }
+    if (this.barGrowthCountryCanvasContext) {
+      this.barGrowthCountryCanvasContext = (<HTMLCanvasElement>this.barChartGrowthCountryCanvas.nativeElement).getContext('2d');
+    }
+    if (this.barGrowthCanvasContext) {
+      this.barGrowthCanvasContext.clearRect(0, 0, this.barGrowthCanvasContext.canvas.width, this.barGrowthCanvasContext.canvas.height);
+    }
+    if (this.barGrowthCountryCanvasContext) {
+      this.barGrowthCountryCanvasContext.clearRect(0, 0, this.barGrowthCountryCanvasContext.canvas.width, this.barGrowthCountryCanvasContext.canvas.height);
+    }
+    if (this.scatterChartGrowthCanvas) {
+      this.scatterGrowthCanvasContext = (<HTMLCanvasElement>this.scatterChartGrowthCanvas.nativeElement).getContext('2d');
+    }
+    if (this.scatterGrowthCountryCanvasContext) {
+      this.scatterGrowthCountryCanvasContext = (<HTMLCanvasElement>this.scatterChartGrowthCountryCanvas.nativeElement).getContext('2d');
+    }
+    if (this.scatterGrowthCanvasContext) {
+      this.scatterGrowthCanvasContext.clearRect(0, 0, this.scatterGrowthCanvasContext.canvas.width, this.scatterGrowthCanvasContext.canvas.height);
+    }
+    if (this.scatterGrowthCountryCanvasContext) {
+      this.scatterGrowthCountryCanvasContext.clearRect(0, 0, this.scatterGrowthCountryCanvasContext.canvas.width, this.scatterGrowthCountryCanvasContext.canvas.height);
+    }
   }
 
   public processCasesGrowthCountriesStats(data: any, value: string) {
     this.processCasesGrowthCountriesStatsForGraphs(data, value);
     this.setCasesGrowthCountriesStatsLineGraphConfiguration(value);
     this.setCasesGrowthCountriesStatsBarGraphConfiguration(value);
+    this.setCasesGrowthCountriesStatsScatterGraphConfiguration(value);
     this.showTotal = false;
     this.showCountry = true;
   }
@@ -213,6 +311,8 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
     this.deltas = this.countryStat[0].growthStats.map(x => x.delta);
     this.totalCases = this.growths[this.growths.length - 1].toLocaleString("us-US");
     this.newCases = this.deltas[this.deltas.length - 1].toLocaleString("us-US");
+    this.scatterCountryDataSet = [];
+    this.countryStat[0].growthStats.forEach(element => { this.scatterCountryDataSet.push({ x: element.growth, y: element.delta }) });
   }
 
   public setCasesGrowthCountriesStatsLineGraphConfiguration(value: string): void {
@@ -274,6 +374,57 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
         xAxes: [{
           ticks: {
             display: false
+          }
+        }]
+      }
+    };
+  }
+
+  public setCasesGrowthCountriesStatsScatterGraphConfiguration(value: string) {
+    this.scatterGraphGrowthCountryData = [{
+      data: this.scatterCountryDataSet,
+      label: 'Cases',
+      borderColor: "#008dc9",
+      backgroundColor: "#008dc9",
+      showLine: true,
+      fill: false,
+      borderDash: [10,5]
+    }];
+    this.scatterGraphGrowthCountryOptions = {
+      scaleShowVerticalLines: false,
+      responsive: false,
+      responsiveAnimationDuration: 0,
+      legend: {
+        display: false
+      },
+      title: {
+        display: true,
+        text: value.charAt(0).toUpperCase() + value.slice(1) + ' / Total Cases vs New Cases',
+        fontSize: 14,
+        fontStyle: 'normal',
+        fontColor: 'darkslategrey'
+      },
+      scales: {
+        xAxes: [{
+          type: 'logarithmic',
+          ticks: {
+            display: true,
+            callback: function (value, index, values) {
+              if (value == 10 || value == 100 || value == 1000 || value == 10000 || value == 100000 || value == 1000000) {
+                return value;
+              }
+            }
+          }
+        }],
+        yAxes: [{
+          type: 'logarithmic',
+          ticks: {
+            display: true,
+            callback: function (value, index, values) {
+              if (value == 10 || value == 100 || value == 1000 || value == 10000 || value == 100000 || value == 1000000) {
+                return value;
+              }
+            }
           }
         }]
       }

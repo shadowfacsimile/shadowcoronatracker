@@ -195,6 +195,18 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
     if (this.lineGrowthCountryCanvasContext) {
       this.lineGrowthCountryCanvasContext.clearRect(0, 0, this.lineGrowthCountryCanvasContext.canvas.width, this.lineGrowthCountryCanvasContext.canvas.height);
     }
+    if (this.barChartGrowthCanvas) {
+      this.barGrowthCanvasContext = (<HTMLCanvasElement>this.barChartGrowthCanvas.nativeElement).getContext('2d');
+    }
+    if (this.barGrowthCountryCanvasContext) {
+      this.barGrowthCountryCanvasContext = (<HTMLCanvasElement>this.barChartGrowthCountryCanvas.nativeElement).getContext('2d');
+    }
+    if (this.barGrowthCanvasContext) {
+      this.barGrowthCanvasContext.clearRect(0, 0, this.barGrowthCanvasContext.canvas.width, this.barGrowthCanvasContext.canvas.height);
+    }
+    if (this.barGrowthCountryCanvasContext) {
+      this.barGrowthCountryCanvasContext.clearRect(0, 0, this.barGrowthCountryCanvasContext.canvas.width, this.barGrowthCountryCanvasContext.canvas.height);
+    }
   }
 
   public processDeathsGrowthCountriesStats(data: any, value: string) {

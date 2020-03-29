@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RestService } from '../services/rest.service';
-import { BehaviorSubject, Subscription } from 'rxjs';
-import { AnonymousSubject } from 'rxjs/internal/Subject';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-casegrowth',
