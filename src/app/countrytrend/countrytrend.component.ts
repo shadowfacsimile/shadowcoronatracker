@@ -71,18 +71,13 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
 
   trendAllCountries(): void {
     if (!this.coronaCasesGrowthCountriesStatsResponse) {
-      this.coronaCasesGrowthCountriesStatsSubscription = this.restService.getCoronaCasesGrowthCountriesStats().subscribe(data => this.storeCasesGrowthCountriesStats(data));
-    }   
+      this.coronaCasesGrowthCountriesStatsSubscription = this.restService.getCoronaCasesGrowthAllCountriesStats().subscribe(data => this.storeCasesGrowthCountriesStats(data));
+    }
     if (!this.coronaCasesGrowthStatsResponse) {
       this.coronaCasesGrowthStatsSubscription = this.restService.getCoronaCasesGrowthStats().subscribe(data => this.processCasesGrowthStats(data));
     } else {
       this.processCasesGrowthStats(this.coronaCasesGrowthStatsResponse);
     }
-  }
-
-  storeCasesGrowthCountriesStats(data) {
-    this.coronaCasesGrowthCountriesStatsResponse = data;
-    this.countries = this.countries ? this.countries : data.map(x => x.country);
   }
 
   processCasesGrowthStats(data: any): void {
@@ -166,20 +161,25 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
     };
   }
 
-  trendSearchByCountry(value: string): void {
+  trendSearchByCountry(country: string): void {
     this.clearExistingGraphs();
 
-    if (value.indexOf("All Countries") >= 0) {
+    if (country.indexOf("All Countries") >= 0) {
       this.showTotal = true;
       this.showCountry = false;
       this.trendAllCountries();
     } else {
-      if (this.coronaCasesGrowthCountriesStatsResponse !== null) {
-        this.processCasesGrowthCountriesStats(this.coronaCasesGrowthCountriesStatsResponse, value);
+      if (!this.coronaCasesGrowthCountriesStatsResponse) {
+        this.coronaCasesGrowthCountriesStatsSubscription = this.restService.getCoronaCasesGrowthAllCountriesStats().subscribe(data => this.processCasesGrowthCountriesStats(data, country));
       } else {
-        this.restService.getCoronaCasesGrowthCountriesStats().subscribe(data => this.processCasesGrowthCountriesStats(data, value));
+        this.processCasesGrowthCountriesStats(this.coronaCasesGrowthCountriesStatsResponse, country);
       }
     }
+  }
+
+  storeCasesGrowthCountriesStats(data) {
+    this.coronaCasesGrowthCountriesStatsResponse = data;
+    this.countries = this.countries ? this.countries : data.map(x => x.country);
   }
 
   public clearExistingGraphs() {

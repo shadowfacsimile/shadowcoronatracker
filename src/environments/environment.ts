@@ -7,10 +7,10 @@ export const environment = {
   summaryUrl: 'http://localhost:9080/ShadowCoronaTracker/api/stats/summary/',
   countriesStatsUrl: 'http://localhost:9080/ShadowCoronaTracker/api/stats/countries/',
   statesStatsUrl: 'http://localhost:9080/ShadowCoronaTracker/api/stats/states/',
-  casesGrowthStatsUrl: 'http://localhost:9080/ShadowCoronaTracker/api/growth/cases/all/',
+  casesGrowthStatsUrl: 'http://localhost:9080/ShadowCoronaTracker/api/growth/cases/',
   casesGrowthCountriesStatsUrl: 'http://localhost:9080/ShadowCoronaTracker/api/growth/cases/countries/',
-  casesGrowthFactorStatsUrl: 'http://localhost:9080/ShadowCoronaTracker/api/growth/factors/all/',
-  deathsGrowthStatsUrl: 'http://localhost:9080/ShadowCoronaTracker/api/growth/deaths/all/',
+  casesGrowthFactorStatsUrl: 'http://localhost:9080/ShadowCoronaTracker/api/growth/factors/',
+  deathsGrowthStatsUrl: 'http://localhost:9080/ShadowCoronaTracker/api/growth/deaths/',
   deathsGrowthCountriesStatsUrl: 'http://localhost:9080/ShadowCoronaTracker/api/growth/deaths/countries/'
 };
 

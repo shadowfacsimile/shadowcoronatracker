@@ -57,7 +57,15 @@ export class RestService {
     return this.coronaCasesGrowthStats;
   }
 
-  getCoronaCasesGrowthCountriesStats(): any {
+  getCoronaCasesGrowthCountriesStats(country: string): any {
+    if (!this.coronaCasesGrowthCountriesStats) {
+      this.coronaCasesGrowthCountriesStats = this.http.get(environment.casesGrowthCountriesStatsUrl + country, httpOptions);
+      return this.coronaCasesGrowthCountriesStats;
+    }
+    return this.coronaCasesGrowthCountriesStats;
+  }
+
+  getCoronaCasesGrowthAllCountriesStats(): any {
     if (!this.coronaCasesGrowthCountriesStats) {
       this.coronaCasesGrowthCountriesStats = this.http.get(environment.casesGrowthCountriesStatsUrl, httpOptions);
       return this.coronaCasesGrowthCountriesStats;
@@ -81,7 +89,15 @@ export class RestService {
     return this.coronaDeathsGrowthStats;
   }
 
-  getCoronaDeathsGrowthCountriesStats(): any {
+  getCoronaDeathsGrowthCountriesStats(country: string): any {
+    if (!this.coronaDeathsGrowthCountriesStats) {
+      this.coronaDeathsGrowthCountriesStats = this.http.get(environment.deathsGrowthCountriesStatsUrl + country, httpOptions);
+      return this.coronaDeathsGrowthCountriesStats;
+    }
+    return this.coronaDeathsGrowthCountriesStats;
+  }
+
+  getCoronaDeathsGrowthAllCountriesStats(): any {
     if (!this.coronaDeathsGrowthCountriesStats) {
       this.coronaDeathsGrowthCountriesStats = this.http.get(environment.deathsGrowthCountriesStatsUrl, httpOptions);
       return this.coronaDeathsGrowthCountriesStats;

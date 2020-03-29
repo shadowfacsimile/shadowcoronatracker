@@ -71,9 +71,8 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
 
   trendAllCountries(): void {
     if (!this.coronaDeathsGrowthCountriesStatsResponse) {
-      this.coronaDeathsGrowthCountriesStatsSubscription = this.restService.getCoronaDeathsGrowthCountriesStats().subscribe(data => this.storeDeathsGrowthCountriesStats(data));
+      this.coronaDeathsGrowthCountriesStatsSubscription = this.restService.getCoronaDeathsGrowthAllCountriesStats().subscribe(data => this.storeDeathsGrowthCountriesStats(data));
     }
-
     if (!this.coronaDeathsGrowthStatsResponse) {
       this.coronaDeathsGrowthStatsSubscription = this.restService.getCoronaDeathsGrowthStats().subscribe(data => this.processDeathsGrowthStats(data));
     } else {
@@ -83,7 +82,7 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
 
   storeDeathsGrowthCountriesStats(data) {
     this.coronaDeathsGrowthCountriesStatsResponse = data;
-    this.countries = this.countries ? this.countries :  data.map(x => x.country);
+    this.countries = this.countries ? this.countries : data.map(x => x.country);
   }
 
   processDeathsGrowthStats(data: any): void {
@@ -167,18 +166,18 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
     };
   }
 
-  trendSearchByCountry(value: string): void {
+  trendSearchByCountry(country: string): void {
     this.clearExistingGraphs();
 
-    if (value.indexOf("All Countries") >= 0) {
+    if (country.indexOf("All Countries") >= 0) {
       this.showTotal = true;
       this.showCountry = false;
       this.trendAllCountries();
     } else {
-      if (this.coronaDeathsGrowthCountriesStatsResponse !== null) {
-        this.processDeathsGrowthCountriesStats(this.coronaDeathsGrowthCountriesStatsResponse, value);
+      if (!this.coronaDeathsGrowthCountriesStatsResponse) {
+        this.coronaDeathsGrowthCountriesStatsSubscription = this.restService.getCoronaDeathsGrowthAllCountriesStats().subscribe(data => this.processDeathsGrowthCountriesStats(data, country));
       } else {
-        this.restService.getCoronaDeathsGrowthCountriesStats().subscribe(data => this.processDeathsGrowthCountriesStats(data, value));
+        this.processDeathsGrowthCountriesStats(this.coronaDeathsGrowthCountriesStatsResponse, country);
       }
     }
   }
