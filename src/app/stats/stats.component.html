@@ -59,12 +59,12 @@
         </td>
         <td class="stat-table-td">{{stat.cases | number}}</td>
         <td class="stat-table-td"
-          [ngStyle]="{'background-color': stat.casesSinceYesterday > 0 ? 'beige' : 'white', 'font-size' : stat.casesSinceYesterday > 0 ? '10' : '0', 'color': 'black'}">
-          +{{stat.casesSinceYesterday | number}}</td>
+          [ngStyle]="{'background-color': stat.newCases > 0 ? 'beige' : 'white', 'font-size' : stat.newCases > 0 ? '10' : '0', 'color': 'black'}">
+          +{{stat.newCases | number}}</td>
         <td class="stat-table-td" [ngStyle]="{'font-size' : stat.deaths > 0 ? '10' : '0'}">{{stat.deaths | number}}</td>
         <td class="stat-table-td"
-          [ngStyle]="{'background-color': stat.deathsSinceYesterday > 0 ? 'red' : 'white', 'font-size' : stat.deathsSinceYesterday > 0 ? '10' : '0', 'color' : 'white'}">
-          +{{stat.deathsSinceYesterday | number}}</td>
+          [ngStyle]="{'background-color': stat.newDeaths > 0 ? 'red' : 'white', 'font-size' : stat.newDeaths > 0 ? '10' : '0', 'color' : 'white'}">
+          +{{stat.newDeaths | number}}</td>
         <td class="stat-table-td" [ngStyle]="{'font-size' : stat.mortalityRate > 0 ? '10' : '0'}">
           {{stat.mortalityRate | percent:'1.2'}}</td>
         <td class="stat-table-td" [ngStyle]="{'font-size' : stat.recoveries > 0 ? '10' : '0'}">

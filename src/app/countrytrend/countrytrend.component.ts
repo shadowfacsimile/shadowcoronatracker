@@ -306,13 +306,13 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
   public processCasesGrowthCountriesStatsForGraphs(data: any, value: string): void {
     this.coronaCasesGrowthCountriesStatsResponse = data;
     this.countryStat = this.coronaCasesGrowthCountriesStatsResponse.filter(x => x.country.indexOf(value) >= 0);
-    this.dates = this.countryStat[0].growthStats.map(x => this.getFormattedDate(x.date));
-    this.growths = this.countryStat[0].growthStats.map(x => x.growth);
-    this.deltas = this.countryStat[0].growthStats.map(x => x.delta);
+    this.dates = this.countryStat[0].casesGrowths.map(x => this.getFormattedDate(x.date));
+    this.growths = this.countryStat[0].casesGrowths.map(x => x.growth);
+    this.deltas = this.countryStat[0].casesGrowths.map(x => x.delta);
     this.totalCases = this.growths[this.growths.length - 1].toLocaleString("us-US");
     this.newCases = this.deltas[this.deltas.length - 1].toLocaleString("us-US");
     this.scatterCountryDataSet = [];
-    this.countryStat[0].growthStats.forEach(element => { this.scatterCountryDataSet.push({ x: element.growth, y: element.delta }) });
+    this.countryStat[0].casesGrowths.forEach(element => { this.scatterCountryDataSet.push({ x: element.growth, y: element.delta }) });
   }
 
   public setCasesGrowthCountriesStatsLineGraphConfiguration(value: string): void {

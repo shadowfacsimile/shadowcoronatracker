@@ -220,9 +220,9 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
   public processDeathsGrowthCountriesStatsForGraphs(data: any, value: string): void {
     this.coronaDeathsGrowthCountriesStatsResponse = data;
     this.countryStat = this.coronaDeathsGrowthCountriesStatsResponse.filter(x => x.country.indexOf(value) >= 0);
-    this.dates = this.countryStat[0].growthStats.map(x => this.getFormattedDate(x.date));
-    this.growths = this.countryStat[0].growthStats.map(x => x.growth);
-    this.deltas = this.countryStat[0].growthStats.map(x => x.delta);
+    this.dates = this.countryStat[0].deathsGrowths.map(x => this.getFormattedDate(x.date));
+    this.growths = this.countryStat[0].deathsGrowths.map(x => x.growth);
+    this.deltas = this.countryStat[0].deathsGrowths.map(x => x.delta);
     this.totalDeaths = this.growths[this.growths.length - 1].toLocaleString("us-US");
     this.newDeaths = this.deltas[this.deltas.length - 1].toLocaleString("us-US");
   }

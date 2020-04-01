@@ -31,7 +31,7 @@
     padding-bottom: 1px;
 }
 
-.total-cases-header, .total-deaths-header, .mortality-rate-header, .total-recoveries-header, .recovery-rate-header, .new-country-cases-header, .new-country-deaths-header {
+.total-cases-header, .total-deaths-header, .mortality-rate-header, .total-recoveries-header, .recovery-rate-header {
     text-align: center;
     font-size: 25px;
     font-weight: normal;
@@ -76,18 +76,11 @@
     font-family: Helvetica;
 }
 
-.new-country-cases-data {
+.new-country-cases-header, .new-country-deaths-header, .new-country-cases-data, .new-country-deaths-data {
     text-align: center;
-    font-size: 15px;
-    color: gray;
-    font-family: monospace;
-}
-
-.new-country-deaths-data {
-    text-align: center;
-    font-size: 15px;
-    color: gray;
-    font-family: monospace;
+    font-size: small;
+    color: darkslategray;
+    font-family: Helvetica;
 }
 
 .india-stats-header-span {

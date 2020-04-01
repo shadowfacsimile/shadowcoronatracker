@@ -39,3 +39,9 @@
 .nav-of-routes {
     text-align: center;
 }
+
+.footer-text {
+    text-align: center;
+    font-size: 12px;
+    font-family: Helvetica;
+}
