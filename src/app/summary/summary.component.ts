@@ -12,11 +12,18 @@ export class SummaryComponent implements OnInit, OnDestroy {
   public coronaSummarySubscription: Subscription;
   public coronaCountriesStatsSubscription: Subscription;
   public coronaSummaryStatsResponse: any;
+  public countriesWithFirstCase: string = '';
+  public countriesWithFirstDeath: string = '';
 
   constructor(public restService: RestService) { }
 
   ngOnInit(): void {
-    this.coronaSummarySubscription = this.restService.getCoronaSummaryStats().subscribe(data => this.coronaSummaryStatsResponse = data);
+    this.coronaSummarySubscription = this.restService.getCoronaSummaryStats().subscribe(data => {
+      this.coronaSummaryStatsResponse = data
+      this.countriesWithFirstCase = this.coronaSummaryStatsResponse.countriesWithFirstCase.join(", ");
+      this.countriesWithFirstDeath = this.coronaSummaryStatsResponse.countriesWithFirstDeath.join(", ");
+    });
+   
   }
 
   ngOnDestroy(): void {

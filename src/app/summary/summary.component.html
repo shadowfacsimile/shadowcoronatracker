@@ -45,18 +45,16 @@
     <tr>
       <td>
         <div class="new-country-cases-header">
-          <span class="new-country-cases-data"
-            *ngFor="let country of coronaSummaryStatsResponse?.countriesWithFirstCase">{{country}}{{coronaSummaryStatsResponse?.countriesWithFirstCase.length > 1 ? ', ' : ' '}}</span>
-            reported {{coronaSummaryStatsResponse?.countriesWithFirstCase.length < 2 ? 'its' : 'their'}} first case          
-        </div>
+          <span class="new-country-cases-data">{{countriesWithFirstCase}}</span>
+          reported {{countriesWithFirstCase.includes(',') ? 'their' : 'its'}} first case
+      </div>
       </td>
     </tr>
     <tr>
       <td>
         <div class="new-country-deaths-header">
-          <span class="new-country-deaths-data"
-            *ngFor="let country of coronaSummaryStatsResponse?.countriesWithFirstDeath">{{country}}{{coronaSummaryStatsResponse?.countriesWithFirstDeath.length > 1 ? ', ' : ' '}}</span>
-            reported {{coronaSummaryStatsResponse?.countriesWithFirstDeath.length < 2 ? 'its' : 'their'}} first death
+          <span class="new-country-deaths-data">{{countriesWithFirstDeath}}</span>
+            reported {{countriesWithFirstDeath.includes(',') ? 'their' : 'its'}} first death
         </div>
     </tr>
   </table>
