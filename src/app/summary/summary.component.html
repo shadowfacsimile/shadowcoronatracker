@@ -46,6 +46,7 @@
       <td>
         <div class="new-country-cases-header">
           <span class="new-country-cases-data">{{countriesWithFirstCase}}</span>
+          <span *ngIf="countriesWithFirstCase.length <= 0">No countries </span>
           reported {{countriesWithFirstCase.includes(',') ? 'their' : 'its'}} first case
       </div>
       </td>
@@ -54,7 +55,8 @@
       <td>
         <div class="new-country-deaths-header">
           <span class="new-country-deaths-data">{{countriesWithFirstDeath}}</span>
-            reported {{countriesWithFirstDeath.includes(',') ? 'their' : 'its'}} first death
+          <span *ngIf="countriesWithFirstDeath.length <= 0">No countries </span>
+            reported {{countriesWithFirstDeath.includes(',') ? 'their' : 'its'}} first death today
         </div>
     </tr>
   </table>
