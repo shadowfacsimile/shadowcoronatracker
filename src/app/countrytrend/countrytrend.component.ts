@@ -116,6 +116,18 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
     this.newCases = this.deltas[this.deltas.length - 1].toLocaleString("us-US");
     this.scatterDataSet = [];
     this.coronaCasesGrowthStatsResponse.forEach(element => { this.scatterDataSet.push({ x: element.growth, y: element.delta }) });
+
+    let updatedScatterDataSet = [];
+
+    for (let i = this.scatterDataSet.length - 1; i >= 0; i--) {
+      let growth = this.scatterDataSet[i].x, delta = 0;
+      for (let j = i; j > i - 7 && j >= 0; j--) {
+        delta = delta + this.scatterDataSet[j].y;
+      }
+      updatedScatterDataSet.push({ x: growth, y: delta });
+    }
+
+    this.scatterDataSet = updatedScatterDataSet;
   }
 
   public setGrowthStatsLineGraphConfiguration(): void {
@@ -191,7 +203,7 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
       backgroundColor: "#008dc9",
       showLine: true,
       fill: false,
-      borderDash: [10,5]
+      borderDash: [10, 5]
     }];
     this.scatterGraphGrowthOptions = {
       scaleShowVerticalLines: false,
@@ -313,6 +325,18 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
     this.newCases = this.deltas[this.deltas.length - 1].toLocaleString("us-US");
     this.scatterCountryDataSet = [];
     this.countryStat[0].casesGrowths.forEach(element => { this.scatterCountryDataSet.push({ x: element.growth, y: element.delta }) });
+
+    let updatedScatterCountryDataSet = [];
+
+    for (let i = this.scatterCountryDataSet.length - 1; i >= 0; i--) {
+      let growth = this.scatterCountryDataSet[i].x, delta = 0;
+      for (let j = i; j > i - 7 && j >= 0; j--) {
+        delta = delta + this.scatterCountryDataSet[j].y;
+      }
+      updatedScatterCountryDataSet.push({ x: growth, y: delta });
+    }
+
+    this.scatterCountryDataSet = updatedScatterCountryDataSet;
   }
 
   public setCasesGrowthCountriesStatsLineGraphConfiguration(value: string): void {
@@ -388,7 +412,7 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
       backgroundColor: "#008dc9",
       showLine: true,
       fill: false,
-      borderDash: [10,5]
+      borderDash: [10, 5]
     }];
     this.scatterGraphGrowthCountryOptions = {
       scaleShowVerticalLines: false,
