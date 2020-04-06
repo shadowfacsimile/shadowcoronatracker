@@ -71,6 +71,7 @@ canvas {
     padding-bottom: 20px;
     text-align: center;
     position: relative;
+    padding-left: 50px;
 }
 
 .growth-factor-text {
