@@ -1,63 +1,99 @@
-<div class="summary-header-div"><span class="summary-header-span">COVID-19 PANDEMIC SUMMARY</span>
+<div class="summary-header-div">
+  <span class="summary-header-span">COVID-19 PANDEMIC SUMMARY</span>
 </div>
-<br>
-<div *ngIf=!coronaSummaryStatsResponse class="data-loading-div"><span class="data-loading-span">Data Loading...</span>
+<br />
+<div *ngIf="!coronaSummaryStatsResponse" class="data-loading-div">
+  <span class="data-loading-span">Data Loading...</span>
 </div>
-<div *ngIf=coronaSummaryStatsResponse>
+<div *ngIf="coronaSummaryStatsResponse">
   <table class="table table-borderless">
     <tr>
       <td colspan="2">
         <div class="total-cases-header">Cases Reported</div>
-        <div class="total-cases-data">{{coronaSummaryStatsResponse?.totalCases | number}} <span
-            class="total-new-cases-data">(+{{coronaSummaryStatsResponse?.totalNewCases | number}})</span>
+        <div class="total-cases-data">
+          {{ coronaSummaryStatsResponse?.totalCases | number }}
+          <span class="total-new-cases-data"
+            >(+{{ coronaSummaryStatsResponse?.totalNewCases | number }})</span
+          >
         </div>
         <div
-          style="text-align:center; text-decoration: underline; font-size: 13px; font-weight:450; font-family: Helvetica;">
-          <a class="route-links" routerLink="/stats-by-country" style="color:#008dc9;">statistics by country</a></div>
+          style="
+            text-align: center;
+            text-decoration: underline;
+            font-size: 13px;
+            font-weight: 450;
+            font-family: Helvetica;
+          "
+        >
+          <a
+            class="route-links"
+            routerLink="/stats-by-country"
+            style="color: #008dc9;"
+            >statistics by country</a
+          >
+        </div>
       </td>
     </tr>
     <tr>
       <td colspan="2">
         <div class="total-deaths-header">Deaths</div>
-        <div class="total-deaths-data">{{coronaSummaryStatsResponse?.totalDeaths | number}} <span
-            class="total-new-deaths-data">(+{{coronaSummaryStatsResponse?.totalNewDeaths | number}})</span>
+        <div class="total-deaths-data">
+          {{ coronaSummaryStatsResponse?.totalDeaths | number }}
+          <span class="total-new-deaths-data"
+            >(+{{ coronaSummaryStatsResponse?.totalNewDeaths | number }})</span
+          >
         </div>
       </td>
     </tr>
     <tr>
       <td colspan="2">
         <div class="mortality-rate-header">Mortality Rate</div>
-        <div class="mortality-rate-data">{{coronaSummaryStatsResponse?.mortalityRate | percent:'1.2'}}</div>
+        <div class="mortality-rate-data">
+          {{ coronaSummaryStatsResponse?.mortalityRate | percent: "1.2" }}
+        </div>
       </td>
     </tr>
     <tr>
       <td colspan="2">
         <div class="total-recoveries-header">Recoveries</div>
-        <div class="total-recoveries-data">{{coronaSummaryStatsResponse?.totalRecoveries | number}}</div>
+        <div class="total-recoveries-data">
+          {{ coronaSummaryStatsResponse?.totalRecoveries | number }}
+        </div>
       </td>
     </tr>
     <tr>
       <td colspan="2">
         <div class="recovery-rate-header">Recovery Rate</div>
-        <div class="recovery-rate-data">{{coronaSummaryStatsResponse?.recoveryRate | percent:'1.2'}}</div>
+        <div class="recovery-rate-data">
+          {{ coronaSummaryStatsResponse?.recoveryRate | percent: "1.2" }}
+        </div>
       </td>
     </tr>
     <tr>
       <td>
         <div class="new-country-cases-header">
-          <span class="new-country-cases-data">{{countriesWithFirstCase}}</span>
+          <span class="new-country-cases-data">{{
+            countriesWithFirstCase
+          }}</span>
           <span *ngIf="countriesWithFirstCase.length <= 0">No country </span>
-          reported {{countriesWithFirstCase.includes(',') ? 'their' : 'its'}} first case
-      </div>
+          reported
+          {{ countriesWithFirstCase.includes(",") ? "their" : "its" }} first
+          case today
+        </div>
       </td>
     </tr>
     <tr>
       <td>
         <div class="new-country-deaths-header">
-          <span class="new-country-deaths-data">{{countriesWithFirstDeath}}</span>
+          <span class="new-country-deaths-data">{{
+            countriesWithFirstDeath
+          }}</span>
           <span *ngIf="countriesWithFirstDeath.length <= 0">No country </span>
-            reported {{countriesWithFirstDeath.includes(',') ? 'their' : 'its'}} first death today
+          reported
+          {{ countriesWithFirstDeath.includes(",") ? "their" : "its" }} first
+          death today
         </div>
+      </td>
     </tr>
   </table>
 </div>

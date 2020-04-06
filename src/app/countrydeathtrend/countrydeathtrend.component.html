@@ -1,7 +1,7 @@
 <div class="growth-header-div">
     <span class="growth-header-span">
         <span class="summary-link" routerLink="/summary-stats">COVID-19</span>
-        / DEATHS GROWTH TREND
+        / DEATHS TREND
     </span>
 </div>
 <br>
@@ -40,6 +40,16 @@
     </tr>
     <tr>
         <td>
+            <div class="chart-growth-container" *ngIf=showTotal&&dates&&countries>
+                <canvas baseChart #scatterChartGrowthCanvas [datasets]="scatterGraphGrowthData"
+                    [labels]="scatterGraphGrowthLabels" [options]="scatterGraphGrowthOptions"
+                    [legend]="scatterGraphGrowthLegend" [chartType]="scatterGraphGrowthType" width="800" height="400">
+                </canvas>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
             <div class="chart-growth-country-container" *ngIf=showCountry>
                 <canvas #lineChartGrowthCountryCanvas baseChart [datasets]="lineGraphGrowthCountryData"
                     [labels]="lineGraphGrowthCountryLabels" [options]="lineGraphGrowthCountryOptions"
@@ -55,6 +65,17 @@
                 <canvas #barChartGrowthCountryCanvas baseChart [datasets]="barGraphGrowthCountryData"
                     [labels]="barGraphGrowthCountryLabels" [options]="barGraphGrowthCountryOptions"
                     [legend]="barGraphGrowthCountryLegend" [chartType]="barGraphGrowthCountryType" width="800"
+                    height="400">
+                </canvas>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="chart-growth-country-container" *ngIf=showCountry>
+                <canvas #scatterChartGrowthCountryCanvas baseChart [datasets]="scatterGraphGrowthCountryData"
+                    [labels]="scatterGraphGrowthCountryLabels" [options]="scatterGraphGrowthCountryOptions"
+                    [legend]="scatterGraphGrowthCountryLegend" [chartType]="scatterGraphGrowthCountryType" width="800"
                     height="400">
                 </canvas>
             </div>

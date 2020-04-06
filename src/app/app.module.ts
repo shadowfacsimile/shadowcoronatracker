@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { StatsComponent } from './stats/stats.component';
@@ -14,6 +13,7 @@ import { CasegrowthComponent } from './casegrowth/casegrowth.component';
 import { CountrytrendComponent } from './countrytrend/countrytrend.component';
 import { CountrydeathtrendComponent } from './countrydeathtrend/countrydeathtrend.component';
 import { StatestatsComponent } from './statestats/statestats.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -32,7 +32,8 @@ import { StatestatsComponent } from './statestats/statestats.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ChartsModule
+    ChartsModule,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

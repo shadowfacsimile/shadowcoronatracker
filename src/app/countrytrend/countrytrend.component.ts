@@ -214,7 +214,7 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
       },
       title: {
         display: true,
-        text: 'All Countries / Total Cases vs New Cases',
+        //text: 'All Countries / Total Cases vs New Cases',
         fontSize: 14,
         fontStyle: 'normal',
         fontColor: 'darkslategrey'
@@ -222,24 +222,46 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
       scales: {
         xAxes: [{
           type: 'logarithmic',
+          scaleLabel: {
+            display: true,
+            labelString: 'Total Confirmed Cases'
+          },
           ticks: {
             display: true,
             callback: function (value, index, values) {
-              if (value == 10 || value == 100 || value == 1000 || value == 10000 || value == 100000 || value == 1000000) {
-                return value;
-              }
+              return Number(value.toString());
             }
+          },
+          afterBuildTicks: function (chartObj) {
+            chartObj.ticks = [];
+            chartObj.ticks.push(100);
+            chartObj.ticks.push(1000);
+            chartObj.ticks.push(10000);
+            chartObj.ticks.push(100000);
+            chartObj.ticks.push(1000000);
+            chartObj.ticks.push(10000000);
           }
         }],
         yAxes: [{
           type: 'logarithmic',
+          scaleLabel: {
+            display: true,
+            labelString: 'New Confirmed Cases Past Week'
+          },
           ticks: {
             display: true,
             callback: function (value, index, values) {
-              if (value == 10 || value == 100 || value == 1000 || value == 10000 || value == 100000 || value == 1000000) {
-                return value;
-              }
+              return Number(value.toString());
             }
+          },
+          afterBuildTicks: function (chartObj) {
+            chartObj.ticks = [];
+            chartObj.ticks.push(100);
+            chartObj.ticks.push(1000);
+            chartObj.ticks.push(10000);
+            chartObj.ticks.push(100000);
+            chartObj.ticks.push(1000000);
+            chartObj.ticks.push(10000000);
           }
         }]
       }
@@ -423,7 +445,7 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
       },
       title: {
         display: true,
-        text: value.charAt(0).toUpperCase() + value.slice(1) + ' / Total Cases vs New Cases',
+        //text: value.charAt(0).toUpperCase() + value.slice(1) + ' / Total Cases vs New Cases',
         fontSize: 14,
         fontStyle: 'normal',
         fontColor: 'darkslategrey'
@@ -431,24 +453,46 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
       scales: {
         xAxes: [{
           type: 'logarithmic',
+          scaleLabel: {
+            display: true,
+            labelString: 'Total Confirmed Cases'
+          },
           ticks: {
             display: true,
             callback: function (value, index, values) {
-              if (value == 10 || value == 100 || value == 1000 || value == 10000 || value == 100000 || value == 1000000) {
-                return value;
-              }
+              return Number(value.toString());
             }
+          },
+          afterBuildTicks: function (chartObj) {
+            chartObj.ticks = [];
+            chartObj.ticks.push(100);
+            chartObj.ticks.push(1000);
+            chartObj.ticks.push(10000);
+            chartObj.ticks.push(100000);
+            chartObj.ticks.push(1000000);
+            chartObj.ticks.push(10000000);
           }
         }],
         yAxes: [{
           type: 'logarithmic',
+          scaleLabel: {
+            display: true,
+            labelString: 'New Confirmed Cases Past Week'
+          },
           ticks: {
             display: true,
             callback: function (value, index, values) {
-              if (value == 10 || value == 100 || value == 1000 || value == 10000 || value == 100000 || value == 1000000) {
-                return value;
-              }
+              return Number(value.toString());
             }
+          },
+          afterBuildTicks: function (chartObj) {
+            chartObj.ticks = [];
+            chartObj.ticks.push(100);
+            chartObj.ticks.push(1000);
+            chartObj.ticks.push(10000);
+            chartObj.ticks.push(100000);
+            chartObj.ticks.push(1000000);
+            chartObj.ticks.push(10000000);
           }
         }]
       }

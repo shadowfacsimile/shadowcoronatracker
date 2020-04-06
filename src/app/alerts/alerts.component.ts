@@ -49,7 +49,7 @@ export class AlertsComponent implements OnInit {
   }
 
   getDaysIntoLockdown(): number {
-    let date1 = new Date("03/25/2020");
+    let date1 = new Date("03/24/2020");
     let date2 = new Date();
     let diff = date2.getTime() - date1.getTime();
     return diff / (1000 * 3600 * 24);

@@ -46,6 +46,19 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
   public barGraphGrowthCountryOptions;
   public barGraphGrowthOptions;
 
+  public scatterGraphGrowthLabels;
+  public scatterGraphGrowthType = 'scatter';
+  public scatterGraphGrowthLegend = true;
+  public scatterGraphGrowthData;
+  public scatterGraphGrowthCountryLabels;
+  public scatterGraphGrowthCountryType = 'scatter';
+  public scatterGraphGrowthCountryLegend = true;
+  public scatterGraphGrowthCountryData;
+  public scatterGraphGrowthCountryOptions;
+  public scatterGraphGrowthOptions;
+  public scatterDataSet = [];
+  public scatterCountryDataSet = [];
+
   @ViewChild('lineChartGrowthCountryCanvas', { static: false }) lineChartGrowthCountryCanvas: ElementRef;
   public lineGrowthCountryCanvasContext: CanvasRenderingContext2D;
 
@@ -57,6 +70,12 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
 
   @ViewChild('barChartGrowthCanvas', { static: false }) barChartGrowthCanvas: ElementRef;
   public barGrowthCanvasContext: CanvasRenderingContext2D;
+
+  @ViewChild('scatterChartGrowthCountryCanvas', { static: false }) scatterChartGrowthCountryCanvas: ElementRef;
+  public scatterGrowthCountryCanvasContext: CanvasRenderingContext2D;
+
+  @ViewChild('scatterChartGrowthCanvas', { static: false }) scatterChartGrowthCanvas: ElementRef;
+  public scatterGrowthCanvasContext: CanvasRenderingContext2D;
 
   constructor(public restService: RestService) { }
 
@@ -80,16 +99,12 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
     }
   }
 
-  storeDeathsGrowthCountriesStats(data) {
-    this.coronaDeathsGrowthCountriesStatsResponse = data;
-    this.countries = this.countries ? this.countries : data.map(x => x.country);
-  }
-
   processDeathsGrowthStats(data: any): void {
     this.processDeathsGrowthStatsForGraphs(data);
     this.setGrowthStatsLineGraphConfiguration();
     this.growths = this.coronaDeathsGrowthStatsResponse.map(x => x.delta);
     this.setGrowthStatsBarGraphConfiguration();
+    this.setGrowthStatsScatterGraphConfiguration();
   }
 
   public processDeathsGrowthStatsForGraphs(data: any): void {
@@ -99,6 +114,20 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
     this.deltas = this.coronaDeathsGrowthStatsResponse.map(x => x.delta);
     this.totalDeaths = this.growths[this.growths.length - 1].toLocaleString("us-US");
     this.newDeaths = this.deltas[this.deltas.length - 1].toLocaleString("us-US");
+    this.scatterDataSet = [];
+    this.coronaDeathsGrowthStatsResponse.forEach(element => { this.scatterDataSet.push({ x: element.growth, y: element.delta }) });
+
+    let updatedScatterDataSet = [];
+
+    for (let i = this.scatterDataSet.length - 1; i >= 0; i--) {
+      let growth = this.scatterDataSet[i].x, delta = 0;
+      for (let j = i; j > i - 7 && j >= 0; j--) {
+        delta = delta + this.scatterDataSet[j].y;
+      }
+      updatedScatterDataSet.push({ x: growth, y: delta });
+    }
+
+    this.scatterDataSet = updatedScatterDataSet;
   }
 
   public setGrowthStatsLineGraphConfiguration(): void {
@@ -166,6 +195,77 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
     };
   }
 
+  public setGrowthStatsScatterGraphConfiguration(): void {
+    this.scatterGraphGrowthData = [{
+      data: this.scatterDataSet,
+      label: 'Deaths',
+      borderColor: "#008dc9",
+      backgroundColor: "#008dc9",
+      showLine: true,
+      fill: false,
+      borderDash: [10, 5]
+    }];
+    this.scatterGraphGrowthOptions = {
+      scaleShowVerticalLines: false,
+      responsive: false,
+      responsiveAnimationDuration: 0,
+      legend: {
+        display: false
+      },
+      title: {
+        display: true,
+        //text: 'All Countries / Total Deaths vs New Deaths',
+        fontSize: 14,
+        fontStyle: 'normal',
+        fontColor: 'darkslategrey'
+      },
+      scales: {
+        xAxes: [{
+          type: 'logarithmic',
+          scaleLabel: {
+            display: true,
+            labelString: 'Total Confirmed Deaths'
+          },
+          ticks: {
+            display: true,
+            callback: function (value, index, values) {
+              return Number(value.toString());
+            }
+          },
+          afterBuildTicks: function (chartObj) {
+            chartObj.ticks = [];
+            chartObj.ticks.push(100);
+            chartObj.ticks.push(1000);
+            chartObj.ticks.push(10000);
+            chartObj.ticks.push(100000);
+            chartObj.ticks.push(1000000);
+          }
+        }],
+        yAxes: [{
+          type: 'logarithmic',
+          scaleLabel: {
+            display: true,
+            labelString: 'New Confirmed Deaths Past Week'
+          },
+          ticks: {
+            display: true,
+            callback: function (value, index, values) {
+              return Number(value.toString());
+            }
+          },
+          afterBuildTicks: function (chartObj) {
+            chartObj.ticks = [];
+            chartObj.ticks.push(100);
+            chartObj.ticks.push(1000);
+            chartObj.ticks.push(10000);
+            chartObj.ticks.push(100000);
+            chartObj.ticks.push(1000000);
+          }
+        }]
+      }
+    };
+  }
+
   trendSearchByCountry(country: string): void {
     this.clearExistingGraphs();
 
@@ -180,6 +280,11 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
         this.processDeathsGrowthCountriesStats(this.coronaDeathsGrowthCountriesStatsResponse, country);
       }
     }
+  }
+
+  storeDeathsGrowthCountriesStats(data) {
+    this.coronaDeathsGrowthCountriesStatsResponse = data;
+    this.countries = this.countries ? this.countries : data.map(x => x.country);
   }
 
   public clearExistingGraphs() {
@@ -207,12 +312,25 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
     if (this.barGrowthCountryCanvasContext) {
       this.barGrowthCountryCanvasContext.clearRect(0, 0, this.barGrowthCountryCanvasContext.canvas.width, this.barGrowthCountryCanvasContext.canvas.height);
     }
+    if (this.scatterChartGrowthCanvas) {
+      this.scatterGrowthCanvasContext = (<HTMLCanvasElement>this.scatterChartGrowthCanvas.nativeElement).getContext('2d');
+    }
+    if (this.scatterGrowthCountryCanvasContext) {
+      this.scatterGrowthCountryCanvasContext = (<HTMLCanvasElement>this.scatterChartGrowthCountryCanvas.nativeElement).getContext('2d');
+    }
+    if (this.scatterGrowthCanvasContext) {
+      this.scatterGrowthCanvasContext.clearRect(0, 0, this.scatterGrowthCanvasContext.canvas.width, this.scatterGrowthCanvasContext.canvas.height);
+    }
+    if (this.scatterGrowthCountryCanvasContext) {
+      this.scatterGrowthCountryCanvasContext.clearRect(0, 0, this.scatterGrowthCountryCanvasContext.canvas.width, this.scatterGrowthCountryCanvasContext.canvas.height);
+    }
   }
 
   public processDeathsGrowthCountriesStats(data: any, value: string) {
     this.processDeathsGrowthCountriesStatsForGraphs(data, value);
     this.setDeathsGrowthCountriesStatsLineGraphConfiguration(value);
     this.setDeathsGrowthCountriesStatsBarGraphConfiguration(value);
+    this.setDeathsGrowthCountriesStatsScatterGraphConfiguration(value);
     this.showTotal = false;
     this.showCountry = true;
   }
@@ -225,6 +343,20 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
     this.deltas = this.countryStat[0].deathsGrowths.map(x => x.delta);
     this.totalDeaths = this.growths[this.growths.length - 1].toLocaleString("us-US");
     this.newDeaths = this.deltas[this.deltas.length - 1].toLocaleString("us-US");
+    this.scatterCountryDataSet = [];
+    this.countryStat[0].deathsGrowths.forEach(element => { this.scatterCountryDataSet.push({ x: element.growth, y: element.delta }) });
+
+    let updatedScatterCountryDataSet = [];
+
+    for (let i = this.scatterCountryDataSet.length - 1; i >= 0; i--) {
+      let growth = this.scatterCountryDataSet[i].x, delta = 0;
+      for (let j = i; j > i - 7 && j >= 0; j--) {
+        delta = delta + this.scatterCountryDataSet[j].y;
+      }
+      updatedScatterCountryDataSet.push({ x: growth, y: delta });
+    }
+
+    this.scatterCountryDataSet = updatedScatterCountryDataSet;
   }
 
   public setDeathsGrowthCountriesStatsLineGraphConfiguration(value: string): void {
@@ -286,6 +418,77 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
         xAxes: [{
           ticks: {
             display: false
+          }
+        }]
+      }
+    };
+  }
+
+  public setDeathsGrowthCountriesStatsScatterGraphConfiguration(value: string) {
+    this.scatterGraphGrowthCountryData = [{
+      data: this.scatterCountryDataSet,
+      label: 'Deaths',
+      borderColor: "#008dc9",
+      backgroundColor: "#008dc9",
+      showLine: true,
+      fill: false,
+      borderDash: [10, 5]
+    }];
+    this.scatterGraphGrowthCountryOptions = {
+      scaleShowVerticalLines: false,
+      responsive: false,
+      responsiveAnimationDuration: 0,
+      legend: {
+        display: false
+      },
+      title: {
+        display: true,
+        //text: value.charAt(0).toUpperDeath() + value.slice(1) + ' / Total Deaths vs New Deaths',
+        fontSize: 14,
+        fontStyle: 'normal',
+        fontColor: 'darkslategrey'
+      },
+      scales: {
+        xAxes: [{
+          type: 'logarithmic',
+          scaleLabel: {
+            display: true,
+            labelString: 'Total Confirmed Deaths'
+          },
+          ticks: {
+            display: true,
+            callback: function (value, index, values) {
+              return Number(value.toString());
+            }
+          },
+          afterBuildTicks: function (chartObj) {
+            chartObj.ticks = [];
+            chartObj.ticks.push(10);
+            chartObj.ticks.push(100);
+            chartObj.ticks.push(1000);
+            chartObj.ticks.push(10000);
+            chartObj.ticks.push(100000);
+          }
+        }],
+        yAxes: [{
+          type: 'logarithmic',
+          scaleLabel: {
+            display: true,
+            labelString: 'New Confirmed Deaths Past Week'
+          },
+          ticks: {
+            display: true,
+            callback: function (value, index, values) {
+              return Number(value.toString());
+            }
+          },
+          afterBuildTicks: function (chartObj) {
+            chartObj.ticks = [];
+            chartObj.ticks.push(10);
+            chartObj.ticks.push(100);
+            chartObj.ticks.push(1000);
+            chartObj.ticks.push(10000);
+            chartObj.ticks.push(100000);
           }
         }]
       }
