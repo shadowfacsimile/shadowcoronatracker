@@ -7,17 +7,12 @@
 }
 
 .growth-header-span {
-    background-color: rgb(243, 243, 243);/*rgb(243, 243, 243); #008dc9;*/
-    color: darkslategray;
-    border-radius: 5px;
+    color: #add8e6;
     text-align: center;
-    font-size: large;
-    font-weight: normal;
-    padding-right: 30px;
-    padding-left: 30px;
-    padding-top: 4px;
-    padding-bottom: 4px;
+    font-size: 20px;
+    font-weight: 700;
     font-family: Helvetica;
+    padding: 4px 30px;
 }
 
 .summary-link {
@@ -27,6 +22,7 @@
 }
 
 .data-loading-div{
+    color: lightblue;
     text-align: center;
 }
 
@@ -41,23 +37,9 @@
     padding-bottom: 1px;
 }
 
-.growth-beige-highlight-span {
-    padding: 3px;
-    background-color: beige;
-    font-size: small;
-    font-weight: 500;
-    color: red;
-}
-
 canvas {
     width: 80% !important;
     height: auto !important;
-}
-
-.chart-growthfactor-container {
-    padding-bottom: 20px;
-    text-align: center;
-    position: relative;
 }
 
 .chart-growth-container {
@@ -74,20 +56,13 @@ canvas {
     padding-left: 50px;
 }
 
-.growth-factor-text {
-    font-size: small;
-}
-
-.trend-search-text {
-    border: 0.5px solid gray;
-    border-radius: 4px;
-    font-family: Helvetica;
-}
-
 .country-selector {
-    border: 0.5px solid gray;
+    border: none;
     border-radius: 4px;
-    font-size: medium;
+    font-size: small;
+    background-color: #4e5b85;
+    color: #add8e6;
+    font-family: Helvetica;
 }
 
 .dropdown {

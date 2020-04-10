@@ -135,8 +135,9 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
     this.lineGraphGrowthData = [{
       data: this.growths,
       label: 'Cases',
-      borderColor: "darkslategrey",
-      fill: false
+      borderColor: 'lightblue',
+      fill: false,
+      pointRadius: 2
     }];
     this.lineGraphGrowthOptions = {
       scaleShowVerticalLines: false,
@@ -150,12 +151,17 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
         text: 'All Countries / Total Cases ' + this.totalCases,
         fontSize: 14,
         fontStyle: 'normal',
-        fontColor: 'darkslategrey'
+        fontColor: 'lightblue'
       },
       scales: {
         xAxes: [{
           ticks: {
             display: false
+          }
+        }], yAxes: [{
+          ticks: {
+            display: true,
+            fontColor: 'lightblue'
           }
         }]
       }
@@ -167,8 +173,8 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
     this.barGraphGrowthData = [{
       data: this.deltas,
       label: 'Cases',
-      borderColor: "#008dc9",
-      backgroundColor: "#008dc9",
+      borderColor: '#008dc9',
+      backgroundColor: '#008dc9',
       fill: false
     }];
     this.barGraphGrowthOptions = {
@@ -183,14 +189,19 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
         text: 'All Countries / New Cases ' + this.newCases,
         fontSize: 14,
         fontStyle: 'normal',
-        fontColor: 'darkslategrey'
+        fontColor: 'lightblue'
       },
       scales: {
         xAxes: [{
           ticks: {
             display: false
           }
-        }]
+        }], yAxes: [{
+          ticks: {
+            display: true,
+            fontColor: 'lightblue'
+          }
+        }] 
       }
     };
   }
@@ -199,11 +210,12 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
     this.scatterGraphGrowthData = [{
       data: this.scatterDataSet,
       label: 'Cases',
-      borderColor: "#008dc9",
-      backgroundColor: "#008dc9",
+      borderColor: 'lightblue',
+      backgroundColor: 'lightblue',
       showLine: true,
       fill: false,
-      borderDash: [10, 5]
+      borderDash: [10, 5],
+      pointRadius: 2
     }];
     this.scatterGraphGrowthOptions = {
       scaleShowVerticalLines: false,
@@ -214,20 +226,22 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
       },
       title: {
         display: true,
-        //text: 'All Countries / Total Cases vs New Cases',
         fontSize: 14,
         fontStyle: 'normal',
-        fontColor: 'darkslategrey'
+        fontColor: 'lightblue'
       },
       scales: {
         xAxes: [{
           type: 'logarithmic',
           scaleLabel: {
             display: true,
-            labelString: 'Total Confirmed Cases'
+            labelString: 'Total Confirmed Cases',
+            fontColor: 'lightblue',
+            pointRadius: 2
           },
           ticks: {
             display: true,
+            fontColor: 'lightblue',
             callback: function (value, index, values) {
               return Number(value.toString());
             }
@@ -246,10 +260,12 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
           type: 'logarithmic',
           scaleLabel: {
             display: true,
-            labelString: 'New Confirmed Cases Past Week'
+            labelString: 'New Confirmed Cases Past Week',
+            fontColor: 'lightblue'
           },
           ticks: {
             display: true,
+            fontColor: 'lightblue',
             callback: function (value, index, values) {
               return Number(value.toString());
             }
@@ -261,7 +277,6 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
             chartObj.ticks.push(10000);
             chartObj.ticks.push(100000);
             chartObj.ticks.push(1000000);
-            chartObj.ticks.push(10000000);
           }
         }]
       }
@@ -366,8 +381,9 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
     this.lineGraphGrowthCountryData = [{
       data: this.growths,
       label: 'Cases',
-      borderColor: "darkslategrey",
-      fill: false
+      borderColor: 'lightblue',
+      fill: false,
+      pointRadius: 2
     }];
     this.lineGraphGrowthCountryOptions = {
       scaleShowVerticalLines: false,
@@ -381,12 +397,16 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
         text: value.charAt(0).toUpperCase() + value.slice(1) + ' / Total Cases ' + this.totalCases,
         fontSize: 14,
         fontStyle: 'normal',
-        fontColor: 'darkslategrey'
+        fontColor: 'lightblue'
       },
       scales: {
         xAxes: [{
           ticks: {
             display: false
+          }
+        }], yAxes: [{
+          ticks: {
+            fontColor: 'lightblue'
           }
         }]
       }
@@ -398,8 +418,8 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
     this.barGraphGrowthCountryData = [{
       data: this.deltas,
       label: 'Cases',
-      borderColor: "#008dc9",
-      backgroundColor: "#008dc9",
+      borderColor: '#008dc9',
+      backgroundColor: '#008dc9',
       fill: false
     }];
     this.barGraphGrowthCountryOptions = {
@@ -414,12 +434,16 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
         text: value.charAt(0).toUpperCase() + value.slice(1) + ' / New Cases ' + this.newCases,
         fontSize: 14,
         fontStyle: 'normal',
-        fontColor: 'darkslategrey'
+        fontColor: 'lightblue'
       },
       scales: {
         xAxes: [{
           ticks: {
             display: false
+          }
+        }], yAxes: [{
+          ticks: {
+            fontColor: 'lightblue'
           }
         }]
       }
@@ -430,11 +454,12 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
     this.scatterGraphGrowthCountryData = [{
       data: this.scatterCountryDataSet,
       label: 'Cases',
-      borderColor: "#008dc9",
-      backgroundColor: "#008dc9",
+      borderColor: 'lightblue',
+      backgroundColor: 'lightblue',
       showLine: true,
       fill: false,
-      borderDash: [10, 5]
+      borderDash: [10, 5],
+      pointRadius: 2
     }];
     this.scatterGraphGrowthCountryOptions = {
       scaleShowVerticalLines: false,
@@ -444,21 +469,22 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
         display: false
       },
       title: {
-        display: true,
-        //text: value.charAt(0).toUpperCase() + value.slice(1) + ' / Total Cases vs New Cases',
+        display: true,        
         fontSize: 14,
         fontStyle: 'normal',
-        fontColor: 'darkslategrey'
+        fontColor: 'lightblue'
       },
       scales: {
         xAxes: [{
           type: 'logarithmic',
           scaleLabel: {
             display: true,
+            fontColor: 'lightblue',
             labelString: 'Total Confirmed Cases'
           },
           ticks: {
             display: true,
+            fontColor: 'lightblue',
             callback: function (value, index, values) {
               return Number(value.toString());
             }
@@ -477,10 +503,12 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
           type: 'logarithmic',
           scaleLabel: {
             display: true,
+            fontColor: 'lightblue',
             labelString: 'New Confirmed Cases Past Week'
           },
           ticks: {
             display: true,
+            fontColor: 'lightblue',
             callback: function (value, index, values) {
               return Number(value.toString());
             }
@@ -491,8 +519,6 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
             chartObj.ticks.push(1000);
             chartObj.ticks.push(10000);
             chartObj.ticks.push(100000);
-            chartObj.ticks.push(1000000);
-            chartObj.ticks.push(10000000);
           }
         }]
       }
@@ -507,4 +533,3 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
     return `${year}-${month}-${day}`;
   }
 }
-

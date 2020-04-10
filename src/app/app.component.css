@@ -1,6 +1,6 @@
 .corona-header {
-    background-color: #008dc9;/*rgb(131, 172, 226);*/
-    color: white;
+    background-color: #21283a;
+    color: #bebeca;
     font-size: 30px;
     font-family: Helvetica;
     text-align: center;
@@ -8,19 +8,8 @@
     padding-bottom: 10px;
 }
 
-.source-header {
+.nav-of-routes {
     text-align: center;
-    font-size: 10px;
-    color: gray;
-}
-
-.external-links {
-    text-align: center;
-    text-decoration: underline;
-    font-size: 13px;
-    font-weight: 450;    
-    color: limegreen;
-    font-family: Helvetica;
 }
 
 .route-links {
@@ -32,18 +21,23 @@
     font-family: Helvetica;
 }
 
-.nav-of-external-links {
+.backslash {
     text-align: center;
-}
-
-.nav-of-routes {
-    text-align: center;
+    font-size: 13px;
+    font-weight: 450; 
+    color: #008dc9;
+    font-family: Helvetica;
 }
 
 .footer-text {
     text-align: center;
-    font-size: 12px;
+    font-size: 10px;
     font-family: Helvetica;
+    color: #add8e6;
+}
+
+.footer-links {
+    color: #008dc9;
 }
 
 .active {
@@ -53,4 +47,8 @@
     font-weight: bold;  
     color: #008dc9;
     font-family: Helvetica;
+}
+
+hr {
+    border: .2px solid #4d5b85;
 }

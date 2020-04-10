@@ -1,15 +1,10 @@
 .stats-header-span {
-    background-color: rgb(243, 243, 243);/*rgb(243, 243, 243); #008dc9;*/
-    color: darkslategray;
-    border-radius: 5px;
+    color: #add8e6;
     text-align: center;
-    font-size: large;
-    font-weight: normal;
-    padding-right: 30px;
-    padding-left: 30px;
-    padding-top: 4px;
-    padding-bottom: 4px;
+    font-size: 20px;
+    font-weight: 700;
     font-family: Helvetica;
+    padding: 4px 30px;
 }
 
 .countries-link {
@@ -23,6 +18,7 @@
 }
 
 .data-loading-div{
+    color: lightblue;
     text-align: center;
 }
 
@@ -37,49 +33,30 @@
     padding-bottom: 1px;
 }
 
-.stats-red-highlight-span {
-    padding: 3px;
-    border-radius: 5px;
-    background-color: red;
-    color: white;
-    font-size: x-small;
-}
-
-.stats-red-highlight-desc-span {
-    padding: 3px;
-    font-size: x-small;
-}
-
-.stats-beige-highlight-span {
-    padding: 3px;
-    border-radius: 5px;
-    background-color: beige;
-    font-size: x-small;
-}
-
-.stats-beige-highlight-desc-span {
-    padding: 3px;
-    font-size: x-small;
-}
-
 .stat-table-td {
+    font-weight: 400;
+    font-family: Helvetica;
+    color: #add8e6;
     text-align: center;
-    font-weight: bolder;
 }
 
 .stat-table-header {
-    color: gray;
+    color: #faebd7;
     font-family: Helvetica;
 }
 
 .stat-table-state-td {
-    font-weight: bolder;
+    font-weight: 400;
     font-family: Helvetica;
+    color: #add8e6;
 }
 
 .stats-search-text {
-    border: 0.5px solid gray;
+    border: none;
     border-radius: 4px;
+    font-size: small;
+    background-color: #4e5b85;
+    color: #add8e6;
     font-family: Helvetica;
 }
 
@@ -87,9 +64,17 @@
     cursor: pointer;
 }
 
+.nowrap {
+    white-space:nowrap;
+}
+
+::placeholder {
+   color: lightblue;
+}
+
 .state-stats-text {
     padding-left: 15px;
     font-size: 10px;
-    color: gray;
+    color: #faebd7;
     padding-bottom: 5px;
 }

@@ -50,7 +50,7 @@ export class StatsComponent implements OnInit, OnDestroy {
   sortByNewCases(): void {
     this.sort = !this.sort;
     this.coronaCountriesStatsResponse = this.tempCoronaCountriesStatsResponse;
-    this.coronaCountriesStatsResponse = this.coronaCountriesStatsResponse.sort((a, b) => this.sortByItem(a.casesSinceYesterday, b.casesSinceYesterday));
+    this.coronaCountriesStatsResponse = this.coronaCountriesStatsResponse.sort((a, b) => this.sortByItem(a.newCases, b.newCases));
   }
 
   sortByDeaths(): void {
@@ -62,7 +62,7 @@ export class StatsComponent implements OnInit, OnDestroy {
   sortByNewDeaths(): void {
     this.sort = !this.sort;
     this.coronaCountriesStatsResponse = this.tempCoronaCountriesStatsResponse;
-    this.coronaCountriesStatsResponse = this.coronaCountriesStatsResponse.sort((a, b) => this.sortByItem(a.deathsSinceYesterday, b.deathsSinceYesterday));
+    this.coronaCountriesStatsResponse = this.coronaCountriesStatsResponse.sort((a, b) => this.sortByItem(a.newDeaths, b.newDeaths));
   }
 
   sortByMortalityRate(): void {

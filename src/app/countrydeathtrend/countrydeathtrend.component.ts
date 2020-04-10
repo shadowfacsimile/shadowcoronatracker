@@ -135,8 +135,9 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
     this.lineGraphGrowthData = [{
       data: this.growths,
       label: 'Deaths',
-      borderColor: "darkslategrey",
-      fill: false
+      borderColor: 'lightblue',
+      fill: false,
+      pointRadius: 2
     }];
     this.lineGraphGrowthOptions = {
       scaleShowVerticalLines: false,
@@ -150,12 +151,17 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
         text: 'All Countries / Total Deaths ' + this.totalDeaths,
         fontSize: 14,
         fontStyle: 'normal',
-        fontColor: 'darkslategrey'
+        fontColor: 'lightblue'
       },
       scales: {
         xAxes: [{
           ticks: {
             display: false
+          }
+        }], yAxes: [{
+          ticks: {
+            display: true,
+            fontColor: 'lightblue'
           }
         }]
       }
@@ -167,8 +173,8 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
     this.barGraphGrowthData = [{
       data: this.deltas,
       label: 'Deaths',
-      borderColor: "#008dc9",
-      backgroundColor: "#008dc9",
+      borderColor: '#008dc9',
+      backgroundColor: '#008dc9',
       fill: false
     }];
     this.barGraphGrowthOptions = {
@@ -183,14 +189,19 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
         text: 'All Countries / New Deaths ' + this.newDeaths,
         fontSize: 14,
         fontStyle: 'normal',
-        fontColor: 'darkslategrey'
+        fontColor: 'lightblue'
       },
       scales: {
         xAxes: [{
           ticks: {
             display: false
           }
-        }]
+        }], yAxes: [{
+          ticks: {
+            display: true,
+            fontColor: 'lightblue'
+          }
+        }] 
       }
     };
   }
@@ -199,11 +210,12 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
     this.scatterGraphGrowthData = [{
       data: this.scatterDataSet,
       label: 'Deaths',
-      borderColor: "#008dc9",
-      backgroundColor: "#008dc9",
+      borderColor: 'lightblue',
+      backgroundColor: 'lightblue',
       showLine: true,
       fill: false,
-      borderDash: [10, 5]
+      borderDash: [10, 5],
+      pointRadius: 2
     }];
     this.scatterGraphGrowthOptions = {
       scaleShowVerticalLines: false,
@@ -214,20 +226,22 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
       },
       title: {
         display: true,
-        //text: 'All Countries / Total Deaths vs New Deaths',
         fontSize: 14,
         fontStyle: 'normal',
-        fontColor: 'darkslategrey'
+        fontColor: 'lightblue'
       },
       scales: {
         xAxes: [{
           type: 'logarithmic',
           scaleLabel: {
             display: true,
-            labelString: 'Total Confirmed Deaths'
+            labelString: 'Total Confirmed Deaths',
+            fontColor: 'lightblue',
+            pointRadius: 2
           },
           ticks: {
             display: true,
+            fontColor: 'lightblue',
             callback: function (value, index, values) {
               return Number(value.toString());
             }
@@ -245,10 +259,12 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
           type: 'logarithmic',
           scaleLabel: {
             display: true,
-            labelString: 'New Confirmed Deaths Past Week'
+            labelString: 'New Confirmed Deaths Past Week',
+            fontColor: 'lightblue'
           },
           ticks: {
             display: true,
+            fontColor: 'lightblue',
             callback: function (value, index, values) {
               return Number(value.toString());
             }
@@ -364,8 +380,9 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
     this.lineGraphGrowthCountryData = [{
       data: this.growths,
       label: 'Deaths',
-      borderColor: "darkslategrey",
-      fill: false
+      borderColor: 'lightblue',
+      fill: false,
+      pointRadius: 2
     }];
     this.lineGraphGrowthCountryOptions = {
       scaleShowVerticalLines: false,
@@ -379,12 +396,16 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
         text: value.charAt(0).toUpperCase() + value.slice(1) + ' / Total Deaths ' + this.totalDeaths,
         fontSize: 14,
         fontStyle: 'normal',
-        fontColor: 'darkslategrey'
+        fontColor: 'lightblue'
       },
       scales: {
         xAxes: [{
           ticks: {
             display: false
+          }
+        }], yAxes: [{
+          ticks: {
+            fontColor: 'lightblue'
           }
         }]
       }
@@ -396,8 +417,8 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
     this.barGraphGrowthCountryData = [{
       data: this.deltas,
       label: 'Deaths',
-      borderColor: "#008dc9",
-      backgroundColor: "#008dc9",
+      borderColor: '#008dc9',
+      backgroundColor: '#008dc9',
       fill: false
     }];
     this.barGraphGrowthCountryOptions = {
@@ -412,12 +433,16 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
         text: value.charAt(0).toUpperCase() + value.slice(1) + ' / New Deaths ' + this.newDeaths,
         fontSize: 14,
         fontStyle: 'normal',
-        fontColor: 'darkslategrey'
+        fontColor: 'lightblue'
       },
       scales: {
         xAxes: [{
           ticks: {
             display: false
+          }
+        }], yAxes: [{
+          ticks: {
+            fontColor: 'lightblue'
           }
         }]
       }
@@ -428,11 +453,12 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
     this.scatterGraphGrowthCountryData = [{
       data: this.scatterCountryDataSet,
       label: 'Deaths',
-      borderColor: "#008dc9",
-      backgroundColor: "#008dc9",
+      borderColor: 'lightblue',
+      backgroundColor: 'lightblue',
       showLine: true,
       fill: false,
-      borderDash: [10, 5]
+      borderDash: [10, 5],
+      pointRadius: 2
     }];
     this.scatterGraphGrowthCountryOptions = {
       scaleShowVerticalLines: false,
@@ -442,21 +468,22 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
         display: false
       },
       title: {
-        display: true,
-        //text: value.charAt(0).toUpperDeath() + value.slice(1) + ' / Total Deaths vs New Deaths',
+        display: true,        
         fontSize: 14,
         fontStyle: 'normal',
-        fontColor: 'darkslategrey'
+        fontColor: 'lightblue'
       },
       scales: {
         xAxes: [{
           type: 'logarithmic',
           scaleLabel: {
             display: true,
+            fontColor: 'lightblue',
             labelString: 'Total Confirmed Deaths'
           },
           ticks: {
             display: true,
+            fontColor: 'lightblue',
             callback: function (value, index, values) {
               return Number(value.toString());
             }
@@ -474,10 +501,12 @@ export class CountrydeathtrendComponent implements OnInit, OnDestroy {
           type: 'logarithmic',
           scaleLabel: {
             display: true,
+            fontColor: 'lightblue',
             labelString: 'New Confirmed Deaths Past Week'
           },
           ticks: {
             display: true,
+            fontColor: 'lightblue',
             callback: function (value, index, values) {
               return Number(value.toString());
             }
