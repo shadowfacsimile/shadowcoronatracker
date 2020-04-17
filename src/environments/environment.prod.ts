@@ -7,5 +7,47 @@ export const environment = {
   casesGrowthCountriesStatsUrl: 'https://shadowcoronatracker-api.eu-gb.mybluemix.net/ShadowCoronaTracker/api/growth/cases/countries/',
   casesGrowthFactorStatsUrl: 'https://shadowcoronatracker-api.eu-gb.mybluemix.net/ShadowCoronaTracker/api/growth/factors/',
   deathsGrowthStatsUrl: 'https://shadowcoronatracker-api.eu-gb.mybluemix.net/ShadowCoronaTracker/api/growth/deaths/',
-  deathsGrowthCountriesStatsUrl: 'https://shadowcoronatracker-api.eu-gb.mybluemix.net/ShadowCoronaTracker/api/growth/deaths/countries/'
+  deathsGrowthCountriesStatsUrl: 'https://shadowcoronatracker-api.eu-gb.mybluemix.net/ShadowCoronaTracker/api/growth/deaths/countries/',
+  indiaStatsUrl: 'https://shadowcoronatracker-api.eu-gb.mybluemix.net/ShadowCoronaTracker/api/stats/indiastats'
+};
+
+
+export const IndiaStates = {
+	an: 'Andaman and Nicobar Islands',
+	ap: 'Andhra Pradesh',
+	ar: 'Arunachal Pradesh',
+	as: 'Assam',
+	br: 'Bihar',
+	ch: 'Chandigarh',
+	ct: 'Chhattisgarh',
+	dd: 'Daman and Diu',
+	dl: 'New Delhi',
+	dn: 'Dadra and Nagar Haveli',
+	ga: 'Goa',
+	gj: 'Gujarat',
+	hp: 'Himachal Pradesh',
+	hr: 'Haryana',
+	jh: 'Jharkhand',
+	jk: 'Jammu and Kashmir',
+	ka: 'Karnataka',
+	kl: 'Kerala',
+	la: 'Ladakh',
+	ld: 'Lakshadweep',
+	mh: 'Maharashtra',
+	ml: 'Meghalaya',
+	mn: 'Manipur',
+	mp: 'Madhya Pradesh',
+	mz: 'Mizoram',
+	nl: 'Nagaland',
+	or: 'Odisha',
+	pb: 'Punjab',
+	py: 'Puducherry',
+	rj: 'Rajasthan',
+	sk: 'Sikkim',
+	tg: 'Telangana',
+	tn: 'Tamil Nadu',
+	tr: 'Tripura',
+	up: 'Uttar Pradesh',
+	ut: 'Uttarakhand',
+	wb: 'West Bengal'
 };

@@ -7,6 +7,7 @@ import { CasegrowthComponent } from './casegrowth/casegrowth.component';
 import { CountrytrendComponent } from './countrytrend/countrytrend.component';
 import { CountrydeathtrendComponent } from './countrydeathtrend/countrydeathtrend.component';
 import { StatestatsComponent } from './statestats/statestats.component';
+import { IndiastatsComponent } from './indiastats/indiastats.component';
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: 'cases-growth-factor', component: CasegrowthComponent},
   {path: 'cases-trend-by-country', component: CountrytrendComponent},
   {path: 'deaths-trend-by-country', component: CountrydeathtrendComponent},
+  {path: 'india-stats', component: IndiastatsComponent},
   {path: '', redirectTo: '/summary-stats', pathMatch: 'full'},
   {path: '**', component: PagenotfoundComponent}
 ];

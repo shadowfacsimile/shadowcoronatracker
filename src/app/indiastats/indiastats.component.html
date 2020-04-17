@@ -1,0 +1,105 @@
+<div class="growth-header-div">
+    <span class="growth-header-span">
+        <span class="summary-link" routerLink="/summary-stats">COVID-19</span>
+        / INDIA TREND
+    </span>
+</div>
+<br>
+<div *ngIf=!dates class="data-loading-div"><span class="data-loading-span">Data Loading...</span></div>
+<br>
+<div class="dropdown">
+    <select class="state-selector" [(ngModel)]="state"  (ngModelChange)="trendSearchByState($event)">
+        <option selected>All States</option>
+        <option *ngFor="let state of states">
+            {{state}}
+        </option>
+    </select>
+</div>
+<br>
+<br>
+<table>
+    <tr>
+        <td>
+            <div class="chart-growth-container" *ngIf=showAll&&dates&&states>
+                <canvas baseChart #lineChartGrowthCanvas [datasets]="lineGraphGrowthData"
+                    [labels]="lineGraphGrowthLabels" [options]="lineGraphGrowthOptions" [legend]="lineGraphGrowthLegend"
+                    [chartType]="lineGraphGrowthType" width="800" height="400">
+                </canvas>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="chart-growth-state-container" *ngIf=showState>
+                <canvas #lineChartGrowthStateCanvas baseChart [datasets]="lineGraphGrowthStateData"
+                    [labels]="lineGraphGrowthStateLabels" [options]="lineGraphGrowthStateOptions"
+                    [legend]="lineGraphGrowthStateLegend" [chartType]="lineGraphGrowthStateType" width="800"
+                    height="400">
+                </canvas>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="chart-growth-container" *ngIf=showAll&&dates&&states>
+                <canvas baseChart #barChartGrowthCanvas [datasets]="barGraphGrowthData"
+                    [labels]="barGraphGrowthLabels" [options]="barGraphGrowthOptions" [legend]="barGraphGrowthLegend"
+                    [chartType]="barGraphGrowthType" width="800" height="400">
+                </canvas>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="chart-growth-state-container" *ngIf=showState>
+                <canvas #barChartGrowthStateCanvas baseChart [datasets]="barGraphGrowthStateData"
+                    [labels]="barGraphGrowthStateLabels" [options]="barGraphGrowthStateOptions"
+                    [legend]="barGraphGrowthStateLegend" [chartType]="barGraphGrowthStateType" width="800"
+                    height="400">
+                </canvas>
+            </div>
+        </td>
+    </tr>    
+    <tr>
+        <td>
+            <div class="chart-growth-container" *ngIf=showAll&&dates&&states>
+                <canvas baseChart #lineChartProjectionCanvas [datasets]="lineGraphProjectionData"
+                    [labels]="lineGraphProjectionLabels" [options]="lineGraphProjectionOptions" [legend]="lineGraphProjectionLegend"
+                    [chartType]="lineGraphProjectionType" width="800" height="400">
+                </canvas>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="chart-growth-state-container" *ngIf=showState>
+                <canvas #lineChartProjectionStateCanvas baseChart [datasets]="lineGraphProjectionStateData"
+                    [labels]="lineGraphProjectionStateLabels" [options]="lineGraphProjectionStateOptions"
+                    [legend]="lineGraphProjectionStateLegend" [chartType]="lineGraphProjectionStateType" width="800"
+                    height="400">
+                </canvas>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="chart-growth-container" *ngIf=showAll&&dates&&states>
+                <canvas baseChart #scatterChartGrowthCanvas [datasets]="scatterGraphGrowthData"
+                    [labels]="scatterGraphGrowthLabels" [options]="scatterGraphGrowthOptions"
+                    [legend]="scatterGraphGrowthLegend" [chartType]="scatterGraphGrowthType" width="800" height="400">
+                </canvas>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="chart-growth-state-container" *ngIf=showState>
+                <canvas #scatterChartGrowthStateCanvas baseChart [datasets]="scatterGraphGrowthStateData"
+                    [labels]="scatterGraphGrowthStateLabels" [options]="scatterGraphGrowthStateOptions"
+                    [legend]="scatterGraphGrowthStateLegend" [chartType]="scatterGraphGrowthStateType" width="800"
+                    height="400">
+                </canvas>
+            </div>
+        </td>
+    </tr>
+</table>

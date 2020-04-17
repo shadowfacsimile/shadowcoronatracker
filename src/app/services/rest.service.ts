@@ -22,6 +22,7 @@ export class RestService {
   public coronaCasesGrowthFactorStats: Observable<any>;
   public coronaDeathsGrowthStats: Observable<any>;
   public coronaDeathsGrowthCountriesStats: Observable<any>;
+  public coronaIndiaStats: Observable<any>;
 
   constructor(public http: HttpClient) { }
 
@@ -103,5 +104,13 @@ export class RestService {
       return this.coronaDeathsGrowthCountriesStats;
     }
     return this.coronaDeathsGrowthCountriesStats;
+  }
+
+  getCoronaIndiaStats(): any {
+    if (!this.coronaIndiaStats) {
+      this.coronaIndiaStats = this.http.get(environment.indiaStatsUrl, httpOptions);
+      return this.coronaIndiaStats;
+    }
+    return this.coronaIndiaStats;
   }
 }

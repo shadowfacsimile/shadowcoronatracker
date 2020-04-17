@@ -74,7 +74,7 @@ export class AlertsComponent implements OnInit {
     this.coronaStatsResponse = data.filter(stat => stat.location.country === 'Italy')[0];
     this.italyCases = this.coronaStatsResponse.cases;
     this.italyDeaths = this.coronaStatsResponse.deaths;
-    this.alertText.push('Day ' + (Math.floor(this.getDaysIntoLockdown()) + 1) + ' of 21 days lockdown in India');
+    this.alertText.push('Day ' + (Math.floor(this.getDaysIntoLockdown()) + 1) + ' of 40 days lockdown in India');
     this.alertText.push(this.indiaCases.toLocaleString("us-US") + ' cases and ' + this.indiaDeaths.toLocaleString("us-US") + ' deaths in India');
     this.alertText.push('Data updated once a day around 23:59 (UTC)')  
     this.alertText.push(this.totalCases.toLocaleString("us-US") + ' cases and ' + this.totalDeaths.toLocaleString("us-US") + ' deaths worldwide');

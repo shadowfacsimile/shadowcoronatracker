@@ -11,14 +11,46 @@ export const environment = {
   casesGrowthCountriesStatsUrl: 'http://localhost:9080/ShadowCoronaTracker/api/growth/cases/countries/',
   casesGrowthFactorStatsUrl: 'http://localhost:9080/ShadowCoronaTracker/api/growth/factors/',
   deathsGrowthStatsUrl: 'http://localhost:9080/ShadowCoronaTracker/api/growth/deaths/',
-  deathsGrowthCountriesStatsUrl: 'http://localhost:9080/ShadowCoronaTracker/api/growth/deaths/countries/'
+  deathsGrowthCountriesStatsUrl: 'http://localhost:9080/ShadowCoronaTracker/api/growth/deaths/countries/',
+  indiaStatsUrl: 'http://localhost:9080/ShadowCoronaTracker/api/stats/indiastats'
 };
 
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+export const IndiaStates = {
+	an: 'Andaman and Nicobar Islands',
+	ap: 'Andhra Pradesh',
+	ar: 'Arunachal Pradesh',
+	as: 'Assam',
+	br: 'Bihar',
+	ch: 'Chandigarh',
+	ct: 'Chhattisgarh',
+	dd: 'Daman and Diu',
+	dl: 'New Delhi',
+	dn: 'Dadra and Nagar Haveli',
+	ga: 'Goa',
+	gj: 'Gujarat',
+	hp: 'Himachal Pradesh',
+	hr: 'Haryana',
+	jh: 'Jharkhand',
+	jk: 'Jammu and Kashmir',
+	ka: 'Karnataka',
+	kl: 'Kerala',
+	la: 'Ladakh',
+	ld: 'Lakshadweep',
+	mh: 'Maharashtra',
+	ml: 'Meghalaya',
+	mn: 'Manipur',
+	mp: 'Madhya Pradesh',
+	mz: 'Mizoram',
+	nl: 'Nagaland',
+	or: 'Odisha',
+	pb: 'Punjab',
+	py: 'Puducherry',
+	rj: 'Rajasthan',
+	sk: 'Sikkim',
+	tg: 'Telangana',
+	tn: 'Tamil Nadu',
+	tr: 'Tripura',
+	up: 'Uttar Pradesh',
+	ut: 'Uttarakhand',
+	wb: 'West Bengal'
+};

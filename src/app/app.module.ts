@@ -14,6 +14,7 @@ import { CountrytrendComponent } from './countrytrend/countrytrend.component';
 import { CountrydeathtrendComponent } from './countrydeathtrend/countrydeathtrend.component';
 import { StatestatsComponent } from './statestats/statestats.component';
 import { RouterModule } from '@angular/router';
+import { IndiastatsComponent } from './indiastats/indiastats.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { RouterModule } from '@angular/router';
     CasegrowthComponent,
     CountrytrendComponent,
     CountrydeathtrendComponent,
-    StatestatsComponent
+    StatestatsComponent,
+    IndiastatsComponent
   ],
   imports: [
     BrowserModule,
