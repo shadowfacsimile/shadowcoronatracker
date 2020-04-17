@@ -65,7 +65,7 @@
             <div class="chart-growth-container" *ngIf=showAll&&dates&&states>
                 <canvas baseChart #lineChartProjectionCanvas [datasets]="lineGraphProjectionData"
                     [labels]="lineGraphProjectionLabels" [options]="lineGraphProjectionOptions" [legend]="lineGraphProjectionLegend"
-                    [chartType]="lineGraphProjectionType" width="800" height="400">
+                    [chartType]="lineGraphProjectionType" width="100" height="100">
                 </canvas>
             </div>
         </td>
@@ -75,8 +75,8 @@
             <div class="chart-growth-state-container" *ngIf=showState>
                 <canvas #lineChartProjectionStateCanvas baseChart [datasets]="lineGraphProjectionStateData"
                     [labels]="lineGraphProjectionStateLabels" [options]="lineGraphProjectionStateOptions"
-                    [legend]="lineGraphProjectionStateLegend" [chartType]="lineGraphProjectionStateType" width="800"
-                    height="400">
+                    [legend]="lineGraphProjectionStateLegend" [chartType]="lineGraphProjectionStateType" width="100"
+                    height="100">
                 </canvas>
             </div>
         </td>

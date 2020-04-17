@@ -68,3 +68,7 @@ canvas {
     position: relative;
     padding-left: 50px;
 }
+
+hr {
+    border: 0.2px solid lightblue;
+}

@@ -576,17 +576,29 @@ export class IndiastatsComponent implements OnInit {
 		let date = [];
 		let doublesEveryFifth = [];
 		let doublesEveryThird = [];
-		doublesEveryFifth.push(this.growths[0] == ('0' || '') ? '1' : this.growths[0]);
-		doublesEveryThird.push(this.growths[0] == ('0' || '') ? '1' : this.growths[0]);
+		let criteria = false;
+		let projStart = false;
 
 		for (let i = 0; i <= this.growths.length - 1; i++) {
 			let g = 0;
 			for (let j = 0; j <= i; j++) {
-				g = g + parseFloat(this.growths[j] == '' ? '0' : this.growths[j]);
+				g = g + parseInt(this.growths[j] == '' ? '0' : this.growths[j]);
 			}
 			growth.push(g);
+		}
 
-			if (i > 0) {
+		doublesEveryFifth.push(this.growths[0] == '' ? '0' : this.growths[0]);
+		doublesEveryThird.push(this.growths[0] == '' ? '0' : this.growths[0]);
+
+		if (parseInt(doublesEveryFifth[0]) > 0) {
+			projStart = true;
+		}
+
+		for (let i = 1; i <= this.growths.length - 1; i++) {
+			criteria = projStart ? projStart : parseInt(doublesEveryFifth[i - 1]) > 0;
+
+			if (criteria) {
+				projStart = true;
 				let x = parseFloat(doublesEveryFifth[i - 1]);
 				let y = x * 1.15;
 				let z = y.toString();
@@ -596,11 +608,13 @@ export class IndiastatsComponent implements OnInit {
 				y = x * 1.259;
 				z = y.toString();
 				doublesEveryThird.push(y);
+			} else {
+				doublesEveryFifth.push(this.growths[i] == '' ? '0' : this.growths[i]);
+				doublesEveryThird.push(this.growths[i] == '' ? '0' : this.growths[i]);
 			}
 		}
 
 		for (let i = 0; i <= this.dates.length - 1; i++) {
-			let g = 0;
 			if (i % 10 == 0) {
 				date.push(this.dates[i]);
 			} else {
@@ -645,7 +659,7 @@ export class IndiastatsComponent implements OnInit {
 		];
 		this.lineGraphProjectionOptions = {
 			scaleShowVerticalLines: false,
-			responsive: false,
+			responsive: true,
 			responsiveAnimationDuration: 0,
 			legend: {
 				display: true,
@@ -689,11 +703,20 @@ export class IndiastatsComponent implements OnInit {
 							}
 						},
 						afterBuildTicks: function(chartObj) {
-							chartObj.ticks = [];
+							chartObj.ticks = [];							
+							chartObj.ticks.push(10);
+							chartObj.ticks.push(50);
 							chartObj.ticks.push(100);
+							chartObj.ticks.push(200);
+							chartObj.ticks.push(400);
 							chartObj.ticks.push(1000);
-							chartObj.ticks.push(10000);
-							chartObj.ticks.push(100000);
+							chartObj.ticks.push(2000);
+							chartObj.ticks.push(4000);
+							chartObj.ticks.push(8000);
+							chartObj.ticks.push(16000);
+							chartObj.ticks.push(32000);
+							chartObj.ticks.push(64000);
+							chartObj.ticks.push(128000);
 						}
 					}
 				]
@@ -706,17 +729,29 @@ export class IndiastatsComponent implements OnInit {
 		let date = [];
 		let doublesEveryFifth = [];
 		let doublesEveryThird = [];
-		doublesEveryFifth.push(this.growths[0] == ('0' || '') ? '1' : this.growths[0]);
-		doublesEveryThird.push(this.growths[0] == ('0' || '') ? '1' : this.growths[0]);
+		let criteria = false;
+		let projStart = false;
 
 		for (let i = 0; i <= this.growths.length - 1; i++) {
 			let g = 0;
 			for (let j = 0; j <= i; j++) {
-				g = g + parseFloat(this.growths[j] == '' ? '0' : this.growths[j]);
+				g = g + parseInt(this.growths[j] == '' ? '0' : this.growths[j]);
 			}
 			growth.push(g);
+		}
 
-			if (i > 0) {
+		doublesEveryFifth.push(this.growths[0] == '' ? '0' : this.growths[0]);
+		doublesEveryThird.push(this.growths[0] == '' ? '0' : this.growths[0]);
+
+		if (parseInt(doublesEveryFifth[0]) > 0) {
+			projStart = true;
+		}
+
+		for (let i = 1; i <= this.growths.length - 1; i++) {
+			criteria = projStart ? projStart : parseInt(doublesEveryFifth[i - 1]) > 0;
+
+			if (criteria) {
+				projStart = true;
 				let x = parseFloat(doublesEveryFifth[i - 1]);
 				let y = x * 1.15;
 				let z = y.toString();
@@ -726,18 +761,20 @@ export class IndiastatsComponent implements OnInit {
 				y = x * 1.259;
 				z = y.toString();
 				doublesEveryThird.push(y);
+			} else {
+				doublesEveryFifth.push(this.growths[i] == '' ? '0' : this.growths[i]);
+				doublesEveryThird.push(this.growths[i] == '' ? '0' : this.growths[i]);
 			}
 		}
 
 		for (let i = 0; i <= this.dates.length - 1; i++) {
-			let g = 0;
 			if (i % 10 == 0) {
 				date.push(this.dates[i]);
 			} else {
 				date.push('');
 			}
 		}
-
+		
 		this.lineGraphProjectionStateLabels = date;
 		this.lineGraphProjectionStateData = [
 			{
@@ -772,7 +809,7 @@ export class IndiastatsComponent implements OnInit {
 		];
 		this.lineGraphProjectionStateOptions = {
 			scaleShowVerticalLines: false,
-			responsive: false,
+			responsive: true,
 			responsiveAnimationDuration: 0,
 			legend: {
 				display: true,
@@ -821,10 +858,16 @@ export class IndiastatsComponent implements OnInit {
 						},
 						afterBuildTicks: function(chartObj) {
 							chartObj.ticks = [];
+							chartObj.ticks.push(10);
+							chartObj.ticks.push(50);
 							chartObj.ticks.push(100);
+							chartObj.ticks.push(200);
+							chartObj.ticks.push(400);
 							chartObj.ticks.push(1000);
-							chartObj.ticks.push(10000);
-							chartObj.ticks.push(100000);
+							chartObj.ticks.push(2000);
+							chartObj.ticks.push(4000);
+							chartObj.ticks.push(8000);
+							chartObj.ticks.push(16000);
 						}
 					}
 				]

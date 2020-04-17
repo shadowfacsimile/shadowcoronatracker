@@ -130,9 +130,8 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
 	processCasesGrowthStats(data: any): void {
 		this.processCasesGrowthStatsForGraphs(data);
 		this.setGrowthStatsLineGraphConfiguration();
-		this.growths = this.coronaCasesGrowthStatsResponse.map((x) => x.delta);
-		this.setGrowthStatsBarGraphConfiguration();
-		this.setGrowthStatsScatterGraphConfiguration();
+		this.setDeltaStatsBarGraphConfiguration();
+		this.setDeltaStatsScatterGraphConfiguration();
 		this.setProjectionStatsLineGraphConfiguration();
 	}
 
@@ -207,7 +206,7 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
 		};
 	}
 
-	public setGrowthStatsBarGraphConfiguration(): void {
+	public setDeltaStatsBarGraphConfiguration(): void {
 		this.barGraphGrowthLabels = this.dates;
 		this.barGraphGrowthData = [
 			{
@@ -252,7 +251,7 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
 		};
 	}
 
-	public setGrowthStatsScatterGraphConfiguration(): void {
+	public setDeltaStatsScatterGraphConfiguration(): void {
 		this.scatterGraphGrowthData = [
 			{
 				data: this.scatterDataSet,
@@ -565,21 +564,33 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
 	}
 
 	public setProjectionStatsLineGraphConfiguration(): void {
-		let growth = [];
+		let delta = [];
 		let date = [];
 		let doublesEveryFifth = [];
 		let doublesEveryThird = [];
-		doublesEveryFifth.push(this.growths[0] == ('0' || '') ? '1' : this.growths[0]);
-		doublesEveryThird.push(this.growths[0] == ('0' || '') ? '1' : this.growths[0]);
+		let criteria = false;
+		let projStart = false;
 
-		for (let i = 0; i <= this.growths.length - 1; i++) {
+		for (let i = 30; i <= this.deltas.length - 1; i++) {
 			let g = 0;
-			for (let j = 0; j <= i; j++) {
-				g = g + parseFloat(this.growths[j] == '' ? '0' : this.growths[j]);
+			for (let j = 30; j <= i; j++) {
+				g = g + parseInt(this.deltas[j] == '' ? '0' : this.deltas[j]);
 			}
-			growth.push(g);
+			delta.push(g);
+		}
 
-			if (i > 0) {
+		doublesEveryFifth.push(this.deltas[30] == '' ? '0' : this.deltas[30]);
+		doublesEveryThird.push(this.deltas[30] == '' ? '0' : this.deltas[30]);
+
+		if (parseInt(doublesEveryFifth[0]) > 0) {
+			projStart = true;
+		}
+
+		for (let i = 1; i <= this.deltas.length - 30; i++) {
+			criteria = projStart ? projStart : parseInt(doublesEveryFifth[i - 1]) > 0;
+
+			if (criteria) {
+				projStart = true;
 				let x = parseFloat(doublesEveryFifth[i - 1]);
 				let y = x * 1.15;
 				let z = y.toString();
@@ -589,11 +600,13 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
 				y = x * 1.259;
 				z = y.toString();
 				doublesEveryThird.push(y);
+			} else {
+				doublesEveryFifth.push(this.growths[i] == '' ? '0' : this.growths[i]);
+				doublesEveryThird.push(this.growths[i] == '' ? '0' : this.growths[i]);
 			}
 		}
 
 		for (let i = 0; i <= this.dates.length - 1; i++) {
-			let g = 0;
 			if (i % 10 == 0) {
 				date.push(this.dates[i]);
 			} else {
@@ -604,7 +617,7 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
 		this.lineGraphProjectionLabels = date;
 		this.lineGraphProjectionData = [
 			{
-				data: growth,
+				data: delta,
 				label: 'Actual Cases',
 				borderColor: 'lightblue',
 				backgroundColor: 'lightblue',
@@ -638,7 +651,7 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
 		];
 		this.lineGraphProjectionOptions = {
 			scaleShowVerticalLines: false,
-			responsive: false,
+			responsive: true,
 			responsiveAnimationDuration: 0,
 			legend: {
 				display: true,
@@ -683,11 +696,11 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
 						},
 						afterBuildTicks: function(chartObj) {
 							chartObj.ticks = [];
-							chartObj.ticks.push(100);
 							chartObj.ticks.push(1000);
 							chartObj.ticks.push(10000);
 							chartObj.ticks.push(100000);
 							chartObj.ticks.push(1000000);
+							chartObj.ticks.push(10000000);
 						}
 					}
 				]
@@ -696,21 +709,33 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
 	}
 
 	public setProjectionCountryStatsLineGraphConfiguration(value: string): void {
-		let growth = [];
+		let delta = [];
 		let date = [];
 		let doublesEveryFifth = [];
 		let doublesEveryThird = [];
-		doublesEveryFifth.push(this.growths[0] == ('0' || '') ? '1' : this.growths[0]);
-		doublesEveryThird.push(this.growths[0] == ('0' || '') ? '1' : this.growths[0]);
+		let criteria = false;
+		let projStart = false;
 
-		for (let i = 0; i <= this.growths.length - 1; i++) {
+		for (let i = 51; i <= this.deltas.length - 1; i++) {
 			let g = 0;
-			for (let j = 0; j <= i; j++) {
-				g = g + parseFloat(this.growths[j] == '' ? '0' : this.growths[j]);
+			for (let j = 51; j <= i; j++) {
+				g = g + parseInt(this.deltas[j] == '' ? '0' : this.deltas[j]);
 			}
-			growth.push(g);
+			delta.push(g);
+		}
 
-			if (i > 0) {
+		doublesEveryFifth.push(this.deltas[51] == '' ? '0' : this.deltas[51]);
+		doublesEveryThird.push(this.deltas[51] == '' ? '0' : this.deltas[51]);
+
+		if (parseInt(doublesEveryFifth[0]) > 0) {
+			projStart = true;
+		}
+
+		for (let i = 1; i <= this.deltas.length - 51; i++) {
+			criteria = projStart ? projStart : parseInt(doublesEveryFifth[i - 1]) > 0;
+
+			if (criteria) {
+				projStart = true;
 				let x = parseFloat(doublesEveryFifth[i - 1]);
 				let y = x * 1.15;
 				let z = y.toString();
@@ -720,11 +745,13 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
 				y = x * 1.259;
 				z = y.toString();
 				doublesEveryThird.push(y);
+			} else {
+				doublesEveryFifth.push(this.growths[i] == '' ? '0' : this.growths[i]);
+				doublesEveryThird.push(this.growths[i] == '' ? '0' : this.growths[i]);
 			}
 		}
 
-		for (let i = 0; i <= this.dates.length - 1; i++) {
-			let g = 0;
+		for (let i = 51; i <= this.dates.length - 1; i++) {
 			if (i % 10 == 0) {
 				date.push(this.dates[i]);
 			} else {
@@ -735,7 +762,7 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
 		this.lineGraphProjectionCountryLabels = date;
 		this.lineGraphProjectionCountryData = [
 			{
-				data: growth,
+				data: delta,
 				label: 'Actual Cases',
 				borderColor: 'lightblue',
 				fill: false,
@@ -766,7 +793,7 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
 		];
 		this.lineGraphProjectionCountryOptions = {
 			scaleShowVerticalLines: false,
-			responsive: false,
+			responsive: true,
 			responsiveAnimationDuration: 0,
 			legend: {
 				display: true,
@@ -779,11 +806,7 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
 			},
 			title: {
 				display: true,
-				text:
-					value.charAt(0).toUpperCase() +
-					value.slice(1) +
-					' / Total Cases ' +
-					this.totalCases,
+				text: value.charAt(0).toUpperCase() + value.slice(1) + ' / Total Cases ' + this.totalCases,
 				fontSize: 14,
 				fontStyle: 'normal',
 				fontColor: 'lightblue'

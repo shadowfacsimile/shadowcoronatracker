@@ -43,7 +43,7 @@
             <div class="chart-growth-container" *ngIf=showTotal&&dates&&countries>
                 <canvas baseChart #lineChartProjectionCanvas [datasets]="lineGraphProjectionData"
                     [labels]="lineGraphProjectionLabels" [options]="lineGraphProjectionOptions" [legend]="lineGraphProjectionLegend"
-                    [chartType]="lineGraphProjectionType" width="800" height="400">
+                    [chartType]="lineGraphProjectionType" width="100" height="100">
                 </canvas>
             </div>
         </td>
@@ -85,8 +85,8 @@
             <div class="chart-growth-country-container" *ngIf=showCountry>
                 <canvas #lineChartProjectionCountryCanvas baseChart [datasets]="lineGraphProjectionCountryData"
                     [labels]="lineGraphProjectionCountryLabels" [options]="lineGraphProjectionCountryOptions"
-                    [legend]="lineGraphProjectionCountryLegend" [chartType]="lineGraphProjectionCountryType" width="800"
-                    height="400">
+                    [legend]="lineGraphProjectionCountryLegend" [chartType]="lineGraphProjectionCountryType" width="100"
+                    height="100">
                 </canvas>
             </div>
         </td>
