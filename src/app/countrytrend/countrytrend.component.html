@@ -27,13 +27,23 @@
                 </canvas>
             </div>
         </td>
-    </tr>
+    </tr>    
     <tr>
         <td>
             <div class="chart-growth-container" *ngIf=showTotal&&dates&&countries>
                 <canvas baseChart #barChartGrowthCanvas [datasets]="barGraphGrowthData" [labels]="barGraphGrowthLabels"
                     [options]="barGraphGrowthOptions" [legend]="barGraphGrowthLegend" [chartType]="barGraphGrowthType"
                     width="800" height="400">
+                </canvas>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="chart-growth-container" *ngIf=showTotal&&dates&&countries>
+                <canvas baseChart #lineChartProjectionCanvas [datasets]="lineGraphProjectionData"
+                    [labels]="lineGraphProjectionLabels" [options]="lineGraphProjectionOptions" [legend]="lineGraphProjectionLegend"
+                    [chartType]="lineGraphProjectionType" width="800" height="400">
                 </canvas>
             </div>
         </td>
@@ -65,6 +75,17 @@
                 <canvas #barChartGrowthCountryCanvas baseChart [datasets]="barGraphGrowthCountryData"
                     [labels]="barGraphGrowthCountryLabels" [options]="barGraphGrowthCountryOptions"
                     [legend]="barGraphGrowthCountryLegend" [chartType]="barGraphGrowthCountryType" width="800"
+                    height="400">
+                </canvas>
+            </div>
+        </td>
+    </tr>    
+    <tr>
+        <td>
+            <div class="chart-growth-country-container" *ngIf=showCountry>
+                <canvas #lineChartProjectionCountryCanvas baseChart [datasets]="lineGraphProjectionCountryData"
+                    [labels]="lineGraphProjectionCountryLabels" [options]="lineGraphProjectionCountryOptions"
+                    [legend]="lineGraphProjectionCountryLegend" [chartType]="lineGraphProjectionCountryType" width="800"
                     height="400">
                 </canvas>
             </div>

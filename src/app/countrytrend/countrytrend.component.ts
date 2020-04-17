@@ -3,533 +3,934 @@ import { RestService } from '../services/rest.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-countrytrend',
-  templateUrl: './countrytrend.component.html',
-  styleUrls: ['./countrytrend.component.css']
+	selector: 'app-countrytrend',
+	templateUrl: './countrytrend.component.html',
+	styleUrls: [ './countrytrend.component.css' ]
 })
 export class CountrytrendComponent implements OnInit, OnDestroy {
+	public coronaCasesGrowthStatsSubscription: Subscription;
+	public coronaCasesGrowthCountriesStatsSubscription: Subscription;
+	public coronaCasesGrowthStatsResponse: any;
+	public coronaCasesGrowthCountriesStatsResponse: any;
+	public countryStat: any;
+	public dates: any;
+	public growths: any;
+	public deltas: any;
+	public countries: any;
+	public country: any;
+	public totalCases: any;
+	public newCases: any;
+	public showCountry: boolean = false;
+	public showTotal: boolean = true;
 
-  public coronaCasesGrowthStatsSubscription: Subscription;
-  public coronaCasesGrowthCountriesStatsSubscription: Subscription;
-  public coronaCasesGrowthStatsResponse: any;
-  public coronaCasesGrowthCountriesStatsResponse: any;
-  public countryStat: any;
-  public dates: any;
-  public growths: any;
-  public deltas: any;
-  public countries: any;
-  public country: any;
-  public totalCases: any;
-  public newCases: any;
-  public showCountry: boolean = false;
-  public showTotal: boolean = true;
+	public lineGraphGrowthLabels;
+	public lineGraphGrowthType = 'line';
+	public lineGraphGrowthLegend = true;
+	public lineGraphGrowthData;
+	public lineGraphGrowthCountryLabels;
+	public lineGraphGrowthCountryType = 'line';
+	public lineGraphGrowthCountryLegend = true;
+	public lineGraphGrowthCountryData;
+	public lineGraphGrowthCountryOptions;
+	public lineGraphGrowthOptions;
 
-  public lineGraphGrowthLabels;
-  public lineGraphGrowthType = 'line';
-  public lineGraphGrowthLegend = true;
-  public lineGraphGrowthData;
-  public lineGraphGrowthCountryLabels;
-  public lineGraphGrowthCountryType = 'line';
-  public lineGraphGrowthCountryLegend = true;
-  public lineGraphGrowthCountryData;
-  public lineGraphGrowthCountryOptions;
-  public lineGraphGrowthOptions;
+	public barGraphGrowthLabels;
+	public barGraphGrowthType = 'bar';
+	public barGraphGrowthLegend = true;
+	public barGraphGrowthData;
+	public barGraphGrowthCountryLabels;
+	public barGraphGrowthCountryType = 'bar';
+	public barGraphGrowthCountryLegend = true;
+	public barGraphGrowthCountryData;
+	public barGraphGrowthCountryOptions;
+	public barGraphGrowthOptions;
 
-  public barGraphGrowthLabels;
-  public barGraphGrowthType = 'bar';
-  public barGraphGrowthLegend = true;
-  public barGraphGrowthData;
-  public barGraphGrowthCountryLabels;
-  public barGraphGrowthCountryType = 'bar';
-  public barGraphGrowthCountryLegend = true;
-  public barGraphGrowthCountryData;
-  public barGraphGrowthCountryOptions;
-  public barGraphGrowthOptions;
+	public scatterGraphGrowthLabels;
+	public scatterGraphGrowthType = 'scatter';
+	public scatterGraphGrowthLegend = true;
+	public scatterGraphGrowthData;
+	public scatterGraphGrowthCountryLabels;
+	public scatterGraphGrowthCountryType = 'scatter';
+	public scatterGraphGrowthCountryLegend = true;
+	public scatterGraphGrowthCountryData;
+	public scatterGraphGrowthCountryOptions;
+	public scatterGraphGrowthOptions;
+	public scatterDataSet = [];
+	public scatterCountryDataSet = [];
 
-  public scatterGraphGrowthLabels;
-  public scatterGraphGrowthType = 'scatter';
-  public scatterGraphGrowthLegend = true;
-  public scatterGraphGrowthData;
-  public scatterGraphGrowthCountryLabels;
-  public scatterGraphGrowthCountryType = 'scatter';
-  public scatterGraphGrowthCountryLegend = true;
-  public scatterGraphGrowthCountryData;
-  public scatterGraphGrowthCountryOptions;
-  public scatterGraphGrowthOptions;
-  public scatterDataSet = [];
-  public scatterCountryDataSet = [];
+	public lineGraphProjectionLabels;
+	public lineGraphProjectionType = 'line';
+	public lineGraphProjectionLegend = true;
+	public lineGraphProjectionData;
+	public lineGraphProjectionCountryLabels;
+	public lineGraphProjectionCountryType = 'line';
+	public lineGraphProjectionCountryLegend = true;
+	public lineGraphProjectionCountryData;
+	public lineGraphProjectionCountryOptions;
+	public lineGraphProjectionOptions;
 
-  @ViewChild('lineChartGrowthCountryCanvas', { static: false }) lineChartGrowthCountryCanvas: ElementRef;
-  public lineGrowthCountryCanvasContext: CanvasRenderingContext2D;
+	@ViewChild('lineChartGrowthCountryCanvas', { static: false })
+	lineChartGrowthCountryCanvas: ElementRef;
+	public lineGrowthCountryCanvasContext: CanvasRenderingContext2D;
 
-  @ViewChild('lineChartGrowthCanvas', { static: false }) lineChartGrowthCanvas: ElementRef;
-  public lineGrowthCanvasContext: CanvasRenderingContext2D;
+	@ViewChild('lineChartGrowthCanvas', { static: false })
+	lineChartGrowthCanvas: ElementRef;
+	public lineGrowthCanvasContext: CanvasRenderingContext2D;
 
-  @ViewChild('barChartGrowthCountryCanvas', { static: false }) barChartGrowthCountryCanvas: ElementRef;
-  public barGrowthCountryCanvasContext: CanvasRenderingContext2D;
+	@ViewChild('barChartGrowthCountryCanvas', { static: false })
+	barChartGrowthCountryCanvas: ElementRef;
+	public barGrowthCountryCanvasContext: CanvasRenderingContext2D;
 
-  @ViewChild('barChartGrowthCanvas', { static: false }) barChartGrowthCanvas: ElementRef;
-  public barGrowthCanvasContext: CanvasRenderingContext2D;
+	@ViewChild('barChartGrowthCanvas', { static: false })
+	barChartGrowthCanvas: ElementRef;
+	public barGrowthCanvasContext: CanvasRenderingContext2D;
 
-  @ViewChild('scatterChartGrowthCountryCanvas', { static: false }) scatterChartGrowthCountryCanvas: ElementRef;
-  public scatterGrowthCountryCanvasContext: CanvasRenderingContext2D;
+	@ViewChild('scatterChartGrowthCountryCanvas', { static: false })
+	scatterChartGrowthCountryCanvas: ElementRef;
+	public scatterGrowthCountryCanvasContext: CanvasRenderingContext2D;
 
-  @ViewChild('scatterChartGrowthCanvas', { static: false }) scatterChartGrowthCanvas: ElementRef;
-  public scatterGrowthCanvasContext: CanvasRenderingContext2D;
+	@ViewChild('scatterChartGrowthCanvas', { static: false })
+	scatterChartGrowthCanvas: ElementRef;
+	public scatterGrowthCanvasContext: CanvasRenderingContext2D;
 
-  constructor(public restService: RestService) { }
+	@ViewChild('lineChartProjectionCountryCanvas', { static: false })
+	lineChartProjectionCountryCanvas: ElementRef;
+	public lineProjectionCountryCanvasContext: CanvasRenderingContext2D;
 
-  ngOnInit(): void {
-    this.trendAllCountries();
-  }
+	@ViewChild('lineChartProjectionCanvas', { static: false })
+	lineChartProjectionCanvas: ElementRef;
+	public lineProjectionCanvasContext: CanvasRenderingContext2D;
 
-  ngOnDestroy(): void {
-    this.coronaCasesGrowthStatsSubscription.unsubscribe();
-    this.coronaCasesGrowthCountriesStatsSubscription.unsubscribe();
-  }
+	constructor(public restService: RestService) {}
 
-  trendAllCountries(): void {
-    if (!this.coronaCasesGrowthCountriesStatsResponse) {
-      this.coronaCasesGrowthCountriesStatsSubscription = this.restService.getCoronaCasesGrowthAllCountriesStats().subscribe(data => this.storeCasesGrowthCountriesStats(data));
-    }
-    if (!this.coronaCasesGrowthStatsResponse) {
-      this.coronaCasesGrowthStatsSubscription = this.restService.getCoronaCasesGrowthStats().subscribe(data => this.processCasesGrowthStats(data));
-    } else {
-      this.processCasesGrowthStats(this.coronaCasesGrowthStatsResponse);
-    }
-  }
+	ngOnInit(): void {
+		this.trendAllCountries();
+	}
 
-  processCasesGrowthStats(data: any): void {
-    this.processCasesGrowthStatsForGraphs(data);
-    this.setGrowthStatsLineGraphConfiguration();
-    this.growths = this.coronaCasesGrowthStatsResponse.map(x => x.delta);
-    this.setGrowthStatsBarGraphConfiguration();
-    this.setGrowthStatsScatterGraphConfiguration();
-  }
+	ngOnDestroy(): void {
+		this.coronaCasesGrowthStatsSubscription.unsubscribe();
+		this.coronaCasesGrowthCountriesStatsSubscription.unsubscribe();
+	}
 
-  public processCasesGrowthStatsForGraphs(data: any): void {
-    this.coronaCasesGrowthStatsResponse = data;
-    this.dates = this.coronaCasesGrowthStatsResponse.map(x => this.getFormattedDate(x.date));
-    this.growths = this.coronaCasesGrowthStatsResponse.map(x => x.growth);
-    this.deltas = this.coronaCasesGrowthStatsResponse.map(x => x.delta);
-    this.totalCases = this.growths[this.growths.length - 1].toLocaleString("us-US");
-    this.newCases = this.deltas[this.deltas.length - 1].toLocaleString("us-US");
-    this.scatterDataSet = [];
-    this.coronaCasesGrowthStatsResponse.forEach(element => { this.scatterDataSet.push({ x: element.growth, y: element.delta }) });
+	trendAllCountries(): void {
+		if (!this.coronaCasesGrowthCountriesStatsResponse) {
+			this.coronaCasesGrowthCountriesStatsSubscription = this.restService
+				.getCoronaCasesGrowthAllCountriesStats()
+				.subscribe((data) => this.storeCasesGrowthCountriesStats(data));
+		}
+		if (!this.coronaCasesGrowthStatsResponse) {
+			this.coronaCasesGrowthStatsSubscription = this.restService
+				.getCoronaCasesGrowthStats()
+				.subscribe((data) => this.processCasesGrowthStats(data));
+		} else {
+			this.processCasesGrowthStats(this.coronaCasesGrowthStatsResponse);
+		}
+	}
 
-    let updatedScatterDataSet = [];
+	processCasesGrowthStats(data: any): void {
+		this.processCasesGrowthStatsForGraphs(data);
+		this.setGrowthStatsLineGraphConfiguration();
+		this.growths = this.coronaCasesGrowthStatsResponse.map((x) => x.delta);
+		this.setGrowthStatsBarGraphConfiguration();
+		this.setGrowthStatsScatterGraphConfiguration();
+		this.setProjectionStatsLineGraphConfiguration();
+	}
 
-    for (let i = this.scatterDataSet.length - 1; i >= 0; i--) {
-      let growth = this.scatterDataSet[i].x, delta = 0;
-      for (let j = i; j > i - 7 && j >= 0; j--) {
-        delta = delta + this.scatterDataSet[j].y;
-      }
-      updatedScatterDataSet.push({ x: growth, y: delta });
-    }
+	public processCasesGrowthStatsForGraphs(data: any): void {
+		this.coronaCasesGrowthStatsResponse = data;
+		this.dates = this.coronaCasesGrowthStatsResponse.map((x) => this.getFormattedDate(x.date));
+		this.growths = this.coronaCasesGrowthStatsResponse.map((x) => x.growth);
+		this.deltas = this.coronaCasesGrowthStatsResponse.map((x) => x.delta);
+		this.totalCases = this.growths[this.growths.length - 1].toLocaleString('us-US');
+		this.newCases = this.deltas[this.deltas.length - 1].toLocaleString('us-US');
+		this.scatterDataSet = [];
+		this.coronaCasesGrowthStatsResponse.forEach((element) => {
+			this.scatterDataSet.push({ x: element.growth, y: element.delta });
+		});
 
-    this.scatterDataSet = updatedScatterDataSet;
-  }
+		let updatedScatterDataSet = [];
 
-  public setGrowthStatsLineGraphConfiguration(): void {
-    this.lineGraphGrowthLabels = this.dates;
-    this.lineGraphGrowthData = [{
-      data: this.growths,
-      label: 'Cases',
-      borderColor: 'lightblue',
-      fill: false,
-      pointRadius: 2
-    }];
-    this.lineGraphGrowthOptions = {
-      scaleShowVerticalLines: false,
-      responsive: false,
-      responsiveAnimationDuration: 0,
-      legend: {
-        display: false
-      },
-      title: {
-        display: true,
-        text: 'All Countries / Total Cases ' + this.totalCases,
-        fontSize: 14,
-        fontStyle: 'normal',
-        fontColor: 'lightblue'
-      },
-      scales: {
-        xAxes: [{
-          ticks: {
-            display: false
-          }
-        }], yAxes: [{
-          ticks: {
-            display: true,
-            fontColor: 'lightblue'
-          }
-        }]
-      }
-    };
-  }
+		for (let i = this.scatterDataSet.length - 1; i >= 0; i--) {
+			let growth = this.scatterDataSet[i].x,
+				delta = 0;
+			for (let j = i; j > i - 7 && j >= 0; j--) {
+				delta = delta + this.scatterDataSet[j].y;
+			}
+			updatedScatterDataSet.push({ x: growth, y: delta });
+		}
 
-  public setGrowthStatsBarGraphConfiguration(): void {
-    this.barGraphGrowthLabels = this.dates;
-    this.barGraphGrowthData = [{
-      data: this.deltas,
-      label: 'Cases',
-      borderColor: '#008dc9',
-      backgroundColor: '#008dc9',
-      fill: false
-    }];
-    this.barGraphGrowthOptions = {
-      scaleShowVerticalLines: false,
-      responsive: false,
-      responsiveAnimationDuration: 0,
-      legend: {
-        display: false
-      },
-      title: {
-        display: true,
-        text: 'All Countries / New Cases ' + this.newCases,
-        fontSize: 14,
-        fontStyle: 'normal',
-        fontColor: 'lightblue'
-      },
-      scales: {
-        xAxes: [{
-          ticks: {
-            display: false
-          }
-        }], yAxes: [{
-          ticks: {
-            display: true,
-            fontColor: 'lightblue'
-          }
-        }] 
-      }
-    };
-  }
+		this.scatterDataSet = updatedScatterDataSet;
+	}
 
-  public setGrowthStatsScatterGraphConfiguration(): void {
-    this.scatterGraphGrowthData = [{
-      data: this.scatterDataSet,
-      label: 'Cases',
-      borderColor: 'lightblue',
-      backgroundColor: 'lightblue',
-      showLine: true,
-      fill: false,
-      borderDash: [10, 5],
-      pointRadius: 2
-    }];
-    this.scatterGraphGrowthOptions = {
-      scaleShowVerticalLines: false,
-      responsive: false,
-      responsiveAnimationDuration: 0,
-      legend: {
-        display: false
-      },
-      title: {
-        display: true,
-        fontSize: 14,
-        fontStyle: 'normal',
-        fontColor: 'lightblue'
-      },
-      scales: {
-        xAxes: [{
-          type: 'logarithmic',
-          scaleLabel: {
-            display: true,
-            labelString: 'Total Confirmed Cases',
-            fontColor: 'lightblue',
-            pointRadius: 2
-          },
-          ticks: {
-            display: true,
-            fontColor: 'lightblue',
-            callback: function (value, index, values) {
-              return Number(value.toString());
-            }
-          },
-          afterBuildTicks: function (chartObj) {
-            chartObj.ticks = [];
-            chartObj.ticks.push(100);
-            chartObj.ticks.push(1000);
-            chartObj.ticks.push(10000);
-            chartObj.ticks.push(100000);
-            chartObj.ticks.push(1000000);
-            chartObj.ticks.push(10000000);
-          }
-        }],
-        yAxes: [{
-          type: 'logarithmic',
-          scaleLabel: {
-            display: true,
-            labelString: 'New Confirmed Cases Past Week',
-            fontColor: 'lightblue'
-          },
-          ticks: {
-            display: true,
-            fontColor: 'lightblue',
-            callback: function (value, index, values) {
-              return Number(value.toString());
-            }
-          },
-          afterBuildTicks: function (chartObj) {
-            chartObj.ticks = [];
-            chartObj.ticks.push(100);
-            chartObj.ticks.push(1000);
-            chartObj.ticks.push(10000);
-            chartObj.ticks.push(100000);
-            chartObj.ticks.push(1000000);
-          }
-        }]
-      }
-    };
-  }
+	public setGrowthStatsLineGraphConfiguration(): void {
+		this.lineGraphGrowthLabels = this.dates;
+		this.lineGraphGrowthData = [
+			{
+				data: this.growths,
+				label: 'Cases',
+				borderColor: 'lightblue',
+				fill: false,
+				pointRadius: 2
+			}
+		];
+		this.lineGraphGrowthOptions = {
+			scaleShowVerticalLines: false,
+			responsive: false,
+			responsiveAnimationDuration: 0,
+			legend: {
+				display: false
+			},
+			title: {
+				display: true,
+				text: 'All Countries / Total Cases ' + this.totalCases,
+				fontSize: 14,
+				fontStyle: 'normal',
+				fontColor: 'lightblue'
+			},
+			scales: {
+				xAxes: [
+					{
+						ticks: {
+							display: false
+						}
+					}
+				],
+				yAxes: [
+					{
+						ticks: {
+							display: true,
+							fontColor: 'lightblue'
+						}
+					}
+				]
+			}
+		};
+	}
 
-  trendSearchByCountry(country: string): void {
-    this.clearExistingGraphs();
+	public setGrowthStatsBarGraphConfiguration(): void {
+		this.barGraphGrowthLabels = this.dates;
+		this.barGraphGrowthData = [
+			{
+				data: this.deltas,
+				label: 'Cases',
+				borderColor: '#008dc9',
+				backgroundColor: '#008dc9',
+				fill: false
+			}
+		];
+		this.barGraphGrowthOptions = {
+			scaleShowVerticalLines: false,
+			responsive: false,
+			responsiveAnimationDuration: 0,
+			legend: {
+				display: false
+			},
+			title: {
+				display: true,
+				text: 'All Countries / New Cases ' + this.newCases,
+				fontSize: 14,
+				fontStyle: 'normal',
+				fontColor: 'lightblue'
+			},
+			scales: {
+				xAxes: [
+					{
+						ticks: {
+							display: false
+						}
+					}
+				],
+				yAxes: [
+					{
+						ticks: {
+							display: true,
+							fontColor: 'lightblue'
+						}
+					}
+				]
+			}
+		};
+	}
 
-    if (country.indexOf("All Countries") >= 0) {
-      this.showTotal = true;
-      this.showCountry = false;
-      this.trendAllCountries();
-    } else {
-      if (!this.coronaCasesGrowthCountriesStatsResponse) {
-        this.coronaCasesGrowthCountriesStatsSubscription = this.restService.getCoronaCasesGrowthAllCountriesStats().subscribe(data => this.processCasesGrowthCountriesStats(data, country));
-      } else {
-        this.processCasesGrowthCountriesStats(this.coronaCasesGrowthCountriesStatsResponse, country);
-      }
-    }
-  }
+	public setGrowthStatsScatterGraphConfiguration(): void {
+		this.scatterGraphGrowthData = [
+			{
+				data: this.scatterDataSet,
+				label: 'Cases',
+				borderColor: 'lightblue',
+				backgroundColor: 'lightblue',
+				showLine: true,
+				fill: false,
+				borderDash: [ 10, 5 ],
+				pointRadius: 2
+			}
+		];
+		this.scatterGraphGrowthOptions = {
+			scaleShowVerticalLines: false,
+			responsive: false,
+			responsiveAnimationDuration: 0,
+			legend: {
+				display: false
+			},
+			title: {
+				display: true,
+				fontSize: 14,
+				fontStyle: 'normal',
+				fontColor: 'lightblue'
+			},
+			scales: {
+				xAxes: [
+					{
+						type: 'logarithmic',
+						scaleLabel: {
+							display: true,
+							labelString: 'Total Confirmed Cases',
+							fontColor: 'lightblue',
+							pointRadius: 2
+						},
+						ticks: {
+							display: true,
+							fontColor: 'lightblue',
+							callback: function(value, index, values) {
+								return Number(value.toString());
+							}
+						},
+						afterBuildTicks: function(chartObj) {
+							chartObj.ticks = [];
+							chartObj.ticks.push(100);
+							chartObj.ticks.push(1000);
+							chartObj.ticks.push(10000);
+							chartObj.ticks.push(100000);
+							chartObj.ticks.push(1000000);
+							chartObj.ticks.push(10000000);
+						}
+					}
+				],
+				yAxes: [
+					{
+						type: 'logarithmic',
+						scaleLabel: {
+							display: true,
+							labelString: 'New Confirmed Cases Past Week',
+							fontColor: 'lightblue'
+						},
+						ticks: {
+							display: true,
+							fontColor: 'lightblue',
+							callback: function(value, index, values) {
+								return Number(value.toString());
+							}
+						},
+						afterBuildTicks: function(chartObj) {
+							chartObj.ticks = [];
+							chartObj.ticks.push(100);
+							chartObj.ticks.push(1000);
+							chartObj.ticks.push(10000);
+							chartObj.ticks.push(100000);
+							chartObj.ticks.push(1000000);
+						}
+					}
+				]
+			}
+		};
+	}
 
-  storeCasesGrowthCountriesStats(data) {
-    this.coronaCasesGrowthCountriesStatsResponse = data;
-    this.countries = this.countries ? this.countries : data.map(x => x.country);
-  }
+	trendSearchByCountry(country: string): void {
+		this.clearExistingGraphs();
 
-  public clearExistingGraphs() {
-    if (this.lineChartGrowthCanvas) {
-      this.lineGrowthCanvasContext = (<HTMLCanvasElement>this.lineChartGrowthCanvas.nativeElement).getContext('2d');
-    }
-    if (this.lineGrowthCountryCanvasContext) {
-      this.lineGrowthCountryCanvasContext = (<HTMLCanvasElement>this.lineChartGrowthCountryCanvas.nativeElement).getContext('2d');
-    }
-    if (this.lineGrowthCanvasContext) {
-      this.lineGrowthCanvasContext.clearRect(0, 0, this.lineGrowthCanvasContext.canvas.width, this.lineGrowthCanvasContext.canvas.height);
-    }
-    if (this.lineGrowthCountryCanvasContext) {
-      this.lineGrowthCountryCanvasContext.clearRect(0, 0, this.lineGrowthCountryCanvasContext.canvas.width, this.lineGrowthCountryCanvasContext.canvas.height);
-    }
-    if (this.barChartGrowthCanvas) {
-      this.barGrowthCanvasContext = (<HTMLCanvasElement>this.barChartGrowthCanvas.nativeElement).getContext('2d');
-    }
-    if (this.barGrowthCountryCanvasContext) {
-      this.barGrowthCountryCanvasContext = (<HTMLCanvasElement>this.barChartGrowthCountryCanvas.nativeElement).getContext('2d');
-    }
-    if (this.barGrowthCanvasContext) {
-      this.barGrowthCanvasContext.clearRect(0, 0, this.barGrowthCanvasContext.canvas.width, this.barGrowthCanvasContext.canvas.height);
-    }
-    if (this.barGrowthCountryCanvasContext) {
-      this.barGrowthCountryCanvasContext.clearRect(0, 0, this.barGrowthCountryCanvasContext.canvas.width, this.barGrowthCountryCanvasContext.canvas.height);
-    }
-    if (this.scatterChartGrowthCanvas) {
-      this.scatterGrowthCanvasContext = (<HTMLCanvasElement>this.scatterChartGrowthCanvas.nativeElement).getContext('2d');
-    }
-    if (this.scatterGrowthCountryCanvasContext) {
-      this.scatterGrowthCountryCanvasContext = (<HTMLCanvasElement>this.scatterChartGrowthCountryCanvas.nativeElement).getContext('2d');
-    }
-    if (this.scatterGrowthCanvasContext) {
-      this.scatterGrowthCanvasContext.clearRect(0, 0, this.scatterGrowthCanvasContext.canvas.width, this.scatterGrowthCanvasContext.canvas.height);
-    }
-    if (this.scatterGrowthCountryCanvasContext) {
-      this.scatterGrowthCountryCanvasContext.clearRect(0, 0, this.scatterGrowthCountryCanvasContext.canvas.width, this.scatterGrowthCountryCanvasContext.canvas.height);
-    }
-  }
+		if (country.indexOf('All Countries') >= 0) {
+			this.showTotal = true;
+			this.showCountry = false;
+			this.trendAllCountries();
+		} else {
+			if (!this.coronaCasesGrowthCountriesStatsResponse) {
+				this.coronaCasesGrowthCountriesStatsSubscription = this.restService
+					.getCoronaCasesGrowthAllCountriesStats()
+					.subscribe((data) => this.processCasesGrowthCountriesStats(data, country));
+			} else {
+				this.processCasesGrowthCountriesStats(this.coronaCasesGrowthCountriesStatsResponse, country);
+			}
+		}
+	}
 
-  public processCasesGrowthCountriesStats(data: any, value: string) {
-    this.processCasesGrowthCountriesStatsForGraphs(data, value);
-    this.setCasesGrowthCountriesStatsLineGraphConfiguration(value);
-    this.setCasesGrowthCountriesStatsBarGraphConfiguration(value);
-    this.setCasesGrowthCountriesStatsScatterGraphConfiguration(value);
-    this.showTotal = false;
-    this.showCountry = true;
-  }
+	storeCasesGrowthCountriesStats(data) {
+		this.coronaCasesGrowthCountriesStatsResponse = data;
+		this.countries = this.countries ? this.countries : data.map((x) => x.country);
+	}
 
-  public processCasesGrowthCountriesStatsForGraphs(data: any, value: string): void {
-    this.coronaCasesGrowthCountriesStatsResponse = data;
-    this.countryStat = this.coronaCasesGrowthCountriesStatsResponse.filter(x => x.country.indexOf(value) >= 0);
-    this.dates = this.countryStat[0].casesGrowths.map(x => this.getFormattedDate(x.date));
-    this.growths = this.countryStat[0].casesGrowths.map(x => x.growth);
-    this.deltas = this.countryStat[0].casesGrowths.map(x => x.delta);
-    this.totalCases = this.growths[this.growths.length - 1].toLocaleString("us-US");
-    this.newCases = this.deltas[this.deltas.length - 1].toLocaleString("us-US");
-    this.scatterCountryDataSet = [];
-    this.countryStat[0].casesGrowths.forEach(element => { this.scatterCountryDataSet.push({ x: element.growth, y: element.delta }) });
+	public processCasesGrowthCountriesStats(data: any, value: string) {
+		this.processCasesGrowthCountriesStatsForGraphs(data, value);
+		this.setCasesGrowthCountriesStatsLineGraphConfiguration(value);
+		this.setCasesGrowthCountriesStatsBarGraphConfiguration(value);
+		this.setCasesGrowthCountriesStatsScatterGraphConfiguration(value);
+		this.setProjectionCountryStatsLineGraphConfiguration(value);
+		this.showTotal = false;
+		this.showCountry = true;
+	}
 
-    let updatedScatterCountryDataSet = [];
+	public processCasesGrowthCountriesStatsForGraphs(data: any, value: string): void {
+		this.coronaCasesGrowthCountriesStatsResponse = data;
+		this.countryStat = this.coronaCasesGrowthCountriesStatsResponse.filter((x) => x.country.indexOf(value) >= 0);
+		this.dates = this.countryStat[0].casesGrowths.map((x) => this.getFormattedDate(x.date));
+		this.growths = this.countryStat[0].casesGrowths.map((x) => x.growth);
+		this.deltas = this.countryStat[0].casesGrowths.map((x) => x.delta);
+		this.totalCases = this.growths[this.growths.length - 1].toLocaleString('us-US');
+		this.newCases = this.deltas[this.deltas.length - 1].toLocaleString('us-US');
+		this.scatterCountryDataSet = [];
+		this.countryStat[0].casesGrowths.forEach((element) => {
+			this.scatterCountryDataSet.push({ x: element.growth, y: element.delta });
+		});
 
-    for (let i = this.scatterCountryDataSet.length - 1; i >= 0; i--) {
-      let growth = this.scatterCountryDataSet[i].x, delta = 0;
-      for (let j = i; j > i - 7 && j >= 0; j--) {
-        delta = delta + this.scatterCountryDataSet[j].y;
-      }
-      updatedScatterCountryDataSet.push({ x: growth, y: delta });
-    }
+		let updatedScatterCountryDataSet = [];
 
-    this.scatterCountryDataSet = updatedScatterCountryDataSet;
-  }
+		for (let i = this.scatterCountryDataSet.length - 1; i >= 0; i--) {
+			let growth = this.scatterCountryDataSet[i].x,
+				delta = 0;
+			for (let j = i; j > i - 7 && j >= 0; j--) {
+				delta = delta + this.scatterCountryDataSet[j].y;
+			}
+			updatedScatterCountryDataSet.push({ x: growth, y: delta });
+		}
 
-  public setCasesGrowthCountriesStatsLineGraphConfiguration(value: string): void {
-    this.lineGraphGrowthCountryLabels = this.dates;
-    this.lineGraphGrowthCountryData = [{
-      data: this.growths,
-      label: 'Cases',
-      borderColor: 'lightblue',
-      fill: false,
-      pointRadius: 2
-    }];
-    this.lineGraphGrowthCountryOptions = {
-      scaleShowVerticalLines: false,
-      responsive: false,
-      responsiveAnimationDuration: 0,
-      legend: {
-        display: false
-      },
-      title: {
-        display: true,
-        text: value.charAt(0).toUpperCase() + value.slice(1) + ' / Total Cases ' + this.totalCases,
-        fontSize: 14,
-        fontStyle: 'normal',
-        fontColor: 'lightblue'
-      },
-      scales: {
-        xAxes: [{
-          ticks: {
-            display: false
-          }
-        }], yAxes: [{
-          ticks: {
-            fontColor: 'lightblue'
-          }
-        }]
-      }
-    };
-  }
+		this.scatterCountryDataSet = updatedScatterCountryDataSet;
+	}
 
-  public setCasesGrowthCountriesStatsBarGraphConfiguration(value: string) {
-    this.barGraphGrowthCountryLabels = this.dates;
-    this.barGraphGrowthCountryData = [{
-      data: this.deltas,
-      label: 'Cases',
-      borderColor: '#008dc9',
-      backgroundColor: '#008dc9',
-      fill: false
-    }];
-    this.barGraphGrowthCountryOptions = {
-      scaleShowVerticalLines: false,
-      responsive: false,
-      responsiveAnimationDuration: 0,
-      legend: {
-        display: false
-      },
-      title: {
-        display: true,
-        text: value.charAt(0).toUpperCase() + value.slice(1) + ' / New Cases ' + this.newCases,
-        fontSize: 14,
-        fontStyle: 'normal',
-        fontColor: 'lightblue'
-      },
-      scales: {
-        xAxes: [{
-          ticks: {
-            display: false
-          }
-        }], yAxes: [{
-          ticks: {
-            fontColor: 'lightblue'
-          }
-        }]
-      }
-    };
-  }
+	public setCasesGrowthCountriesStatsLineGraphConfiguration(value: string): void {
+		this.lineGraphGrowthCountryLabels = this.dates;
+		this.lineGraphGrowthCountryData = [
+			{
+				data: this.growths,
+				label: 'Cases',
+				borderColor: 'lightblue',
+				fill: false,
+				pointRadius: 2
+			}
+		];
+		this.lineGraphGrowthCountryOptions = {
+			scaleShowVerticalLines: false,
+			responsive: false,
+			responsiveAnimationDuration: 0,
+			legend: {
+				display: false
+			},
+			title: {
+				display: true,
+				text: value.charAt(0).toUpperCase() + value.slice(1) + ' / Total Cases ' + this.totalCases,
+				fontSize: 14,
+				fontStyle: 'normal',
+				fontColor: 'lightblue'
+			},
+			scales: {
+				xAxes: [
+					{
+						ticks: {
+							display: false
+						}
+					}
+				],
+				yAxes: [
+					{
+						ticks: {
+							fontColor: 'lightblue'
+						}
+					}
+				]
+			}
+		};
+	}
 
-  public setCasesGrowthCountriesStatsScatterGraphConfiguration(value: string) {
-    this.scatterGraphGrowthCountryData = [{
-      data: this.scatterCountryDataSet,
-      label: 'Cases',
-      borderColor: 'lightblue',
-      backgroundColor: 'lightblue',
-      showLine: true,
-      fill: false,
-      borderDash: [10, 5],
-      pointRadius: 2
-    }];
-    this.scatterGraphGrowthCountryOptions = {
-      scaleShowVerticalLines: false,
-      responsive: false,
-      responsiveAnimationDuration: 0,
-      legend: {
-        display: false
-      },
-      title: {
-        display: true,        
-        fontSize: 14,
-        fontStyle: 'normal',
-        fontColor: 'lightblue'
-      },
-      scales: {
-        xAxes: [{
-          type: 'logarithmic',
-          scaleLabel: {
-            display: true,
-            fontColor: 'lightblue',
-            labelString: 'Total Confirmed Cases'
-          },
-          ticks: {
-            display: true,
-            fontColor: 'lightblue',
-            callback: function (value, index, values) {
-              return Number(value.toString());
-            }
-          },
-          afterBuildTicks: function (chartObj) {
-            chartObj.ticks = [];
-            chartObj.ticks.push(100);
-            chartObj.ticks.push(1000);
-            chartObj.ticks.push(10000);
-            chartObj.ticks.push(100000);
-            chartObj.ticks.push(1000000);
-            chartObj.ticks.push(10000000);
-          }
-        }],
-        yAxes: [{
-          type: 'logarithmic',
-          scaleLabel: {
-            display: true,
-            fontColor: 'lightblue',
-            labelString: 'New Confirmed Cases Past Week'
-          },
-          ticks: {
-            display: true,
-            fontColor: 'lightblue',
-            callback: function (value, index, values) {
-              return Number(value.toString());
-            }
-          },
-          afterBuildTicks: function (chartObj) {
-            chartObj.ticks = [];
-            chartObj.ticks.push(100);
-            chartObj.ticks.push(1000);
-            chartObj.ticks.push(10000);
-            chartObj.ticks.push(100000);
-          }
-        }]
-      }
-    };
-  }
+	public setCasesGrowthCountriesStatsBarGraphConfiguration(value: string) {
+		this.barGraphGrowthCountryLabels = this.dates;
+		this.barGraphGrowthCountryData = [
+			{
+				data: this.deltas,
+				label: 'Cases',
+				borderColor: '#008dc9',
+				backgroundColor: '#008dc9',
+				fill: false
+			}
+		];
+		this.barGraphGrowthCountryOptions = {
+			scaleShowVerticalLines: false,
+			responsive: false,
+			responsiveAnimationDuration: 0,
+			legend: {
+				display: false
+			},
+			title: {
+				display: true,
+				text: value.charAt(0).toUpperCase() + value.slice(1) + ' / New Cases ' + this.newCases,
+				fontSize: 14,
+				fontStyle: 'normal',
+				fontColor: 'lightblue'
+			},
+			scales: {
+				xAxes: [
+					{
+						ticks: {
+							display: false
+						}
+					}
+				],
+				yAxes: [
+					{
+						ticks: {
+							fontColor: 'lightblue'
+						}
+					}
+				]
+			}
+		};
+	}
 
-  getFormattedDate(date) {
-    var dt = new Date(date);
-    var year = dt.getFullYear();
-    var month = ("0" + (dt.getMonth() + 1)).slice(-2);
-    var day = ("0" + dt.getDate()).slice(-2);
-    return `${year}-${month}-${day}`;
-  }
+	public setCasesGrowthCountriesStatsScatterGraphConfiguration(value: string) {
+		this.scatterGraphGrowthCountryData = [
+			{
+				data: this.scatterCountryDataSet,
+				label: 'Cases',
+				borderColor: 'lightblue',
+				backgroundColor: 'lightblue',
+				showLine: true,
+				fill: false,
+				borderDash: [ 10, 5 ],
+				pointRadius: 2
+			}
+		];
+		this.scatterGraphGrowthCountryOptions = {
+			scaleShowVerticalLines: false,
+			responsive: false,
+			responsiveAnimationDuration: 0,
+			legend: {
+				display: false
+			},
+			title: {
+				display: true,
+				fontSize: 14,
+				fontStyle: 'normal',
+				fontColor: 'lightblue'
+			},
+			scales: {
+				xAxes: [
+					{
+						type: 'logarithmic',
+						scaleLabel: {
+							display: true,
+							fontColor: 'lightblue',
+							labelString: 'Total Confirmed Cases'
+						},
+						ticks: {
+							display: true,
+							fontColor: 'lightblue',
+							callback: function(value, index, values) {
+								return Number(value.toString());
+							}
+						},
+						afterBuildTicks: function(chartObj) {
+							chartObj.ticks = [];
+							chartObj.ticks.push(100);
+							chartObj.ticks.push(1000);
+							chartObj.ticks.push(10000);
+							chartObj.ticks.push(100000);
+							chartObj.ticks.push(1000000);
+							chartObj.ticks.push(10000000);
+						}
+					}
+				],
+				yAxes: [
+					{
+						type: 'logarithmic',
+						scaleLabel: {
+							display: true,
+							fontColor: 'lightblue',
+							labelString: 'New Confirmed Cases Past Week'
+						},
+						ticks: {
+							display: true,
+							fontColor: 'lightblue',
+							callback: function(value, index, values) {
+								return Number(value.toString());
+							}
+						},
+						afterBuildTicks: function(chartObj) {
+							chartObj.ticks = [];
+							chartObj.ticks.push(100);
+							chartObj.ticks.push(1000);
+							chartObj.ticks.push(10000);
+							chartObj.ticks.push(100000);
+						}
+					}
+				]
+			}
+		};
+	}
+
+	public setProjectionStatsLineGraphConfiguration(): void {
+		let growth = [];
+		let date = [];
+		let doublesEveryFifth = [];
+		let doublesEveryThird = [];
+		doublesEveryFifth.push(this.growths[0] == ('0' || '') ? '1' : this.growths[0]);
+		doublesEveryThird.push(this.growths[0] == ('0' || '') ? '1' : this.growths[0]);
+
+		for (let i = 0; i <= this.growths.length - 1; i++) {
+			let g = 0;
+			for (let j = 0; j <= i; j++) {
+				g = g + parseFloat(this.growths[j] == '' ? '0' : this.growths[j]);
+			}
+			growth.push(g);
+
+			if (i > 0) {
+				let x = parseFloat(doublesEveryFifth[i - 1]);
+				let y = x * 1.15;
+				let z = y.toString();
+				doublesEveryFifth.push(z);
+
+				x = parseFloat(doublesEveryThird[i - 1]);
+				y = x * 1.259;
+				z = y.toString();
+				doublesEveryThird.push(y);
+			}
+		}
+
+		for (let i = 0; i <= this.dates.length - 1; i++) {
+			let g = 0;
+			if (i % 10 == 0) {
+				date.push(this.dates[i]);
+			} else {
+				date.push('');
+			}
+		}
+
+		this.lineGraphProjectionLabels = date;
+		this.lineGraphProjectionData = [
+			{
+				data: growth,
+				label: 'Actual Cases',
+				borderColor: 'lightblue',
+				backgroundColor: 'lightblue',
+				showLine: true,
+				fill: false,
+				borderDash: [ 10, 5 ],
+				pointRadius: 2
+			},
+			{
+				data: doublesEveryFifth,
+				label: 'Doubling every 5 days',
+				borderColor: 'limegreen',
+				backgroundColor: 'limegreen',
+				showLine: true,
+				fill: false,
+				borderDash: [ 5, 5 ],
+				pointRadius: 1,
+				borderWidth: 1
+			},
+			{
+				data: doublesEveryThird,
+				label: 'Doubling every 3 days',
+				borderColor: 'red',
+				backgroundColor: 'red',
+				showLine: true,
+				fill: false,
+				borderDash: [ 5, 5 ],
+				pointRadius: 1,
+				borderWidth: 1
+			}
+		];
+		this.lineGraphProjectionOptions = {
+			scaleShowVerticalLines: false,
+			responsive: false,
+			responsiveAnimationDuration: 0,
+			legend: {
+				display: true,
+				position: 'bottom',
+				labels: {
+					fontColor: 'lightblue',
+					fontSize: 8,
+					useLineStyle: true
+				}
+			},
+			title: {
+				display: true,
+				text: 'All Countries / Total Cases ' + this.totalCases,
+				fontSize: 14,
+				fontStyle: 'normal',
+				fontColor: 'lightblue'
+			},
+			scales: {
+				xAxes: [
+					{
+						ticks: {
+							display: true,
+							fontColor: 'lightblue',
+							fontSize: 8
+						}
+					}
+				],
+				yAxes: [
+					{
+						type: 'logarithmic',
+						scaleLabel: {
+							display: true,
+							labelString: 'Cases',
+							fontColor: 'lightblue'
+						},
+						ticks: {
+							display: true,
+							fontColor: 'lightblue',
+							callback: function(value, index, values) {
+								return Number(value.toString());
+							}
+						},
+						afterBuildTicks: function(chartObj) {
+							chartObj.ticks = [];
+							chartObj.ticks.push(100);
+							chartObj.ticks.push(1000);
+							chartObj.ticks.push(10000);
+							chartObj.ticks.push(100000);
+							chartObj.ticks.push(1000000);
+						}
+					}
+				]
+			}
+		};
+	}
+
+	public setProjectionCountryStatsLineGraphConfiguration(value: string): void {
+		let growth = [];
+		let date = [];
+		let doublesEveryFifth = [];
+		let doublesEveryThird = [];
+		doublesEveryFifth.push(this.growths[0] == ('0' || '') ? '1' : this.growths[0]);
+		doublesEveryThird.push(this.growths[0] == ('0' || '') ? '1' : this.growths[0]);
+
+		for (let i = 0; i <= this.growths.length - 1; i++) {
+			let g = 0;
+			for (let j = 0; j <= i; j++) {
+				g = g + parseFloat(this.growths[j] == '' ? '0' : this.growths[j]);
+			}
+			growth.push(g);
+
+			if (i > 0) {
+				let x = parseFloat(doublesEveryFifth[i - 1]);
+				let y = x * 1.15;
+				let z = y.toString();
+				doublesEveryFifth.push(z);
+
+				x = parseFloat(doublesEveryThird[i - 1]);
+				y = x * 1.259;
+				z = y.toString();
+				doublesEveryThird.push(y);
+			}
+		}
+
+		for (let i = 0; i <= this.dates.length - 1; i++) {
+			let g = 0;
+			if (i % 10 == 0) {
+				date.push(this.dates[i]);
+			} else {
+				date.push('');
+			}
+		}
+
+		this.lineGraphProjectionCountryLabels = date;
+		this.lineGraphProjectionCountryData = [
+			{
+				data: growth,
+				label: 'Actual Cases',
+				borderColor: 'lightblue',
+				fill: false,
+				pointRadius: 2
+			},
+			{
+				data: doublesEveryFifth,
+				label: 'Doubling every 5 days',
+				borderColor: 'limegreen',
+				backgroundColor: 'limegreen',
+				showLine: true,
+				fill: false,
+				borderDash: [ 5, 5 ],
+				pointRadius: 1,
+				borderWidth: 1
+			},
+			{
+				data: doublesEveryThird,
+				label: 'Doubling every 3 days',
+				borderColor: 'red',
+				backgroundColor: 'red',
+				showLine: true,
+				fill: false,
+				borderDash: [ 5, 5 ],
+				pointRadius: 1,
+				borderWidth: 1
+			}
+		];
+		this.lineGraphProjectionCountryOptions = {
+			scaleShowVerticalLines: false,
+			responsive: false,
+			responsiveAnimationDuration: 0,
+			legend: {
+				display: true,
+				position: 'bottom',
+				labels: {
+					fontColor: 'lightblue',
+					fontSize: 8,
+					useLineStyle: true
+				}
+			},
+			title: {
+				display: true,
+				text:
+					value.charAt(0).toUpperCase() +
+					value.slice(1) +
+					' / Total Cases ' +
+					this.totalCases,
+				fontSize: 14,
+				fontStyle: 'normal',
+				fontColor: 'lightblue'
+			},
+			scales: {
+				xAxes: [
+					{
+						ticks: {
+							display: true,
+							fontColor: 'lightblue',
+							fontSize: 8
+						}
+					}
+				],
+				yAxes: [
+					{
+						type: 'logarithmic',
+						scaleLabel: {
+							display: true,
+							labelString: 'Cases',
+							fontColor: 'lightblue'
+						},
+						ticks: {
+							display: true,
+							fontColor: 'lightblue',
+							callback: function(value, index, values) {
+								return Number(value.toString());
+							}
+						},
+						afterBuildTicks: function(chartObj) {
+							chartObj.ticks = [];
+							chartObj.ticks.push(100);
+							chartObj.ticks.push(1000);
+							chartObj.ticks.push(10000);
+							chartObj.ticks.push(100000);
+							chartObj.ticks.push(1000000);
+						}
+					}
+				]
+			}
+		};
+	}
+
+	getFormattedDate(date) {
+		var dt = new Date(date);
+		var year = dt.getFullYear();
+		var month = ('0' + (dt.getMonth() + 1)).slice(-2);
+		var day = ('0' + dt.getDate()).slice(-2);
+		return `${year}-${month}-${day}`;
+	}
+
+	public clearExistingGraphs() {
+		if (this.lineChartGrowthCanvas) {
+			this.lineGrowthCanvasContext = (<HTMLCanvasElement>this.lineChartGrowthCanvas.nativeElement).getContext(
+				'2d'
+			);
+		}
+		if (this.lineGrowthCountryCanvasContext) {
+			this.lineGrowthCountryCanvasContext = (<HTMLCanvasElement>this.lineChartGrowthCountryCanvas
+				.nativeElement).getContext('2d');
+		}
+		if (this.lineGrowthCanvasContext) {
+			this.lineGrowthCanvasContext.clearRect(
+				0,
+				0,
+				this.lineGrowthCanvasContext.canvas.width,
+				this.lineGrowthCanvasContext.canvas.height
+			);
+		}
+		if (this.lineGrowthCountryCanvasContext) {
+			this.lineGrowthCountryCanvasContext.clearRect(
+				0,
+				0,
+				this.lineGrowthCountryCanvasContext.canvas.width,
+				this.lineGrowthCountryCanvasContext.canvas.height
+			);
+		}
+		if (this.barChartGrowthCanvas) {
+			this.barGrowthCanvasContext = (<HTMLCanvasElement>this.barChartGrowthCanvas.nativeElement).getContext('2d');
+		}
+		if (this.barGrowthCountryCanvasContext) {
+			this.barGrowthCountryCanvasContext = (<HTMLCanvasElement>this.barChartGrowthCountryCanvas
+				.nativeElement).getContext('2d');
+		}
+		if (this.barGrowthCanvasContext) {
+			this.barGrowthCanvasContext.clearRect(
+				0,
+				0,
+				this.barGrowthCanvasContext.canvas.width,
+				this.barGrowthCanvasContext.canvas.height
+			);
+		}
+		if (this.barGrowthCountryCanvasContext) {
+			this.barGrowthCountryCanvasContext.clearRect(
+				0,
+				0,
+				this.barGrowthCountryCanvasContext.canvas.width,
+				this.barGrowthCountryCanvasContext.canvas.height
+			);
+		}
+		if (this.scatterChartGrowthCanvas) {
+			this.scatterGrowthCanvasContext = (<HTMLCanvasElement>this.scatterChartGrowthCanvas
+				.nativeElement).getContext('2d');
+		}
+		if (this.scatterGrowthCountryCanvasContext) {
+			this.scatterGrowthCountryCanvasContext = (<HTMLCanvasElement>this.scatterChartGrowthCountryCanvas
+				.nativeElement).getContext('2d');
+		}
+		if (this.scatterGrowthCanvasContext) {
+			this.scatterGrowthCanvasContext.clearRect(
+				0,
+				0,
+				this.scatterGrowthCanvasContext.canvas.width,
+				this.scatterGrowthCanvasContext.canvas.height
+			);
+		}
+		if (this.scatterGrowthCountryCanvasContext) {
+			this.scatterGrowthCountryCanvasContext.clearRect(
+				0,
+				0,
+				this.scatterGrowthCountryCanvasContext.canvas.width,
+				this.scatterGrowthCountryCanvasContext.canvas.height
+			);
+		}
+		if (this.lineChartProjectionCanvas) {
+			this.lineProjectionCanvasContext = (<HTMLCanvasElement>this.lineChartProjectionCanvas
+				.nativeElement).getContext('2d');
+		}
+		if (this.lineProjectionCountryCanvasContext) {
+			this.lineProjectionCountryCanvasContext = (<HTMLCanvasElement>this.lineChartProjectionCountryCanvas
+				.nativeElement).getContext('2d');
+		}
+		if (this.lineProjectionCanvasContext) {
+			this.lineProjectionCanvasContext.clearRect(
+				0,
+				0,
+				this.lineProjectionCanvasContext.canvas.width,
+				this.lineProjectionCanvasContext.canvas.height
+			);
+		}
+		if (this.lineProjectionCountryCanvasContext) {
+			this.lineProjectionCountryCanvasContext.clearRect(
+				0,
+				0,
+				this.lineProjectionCountryCanvasContext.canvas.width,
+				this.lineProjectionCountryCanvasContext.canvas.height
+			);
+		}
+	}
 }

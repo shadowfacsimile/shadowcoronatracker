@@ -742,14 +742,14 @@ export class IndiastatsComponent implements OnInit {
 		this.lineGraphProjectionStateData = [
 			{
 				data: growth,
-				label: 'Cases',
+				label: 'Actual Cases',
 				borderColor: 'lightblue',
 				fill: false,
 				pointRadius: 2
 			},
 			{
 				data: doublesEveryFifth,
-				label: 'Cases',
+				label: 'Doubling every 5 days',
 				borderColor: 'limegreen',
 				backgroundColor: 'limegreen',
 				showLine: true,
@@ -760,7 +760,7 @@ export class IndiastatsComponent implements OnInit {
 			},
 			{
 				data: doublesEveryThird,
-				label: 'Cases',
+				label: 'Doubling every 3 days',
 				borderColor: 'red',
 				backgroundColor: 'red',
 				showLine: true,
