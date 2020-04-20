@@ -1,3 +1,25 @@
 body {
     background-color: #353f5c;
 }
+
+footer {
+    clear: both;
+    position: relative;
+    height: 20px;
+    margin-top: -20px;
+}
+
+.footer-text {
+    text-align: center;
+    font-size: 10px;
+    font-family: Helvetica;
+    color: #add8e6;
+}
+
+.footer-links {
+    color: #008dc9;
+}
+
+hr {
+    border: .2px solid #4d5b85;
+}

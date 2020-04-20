@@ -8,6 +8,7 @@ import { CountrytrendComponent } from './countrytrend/countrytrend.component';
 import { CountrydeathtrendComponent } from './countrydeathtrend/countrydeathtrend.component';
 import { StatestatsComponent } from './statestats/statestats.component';
 import { IndiastatsComponent } from './indiastats/indiastats.component';
+import { AboutComponent } from './about/about.component';
 
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path: 'cases-trend-by-country', component: CountrytrendComponent},
   {path: 'deaths-trend-by-country', component: CountrydeathtrendComponent},
   {path: 'india-stats', component: IndiastatsComponent},
+  {path: 'about', component: AboutComponent},
   {path: '', redirectTo: '/summary-stats', pathMatch: 'full'},
   {path: '**', component: PagenotfoundComponent}
 ];

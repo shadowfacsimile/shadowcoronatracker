@@ -72,3 +72,13 @@ canvas {
 hr {
     border: 0.2px solid lightblue;
 }
+
+.span-prev {
+    float: left;
+    padding-left: 50px;
+}
+
+.span-next {
+    float: right;
+    padding-right: 50px;
+}

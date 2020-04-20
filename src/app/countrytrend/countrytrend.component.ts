@@ -22,6 +22,11 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
 	public newCases: any;
 	public showCountry: boolean = false;
 	public showTotal: boolean = true;
+	public showLineGraph: boolean = true;
+	public showBarGraph: boolean = false;
+	public showProjectionGraph: boolean = false;
+	public showScatterGraph: boolean = false;
+	public graphDisplayCount: number = 0;
 
 	public lineGraphGrowthLabels;
 	public lineGraphGrowthType = 'line';
@@ -168,13 +173,14 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
 				data: this.growths,
 				label: 'Cases',
 				borderColor: 'lightblue',
-				fill: false,
-				pointRadius: 2
+				fill: false,				
+				pointRadius: 1,
+				borderWidth: 1				
 			}
 		];
 		this.lineGraphGrowthOptions = {
 			scaleShowVerticalLines: false,
-			responsive: false,
+			responsive: true,
 			responsiveAnimationDuration: 0,
 			legend: {
 				display: false
@@ -219,7 +225,7 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
 		];
 		this.barGraphGrowthOptions = {
 			scaleShowVerticalLines: false,
-			responsive: false,
+			responsive: true,
 			responsiveAnimationDuration: 0,
 			legend: {
 				display: false
@@ -260,13 +266,14 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
 				backgroundColor: 'lightblue',
 				showLine: true,
 				fill: false,
-				borderDash: [ 10, 5 ],
-				pointRadius: 2
+				borderDash: [ 10, 5 ],				
+				pointRadius: 1,
+				borderWidth: 1
 			}
 		];
 		this.scatterGraphGrowthOptions = {
 			scaleShowVerticalLines: false,
-			responsive: false,
+			responsive: true,
 			responsiveAnimationDuration: 0,
 			legend: {
 				display: false
@@ -401,13 +408,14 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
 				data: this.growths,
 				label: 'Cases',
 				borderColor: 'lightblue',
-				fill: false,
-				pointRadius: 2
+				fill: false,				
+				pointRadius: 1,
+				borderWidth: 1
 			}
 		];
 		this.lineGraphGrowthCountryOptions = {
 			scaleShowVerticalLines: false,
-			responsive: false,
+			responsive: true,
 			responsiveAnimationDuration: 0,
 			legend: {
 				display: false
@@ -451,7 +459,7 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
 		];
 		this.barGraphGrowthCountryOptions = {
 			scaleShowVerticalLines: false,
-			responsive: false,
+			responsive: true,
 			responsiveAnimationDuration: 0,
 			legend: {
 				display: false
@@ -491,13 +499,14 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
 				backgroundColor: 'lightblue',
 				showLine: true,
 				fill: false,
-				borderDash: [ 10, 5 ],
-				pointRadius: 2
+				borderDash: [ 10, 5 ],				
+				pointRadius: 1,
+				borderWidth: 1
 			}
 		];
 		this.scatterGraphGrowthCountryOptions = {
 			scaleShowVerticalLines: false,
-			responsive: false,
+			responsive: true,
 			responsiveAnimationDuration: 0,
 			legend: {
 				display: false
@@ -606,7 +615,7 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
 			}
 		}
 
-		for (let i = 0; i <= this.dates.length - 1; i++) {
+		for (let i = 30; i <= this.dates.length - 1; i++) {
 			if (i % 10 == 0) {
 				date.push(this.dates[i]);
 			} else {
@@ -623,8 +632,9 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
 				backgroundColor: 'lightblue',
 				showLine: true,
 				fill: false,
-				borderDash: [ 10, 5 ],
-				pointRadius: 2
+				borderDash: [ 10, 5 ],				
+				pointRadius: 1,
+				borderWidth: 1
 			},
 			{
 				data: doublesEveryFifth,
@@ -664,7 +674,7 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
 			},
 			title: {
 				display: true,
-				text: 'All Countries / Total Cases ' + this.totalCases,
+				text: 'All Countries Projection Comparison / Total Cases ' + this.totalCases,
 				fontSize: 14,
 				fontStyle: 'normal',
 				fontColor: 'lightblue'
@@ -765,8 +775,9 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
 				data: delta,
 				label: 'Actual Cases',
 				borderColor: 'lightblue',
-				fill: false,
-				pointRadius: 2
+				fill: false,				
+				pointRadius: 1,
+				borderWidth: 1
 			},
 			{
 				data: doublesEveryFifth,
@@ -806,7 +817,7 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
 			},
 			title: {
 				display: true,
-				text: value.charAt(0).toUpperCase() + value.slice(1) + ' / Total Cases ' + this.totalCases,
+				text: value.charAt(0).toUpperCase() + value.slice(1) + ' Projection Comparison / Total Cases ' + this.totalCases,
 				fontSize: 14,
 				fontStyle: 'normal',
 				fontColor: 'lightblue'
@@ -859,6 +870,12 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
 	}
 
 	public clearExistingGraphs() {
+		this.showLineGraph = true;
+		this.showBarGraph = false;
+		this.showProjectionGraph = false;
+		this.showScatterGraph = false;
+		this.graphDisplayCount = 0;
+
 		if (this.lineChartGrowthCanvas) {
 			this.lineGrowthCanvasContext = (<HTMLCanvasElement>this.lineChartGrowthCanvas.nativeElement).getContext(
 				'2d'
@@ -954,6 +971,53 @@ export class CountrytrendComponent implements OnInit, OnDestroy {
 				this.lineProjectionCountryCanvasContext.canvas.width,
 				this.lineProjectionCountryCanvasContext.canvas.height
 			);
+		}
+	}
+
+	displayNextGraph() {
+		this.graphDisplayCount = (this.graphDisplayCount + 1) % 4;
+		this.showLineGraph = false;
+		this.showBarGraph = false;
+		this.showProjectionGraph = false;
+		this.showScatterGraph = false;
+
+		switch (this.graphDisplayCount) {
+			case 0:
+				this.showLineGraph = true;
+				break;
+			case 1:
+				this.showBarGraph = true;
+				break;
+			case 2:
+				this.showProjectionGraph = true;
+				break;
+			case 3:
+				this.showScatterGraph = true;
+				break;
+		}
+	}
+
+	displayPrevGraph() {
+		this.graphDisplayCount = this.graphDisplayCount == 0 ? 4 : this.graphDisplayCount;
+		this.graphDisplayCount = (this.graphDisplayCount - 1) % 4;
+		this.showLineGraph = false;
+		this.showBarGraph = false;
+		this.showProjectionGraph = false;
+		this.showScatterGraph = false;
+
+		switch (this.graphDisplayCount) {
+			case 0:
+				this.showLineGraph = true;
+				break;
+			case 1:
+				this.showBarGraph = true;
+				break;
+			case 2:
+				this.showProjectionGraph = true;
+				break;
+			case 3:
+				this.showScatterGraph = true;
+				break;
 		}
 	}
 }

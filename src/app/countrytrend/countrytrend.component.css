@@ -68,3 +68,13 @@ canvas {
 .dropdown {
     text-align: center;
 }
+
+.span-prev {
+    float: left;
+    padding-left: 50px;
+}
+
+.span-next {
+    float: right;
+    padding-right: 50px;
+}

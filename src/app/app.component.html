@@ -1,18 +1,41 @@
-<div class="corona-header"><strong>Yet Another Novel Coronavirus COVID-19 Pandemic Statistics Tracker</strong></div>
-<app-alerts></app-alerts>
-<br>
-<nav class="nav-of-routes">
-    <a class="route-links" routerLink="/summary-stats" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">summary</a><span class="backslash"> / </span>
-    <a class="route-links" routerLink="/stats-by-country"routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">countries</a><span class="backslash"> / </span>
-    <a class="route-links" routerLink="/cases-trend-by-country" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">cases trend</a><span class="backslash"> / </span>
-    <a class="route-links" routerLink="/deaths-trend-by-country" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">deaths trend</a><span class="backslash"> / </span>
-    <a class="route-links" routerLink="/india-stats" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">india stats</a>
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <a class="navbar-brand" href="#"><span class="corona-header"><strong>YET ANOTHER COVID-19
+        TRACKER</strong></span></a>
+  <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    <span class="my-1 mx-2 close">X</span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+        <a class="dropdown-item" routerLink="/summary-stats" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}">summary</a>
+      </li>
+      <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+        <a class="dropdown-item" routerLink="/stats-by-country" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}">countries</a>
+      </li>
+      <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+        <a class="dropdown-item" routerLink="/cases-trend-by-country" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}">cases trend</a>
+      </li>
+      <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+        <a class="dropdown-item" routerLink="/deaths-trend-by-country" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}">deaths trend</a>
+      </li>
+      <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+        <a class="dropdown-item" routerLink="/india-stats" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}">india trends</a>
+      </li>
+      <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+        <a class="dropdown-item" routerLink="/about" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}">about</a>
+      </li>
+    </ul>
+  </div>
 </nav>
 <br>
 <br>
 <router-outlet></router-outlet>
-
-<hr>
-<div class="footer-text"><span>© 2020 <a class="footer-links" href="https://github.com/shadowfacsimile">ShadowFacsimile</a> / Source: Johns
-        Hopkins CSSE <a class="footer-links" href='https://github.com/CSSEGISandData/COVID-19'>github repo</a> /</span></div>
-<br>

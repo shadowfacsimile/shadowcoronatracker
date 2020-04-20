@@ -18,6 +18,11 @@ export class IndiastatsComponent implements OnInit {
 	public newCases: any;
 	public showAll: boolean = true;
 	public showState: boolean = false;
+	public showLineGraph: boolean = true;
+	public showBarGraph: boolean = false;
+	public showProjectionGraph: boolean = false;
+	public showScatterGraph: boolean = false;
+	public graphDisplayCount: number = 0;
 
 	public barGraphGrowthLabels;
 	public barGraphGrowthType = 'bar';
@@ -221,7 +226,7 @@ export class IndiastatsComponent implements OnInit {
 		];
 		this.barGraphGrowthOptions = {
 			scaleShowVerticalLines: false,
-			responsive: false,
+			responsive: true,
 			responsiveAnimationDuration: 0,
 			legend: {
 				display: false
@@ -266,7 +271,7 @@ export class IndiastatsComponent implements OnInit {
 		];
 		this.barGraphGrowthStateOptions = {
 			scaleShowVerticalLines: false,
-			responsive: false,
+			responsive: true,
 			responsiveAnimationDuration: 0,
 			legend: {
 				display: false
@@ -311,12 +316,13 @@ export class IndiastatsComponent implements OnInit {
 				showLine: true,
 				fill: false,
 				borderDash: [ 10, 5 ],
-				pointRadius: 2
+				pointRadius: 1,
+				borderWidth: 1
 			}
 		];
 		this.scatterGraphGrowthOptions = {
 			scaleShowVerticalLines: false,
-			responsive: false,
+			responsive: true,
 			responsiveAnimationDuration: 0,
 			legend: {
 				display: false
@@ -391,12 +397,13 @@ export class IndiastatsComponent implements OnInit {
 				showLine: true,
 				fill: false,
 				borderDash: [ 10, 5 ],
-				pointRadius: 2
+				pointRadius: 1,
+				borderWidth: 1
 			}
 		];
 		this.scatterGraphGrowthStateOptions = {
 			scaleShowVerticalLines: false,
-			responsive: false,
+			responsive: true,
 			responsiveAnimationDuration: 0,
 			legend: {
 				display: false
@@ -477,12 +484,13 @@ export class IndiastatsComponent implements OnInit {
 				label: 'Cases',
 				borderColor: 'lightblue',
 				fill: false,
-				pointRadius: 2
+				pointRadius: 1,
+				borderWidth: 1
 			}
 		];
 		this.lineGraphGrowthOptions = {
 			scaleShowVerticalLines: false,
-			responsive: false,
+			responsive: true,
 			responsiveAnimationDuration: 0,
 			legend: {
 				display: false
@@ -531,12 +539,13 @@ export class IndiastatsComponent implements OnInit {
 				label: 'Cases',
 				borderColor: 'lightblue',
 				fill: false,
-				pointRadius: 2
+				pointRadius: 1,
+				borderWidth: 1
 			}
 		];
 		this.lineGraphGrowthStateOptions = {
 			scaleShowVerticalLines: false,
-			responsive: false,
+			responsive: true,
 			responsiveAnimationDuration: 0,
 			legend: {
 				display: false
@@ -632,7 +641,8 @@ export class IndiastatsComponent implements OnInit {
 				showLine: true,
 				fill: false,
 				borderDash: [ 10, 5 ],
-				pointRadius: 2
+				pointRadius: 1,
+				borderWidth: 1
 			},
 			{
 				data: doublesEveryFifth,
@@ -703,7 +713,7 @@ export class IndiastatsComponent implements OnInit {
 							}
 						},
 						afterBuildTicks: function(chartObj) {
-							chartObj.ticks = [];							
+							chartObj.ticks = [];
 							chartObj.ticks.push(10);
 							chartObj.ticks.push(50);
 							chartObj.ticks.push(100);
@@ -774,7 +784,7 @@ export class IndiastatsComponent implements OnInit {
 				date.push('');
 			}
 		}
-		
+
 		this.lineGraphProjectionStateLabels = date;
 		this.lineGraphProjectionStateData = [
 			{
@@ -782,7 +792,8 @@ export class IndiastatsComponent implements OnInit {
 				label: 'Actual Cases',
 				borderColor: 'lightblue',
 				fill: false,
-				pointRadius: 2
+				pointRadius: 1,
+				borderWidth: 1
 			},
 			{
 				data: doublesEveryFifth,
@@ -876,6 +887,12 @@ export class IndiastatsComponent implements OnInit {
 	}
 
 	public clearExistingGraphs() {
+		this.showLineGraph = true;
+		this.showBarGraph = false;
+		this.showProjectionGraph = false;
+		this.showScatterGraph = false;
+		this.graphDisplayCount = 0;
+
 		if (this.barChartGrowthCanvas) {
 			this.barGrowthCanvasContext = (<HTMLCanvasElement>this.barChartGrowthCanvas.nativeElement).getContext('2d');
 		}
@@ -971,6 +988,53 @@ export class IndiastatsComponent implements OnInit {
 				this.lineProjectionStateCanvasContext.canvas.width,
 				this.lineProjectionStateCanvasContext.canvas.height
 			);
+		}
+	}
+
+	displayNextGraph() {
+		this.graphDisplayCount = (this.graphDisplayCount + 1) % 4;
+		this.showLineGraph = false;
+		this.showBarGraph = false;
+		this.showProjectionGraph = false;
+		this.showScatterGraph = false;
+
+		switch (this.graphDisplayCount) {
+			case 0:
+				this.showLineGraph = true;
+				break;
+			case 1:
+				this.showBarGraph = true;
+				break;
+			case 2:
+				this.showProjectionGraph = true;
+				break;
+			case 3:
+				this.showScatterGraph = true;
+				break;
+		}
+	}
+
+	displayPrevGraph() {
+		this.graphDisplayCount = this.graphDisplayCount == 0 ? 4 : this.graphDisplayCount;
+		this.graphDisplayCount = (this.graphDisplayCount - 1) % 4;
+		this.showLineGraph = false;
+		this.showBarGraph = false;
+		this.showProjectionGraph = false;
+		this.showScatterGraph = false;
+
+		switch (this.graphDisplayCount) {
+			case 0:
+				this.showLineGraph = true;
+				break;
+			case 1:
+				this.showBarGraph = true;
+				break;
+			case 2:
+				this.showProjectionGraph = true;
+				break;
+			case 3:
+				this.showScatterGraph = true;
+				break;
 		}
 	}
 
