@@ -3,90 +3,108 @@ import { RestService } from '../services/rest.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-stats',
-  templateUrl: './stats.component.html',
-  styleUrls: ['./stats.component.css']
+	selector: 'app-stats',
+	templateUrl: './stats.component.html',
+	styleUrls: [ './stats.component.css' ]
 })
 export class StatsComponent implements OnInit, OnDestroy {
+	public coronaCountriesStatsSubscription: Subscription;
+	public coronaCountriesStatsResponse: any;
+	public tempCoronaCountriesStatsResponse: any;
+	public sort: boolean = false;
+	public country: string;
 
-  public coronaCountriesStatsSubscription: Subscription;
-  public coronaCountriesStatsResponse: any;
-  public tempCoronaCountriesStatsResponse: any;
-  public sort: boolean = false;
-  public country: string;
+	constructor(public restService: RestService) {}
 
-  constructor(public restService: RestService) { }
+	ngOnInit(): void {
+		this.coronaCountriesStatsSubscription = this.restService
+			.getCoronaCountriesStats()
+			.subscribe((data) => this.processStatsData(data));
+	}
 
-  ngOnInit(): void {
-    this.coronaCountriesStatsSubscription = this.restService.getCoronaCountriesStats().subscribe(data => this.processStatsData(data));
-  }
+	processStatsData(data: any): void {
+		this.coronaCountriesStatsResponse = data;
+		this.tempCoronaCountriesStatsResponse = this.coronaCountriesStatsResponse;
+	}
 
-  ngOnDestroy(): void {
-    this.coronaCountriesStatsSubscription.unsubscribe();
-  }
+	searchByCountry(value: string): void {
+		this.coronaCountriesStatsResponse = this.tempCoronaCountriesStatsResponse;
+		this.coronaCountriesStatsResponse = this.coronaCountriesStatsResponse.filter(
+			(stat) => stat.location.country.toLowerCase().indexOf(value.toLowerCase()) >= 0
+		);
+	}
 
-  processStatsData(data: any): void {
-    this.coronaCountriesStatsResponse = data;
-    this.tempCoronaCountriesStatsResponse = this.coronaCountriesStatsResponse;
-  }
+	sortByCountry(): void {
+		this.sort = !this.sort;
+		this.coronaCountriesStatsResponse = this.tempCoronaCountriesStatsResponse;
+		this.coronaCountriesStatsResponse = this.coronaCountriesStatsResponse.sort((a, b) =>
+			this.sortByItem(a.location.country.toLowerCase(), b.location.country.toLowerCase())
+		);
+	}
 
-  searchByCountry(value: string): void {
-    this.coronaCountriesStatsResponse = this.tempCoronaCountriesStatsResponse;
-    this.coronaCountriesStatsResponse = this.coronaCountriesStatsResponse.filter(stat => stat.location.country.toLowerCase().indexOf(value.toLowerCase()) >= 0);
-  }
+	sortByCases(): void {
+		this.sort = !this.sort;
+		this.coronaCountriesStatsResponse = this.tempCoronaCountriesStatsResponse;
+		this.coronaCountriesStatsResponse = this.coronaCountriesStatsResponse.sort((a, b) =>
+			this.sortByItem(a.cases, b.cases)
+		);
+	}
 
-  sortByCountry(): void {
-    this.sort = !this.sort;
-    this.coronaCountriesStatsResponse = this.tempCoronaCountriesStatsResponse;
-    this.coronaCountriesStatsResponse = this.coronaCountriesStatsResponse.sort((a, b) => this.sortByItem(a.location.country.toLowerCase(), b.location.country.toLowerCase()));
-  }
+	sortByNewCases(): void {
+		this.sort = !this.sort;
+		this.coronaCountriesStatsResponse = this.tempCoronaCountriesStatsResponse;
+		this.coronaCountriesStatsResponse = this.coronaCountriesStatsResponse.sort((a, b) =>
+			this.sortByItem(a.newCases, b.newCases)
+		);
+	}
 
-  sortByCases(): void {
-    this.sort = !this.sort;
-    this.coronaCountriesStatsResponse = this.tempCoronaCountriesStatsResponse;
-    this.coronaCountriesStatsResponse = this.coronaCountriesStatsResponse.sort((a, b) => this.sortByItem(a.cases, b.cases));
-  }
+	sortByDeaths(): void {
+		this.sort = !this.sort;
+		this.coronaCountriesStatsResponse = this.tempCoronaCountriesStatsResponse;
+		this.coronaCountriesStatsResponse = this.coronaCountriesStatsResponse.sort((a, b) =>
+			this.sortByItem(a.deaths, b.deaths)
+		);
+	}
 
-  sortByNewCases(): void {
-    this.sort = !this.sort;
-    this.coronaCountriesStatsResponse = this.tempCoronaCountriesStatsResponse;
-    this.coronaCountriesStatsResponse = this.coronaCountriesStatsResponse.sort((a, b) => this.sortByItem(a.newCases, b.newCases));
-  }
+	sortByNewDeaths(): void {
+		this.sort = !this.sort;
+		this.coronaCountriesStatsResponse = this.tempCoronaCountriesStatsResponse;
+		this.coronaCountriesStatsResponse = this.coronaCountriesStatsResponse.sort((a, b) =>
+			this.sortByItem(a.newDeaths, b.newDeaths)
+		);
+	}
 
-  sortByDeaths(): void {
-    this.sort = !this.sort;
-    this.coronaCountriesStatsResponse = this.tempCoronaCountriesStatsResponse;
-    this.coronaCountriesStatsResponse = this.coronaCountriesStatsResponse.sort((a, b) => this.sortByItem(a.deaths, b.deaths));
-  }
+	sortByMortalityRate(): void {
+		this.sort = !this.sort;
+		this.coronaCountriesStatsResponse = this.tempCoronaCountriesStatsResponse;
+		this.coronaCountriesStatsResponse = this.coronaCountriesStatsResponse.sort((a, b) =>
+			this.sortByItem(a.mortalityRate, b.mortalityRate)
+		);
+	}
 
-  sortByNewDeaths(): void {
-    this.sort = !this.sort;
-    this.coronaCountriesStatsResponse = this.tempCoronaCountriesStatsResponse;
-    this.coronaCountriesStatsResponse = this.coronaCountriesStatsResponse.sort((a, b) => this.sortByItem(a.newDeaths, b.newDeaths));
-  }
+	sortByRecoveries(): void {
+		this.sort = !this.sort;
+		this.coronaCountriesStatsResponse = this.tempCoronaCountriesStatsResponse;
+		this.coronaCountriesStatsResponse = this.coronaCountriesStatsResponse.sort((a, b) =>
+			this.sortByItem(a.recoveries, b.recoveries)
+		);
+	}
 
-  sortByMortalityRate(): void {
-    this.sort = !this.sort;
-    this.coronaCountriesStatsResponse = this.tempCoronaCountriesStatsResponse;
-    this.coronaCountriesStatsResponse = this.coronaCountriesStatsResponse.sort((a, b) => this.sortByItem(a.mortalityRate, b.mortalityRate));
-  }
+	sortByRecoveryRate(): void {
+		this.sort = !this.sort;
+		this.coronaCountriesStatsResponse = this.tempCoronaCountriesStatsResponse;
+		this.coronaCountriesStatsResponse = this.coronaCountriesStatsResponse.sort((a, b) =>
+			this.sortByItem(a.recoveryRate, b.recoveryRate)
+		);
+	}
 
-  sortByRecoveries(): void {
-    this.sort = !this.sort;
-    this.coronaCountriesStatsResponse = this.tempCoronaCountriesStatsResponse;
-    this.coronaCountriesStatsResponse = this.coronaCountriesStatsResponse.sort((a, b) => this.sortByItem(a.recoveries, b.recoveries));
-  }
+	sortByItem(a, b): number {
+		if ((this.sort && a < b) || (!this.sort && a > b)) return 1;
+		if ((this.sort && a > b) || (!this.sort && a < b)) return -1;
+		return 0;
+	}
 
-  sortByRecoveryRate(): void {
-    this.sort = !this.sort;
-    this.coronaCountriesStatsResponse = this.tempCoronaCountriesStatsResponse;
-    this.coronaCountriesStatsResponse = this.coronaCountriesStatsResponse.sort((a, b) => this.sortByItem(a.recoveryRate, b.recoveryRate));
-  }
-
-  sortByItem(a, b): number {
-    if ((this.sort && a < b) || (!this.sort && a > b)) return 1;
-    if ((this.sort && a > b) || (!this.sort && a < b)) return -1;
-    return 0;
-  }
-
+	ngOnDestroy(): void {
+		this.coronaCountriesStatsSubscription.unsubscribe();
+	}
 }
