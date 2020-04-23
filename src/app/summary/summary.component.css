@@ -8,7 +8,7 @@ h1 {
   padding-bottom: 20px;
 }
 
-.data-loading-div{
+.data-loading-div {
   color: lightblue;
   text-align: center;
   font-size: large;
@@ -24,7 +24,7 @@ h1 {
   text-align: center;
 }
 
-.router-links a {  
+.router-links a {
   color: #008dc9;
   text-decoration: underline;
   font-size: 13px;
