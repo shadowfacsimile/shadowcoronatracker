@@ -1,81 +1,93 @@
-.summary-header-div {
-    text-align: center;
-}
-
-.summary-header-span {
-    color: #bebeca;
-    text-align: center;
-    font-size: 20px;
-    font-weight: 700;
-    font-family: Helvetica;
-    padding: 4px 30px;
+h1 {
+  color: #bebeca;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  font-family: Helvetica;
+  padding: 4px 30px;
+  padding-bottom: 20px;
 }
 
 .data-loading-div{
-    color: lightblue;
-    text-align: center;
+  color: lightblue;
+  text-align: center;
+  font-size: large;
+  font-weight: normal;
+  font-family: Helvetica;
+  padding-right: 30px;
+  padding-left: 30px;
+  padding-top: 1px;
+  padding-bottom: 1px;
 }
 
-.data-loading-span {
-    text-align: center;
-    font-size: large;
-    font-weight: normal;
-    font-family: Helvetica;
-    padding-right: 30px;
-    padding-left: 30px;
-    padding-top: 1px;
-    padding-bottom: 1px;
+.router-links {
+  text-align: center;
 }
 
-.total-cases-header, .total-deaths-header, .mortality-rate-header, 
-.total-recoveries-header, .recovery-rate-header {
-    text-align: center;
-    font-size: 25px;
-    font-weight: 400;
-    color: #add8e6;
-    font-family: Helvetica;
+.router-links a {  
+  color: #008dc9;
+  text-decoration: underline;
+  font-size: 13px;
+  font-weight: 450;
+  font-family: Helvetica;
+}
+
+.total-cases-header,
+.total-deaths-header,
+.mortality-rate-header,
+.total-recoveries-header,
+.recovery-rate-header {
+  text-align: center;
+  font-size: 25px;
+  font-weight: 400;
+  color: #add8e6;
+  font-family: Helvetica;
 }
 
 .total-cases-data {
-    text-align: center;
-    font-size: 50px;
-    color: #faebd7;
-    font-family: Helvetica;
+  text-align: center;
+  font-size: 50px;
+  color: #faebd7;
+  font-family: Helvetica;
 }
 
-.total-deaths-data, .mortality-rate-data  {
-    text-align: center;
-    font-size: 50px;
-    color: #ce4545;
-    font-family: Helvetica;
+.total-deaths-data,
+.mortality-rate-data {
+  text-align: center;
+  font-size: 50px;
+  color: #ce4545;
+  font-family: Helvetica;
 }
 
-.total-recoveries-data, .recovery-rate-data  {
-    text-align: center;
-    font-size: 50px;
-    color: #56d386;
-    font-family: Helvetica;
+.total-recoveries-data,
+.recovery-rate-data {
+  text-align: center;
+  font-size: 50px;
+  color: #56d386;
+  font-family: Helvetica;
 }
 
 .total-new-cases-data {
-    text-align: center;
-    font-size: 20px;
-    color: #faebd7;
-    font-family: Helvetica;
+  text-align: center;
+  font-size: 20px;
+  color: #faebd7;
+  font-family: Helvetica;
 }
 
 .total-new-deaths-data {
-    text-align: center;
-    font-size: 20px;
-    color: #ce4545;
-    font-family: Helvetica;
+  text-align: center;
+  font-size: 20px;
+  color: #ce4545;
+  font-family: Helvetica;
 }
 
-.new-country-cases-header, .new-country-deaths-header, 
-.new-country-cases-data, .new-country-deaths-data {
-    text-align: center;
-    font-size: small;
-    color: lightblue;
-    font-family: Helvetica;
-    font-style: italic;
+.new-country-cases-header,
+.new-country-deaths-header,
+.new-country-cases-data,
+.new-country-deaths-data {
+  text-align: center;
+  font-size: small;
+  color: lightblue;
+  font-family: Helvetica;
+  font-style: italic;
 }

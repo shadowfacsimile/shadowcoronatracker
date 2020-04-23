@@ -1,11 +1,12 @@
-.stats-header-span {
+h1 {
     color: #bebeca;
     text-align: center;
     font-size: 20px;
     font-weight: 700;
     font-family: Helvetica;
     padding: 4px 30px;
-}
+    padding-bottom: 20px;
+  }
 
 .summary-link {
     text-decoration: underline;
@@ -13,16 +14,8 @@
     color: #008dc9;
 }
 
-.stats-header-div {
-    text-align: center;
-}
-
 .data-loading-div{
     color: lightblue;
-    text-align: center;
-}
-
-.data-loading-span {
     text-align: center;
     font-size: large;
     font-weight: normal;

@@ -1,11 +1,9 @@
-<div class="stats-header-div">
-  <span class="stats-header-span">
-    <span class="countries-link"  routerLink="/summary-stats">COVID-19</span>
+<h1>
+    <span class="summary-link"  routerLink="/summary-stats">COVID-19</span>
      / {{filterCountry.toUpperCase()}} SUMMARY
-  </span>
-</div>
-<br>
-<div *ngIf=!coronaStatesStatsResponse class="data-loading-div"><span class="data-loading-span">Data Loading...</span></div>
+</h1>
+
+<div *ngIf=!coronaStatesStatsResponse class="data-loading-div">Data Loading...</div>
 
 <div *ngIf=coronaStatesStatsResponse>
   <table class="table table-borderless">
