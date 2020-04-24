@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GrowthfactorComponent } from './growthfactor.component';
+import { GrowthFactorComponent } from './growth-factor.component';
 
-describe('GrowthfactorComponent', () => {
-  let component: GrowthfactorComponent;
-  let fixture: ComponentFixture<GrowthfactorComponent>;
+describe('GrowthFactorComponent', () => {
+  let component: GrowthFactorComponent;
+  let fixture: ComponentFixture<GrowthFactorComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GrowthfactorComponent ]
+      declarations: [ GrowthFactorComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GrowthfactorComponent);
+    fixture = TestBed.createComponent(GrowthFactorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -11,7 +11,7 @@ import { StatsModule } from './modules/stats/stats.module';
 import { TrendsModule } from './modules/trends/trends.module';
 import { AboutModule } from './modules/about/about.module';
 import { AlertsModule } from './modules/alerts/alerts.module';
-import { PagenotfoundModule } from './modules/pagenotfound/pagenotfound.module';
+import { PageNotFoundModule } from './modules/page-not-found/page-not-found.module';
 
 import { AppComponent } from './app.component';
 
@@ -29,7 +29,7 @@ import { AppComponent } from './app.component';
 		StatsModule,
 		TrendsModule,
 		AboutModule,
-		PagenotfoundModule,
+		PageNotFoundModule,
 		AlertsModule
 	],
 	providers: [],

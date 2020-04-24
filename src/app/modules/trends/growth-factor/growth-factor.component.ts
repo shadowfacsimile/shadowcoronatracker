@@ -3,11 +3,11 @@ import { Subscription } from 'rxjs';
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
-	selector: 'app-growthfactor',
-	templateUrl: './growthfactor.component.html',
-	styleUrls: [ './growthfactor.component.css' ]
+  selector: 'app-growth-factor',
+  templateUrl: './growth-factor.component.html',
+  styleUrls: ['./growth-factor.component.css']
 })
-export class GrowthfactorComponent implements OnInit, OnDestroy {
+export class GrowthFactorComponent implements OnInit, OnDestroy {
 	public coronaCaseGrowthSubscription: Subscription;
 	public coronaStatsResponse: any;
 	public dates: any;
