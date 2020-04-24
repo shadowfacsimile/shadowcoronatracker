@@ -1,0 +1,83 @@
+.growth-table-header {
+    color: gray;
+  }
+  
+  .growth-header-div {
+    text-align: center;
+  }
+  
+  .growth-header-span {
+    background-color: rgb(243, 243, 243); /*rgb(243, 243, 243); #008dc9;*/
+    color: darkslategray;
+    border-radius: 5px;
+    text-align: center;
+    font-size: large;
+    font-weight: normal;
+    padding-right: 30px;
+    padding-left: 30px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    font-family: Helvetica;
+  }
+  
+  .summary-link {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #008dc9;
+  }
+  
+  .data-loading-div {
+    text-align: center;
+  }
+  
+  .data-loading-span {
+    text-align: center;
+    font-size: large;
+    font-weight: normal;
+    font-family: Helvetica;
+    padding-right: 30px;
+    padding-left: 30px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+  }
+  
+  .growth-beige-highlight-span {
+    padding: 3px;
+    background-color: beige;
+    font-size: small;
+    font-weight: 500;
+    color: red;
+  }
+  
+  .growth-beige-highlight-div {
+    padding-left: 10px;
+  }
+  
+  canvas {
+    width: 80% !important;
+    height: auto !important;
+  }
+  
+  .chart-growthfactor-container {
+    padding-bottom: 20px;
+    text-align: center;
+    position: relative;
+  }
+  
+  .chart-growth-container {
+    padding-bottom: 20px;
+    text-align: center;
+    position: relative;
+  }
+  
+  .chart-growth-country-container {
+    padding-bottom: 20px;
+    text-align: center;
+    position: relative;
+  }
+  
+  .growth-factor-text {
+    font-size: small;
+    padding-left: 10px;
+  }
+  
