@@ -5,13 +5,13 @@ import { FormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
-import { NavbarModule } from './navbar/navbar.module';
-import { SummaryModule } from './summary/summary.module';
-import { StatsModule } from './stats/stats.module';
-import { TrendsModule } from './trends/trends.module';
-import { AboutModule } from './about/about.module';
-import { AlertsModule } from './alerts/alerts.module';
-import { PagenotfoundModule } from './pagenotfound/pagenotfound.module';
+import { NavbarModule } from './modules/navbar/navbar.module';
+import { SummaryModule } from './modules/summary/summary.module';
+import { StatsModule } from './modules/stats/stats.module';
+import { TrendsModule } from './modules/trends/trends.module';
+import { AboutModule } from './modules/about/about.module';
+import { AlertsModule } from './modules/alerts/alerts.module';
+import { PagenotfoundModule } from './modules/pagenotfound/pagenotfound.module';
 
 import { AppComponent } from './app.component';
 

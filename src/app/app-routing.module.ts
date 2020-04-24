@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SummaryComponent } from './summary/summary.component';
-import { CountriesComponent } from './stats/countries/countries.component';
-import { StatesComponent } from './stats/states/states.component';
-import { IndiaComponent } from './trends/india/india.component';
-import { CasesComponent } from './trends/cases/cases.component';
-import { DeathsComponent } from './trends/deaths/deaths.component';
-import { GrowthfactorComponent } from './trends/growthfactor/growthfactor.component';
-import { AboutComponent } from './about/about.component';
-import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { SummaryComponent } from './modules/summary/summary.component';
+import { CountriesComponent } from './modules/stats/countries/countries.component';
+import { StatesComponent } from './modules/stats/states/states.component';
+import { IndiaComponent } from './modules/trends/india/india.component';
+import { CasesComponent } from './modules/trends/cases/cases.component';
+import { DeathsComponent } from './modules/trends/deaths/deaths.component';
+import { GrowthfactorComponent } from './modules/trends/growthfactor/growthfactor.component';
+import { AboutComponent } from './modules/about/about.component';
+import { PagenotfoundComponent } from './modules/pagenotfound/pagenotfound.component';
 
 
 const routes: Routes = [
