@@ -273,7 +273,7 @@ export class CasesComponent implements OnInit, OnDestroy {
 		];
 		this.scatterGraphGrowthOptions = {
 			scaleShowVerticalLines: false,
-			responsive: true,
+			responsive: false,
 			responsiveAnimationDuration: 0,
 			legend: {
 				display: false
@@ -506,7 +506,7 @@ export class CasesComponent implements OnInit, OnDestroy {
 		];
 		this.scatterGraphGrowthCountryOptions = {
 			scaleShowVerticalLines: false,
-			responsive: true,
+			responsive: false,
 			responsiveAnimationDuration: 0,
 			legend: {
 				display: false

@@ -322,7 +322,7 @@ export class IndiaComponent implements OnInit {
 		];
 		this.scatterGraphGrowthOptions = {
 			scaleShowVerticalLines: false,
-			responsive: true,
+			responsive: false,
 			responsiveAnimationDuration: 0,
 			legend: {
 				display: false
@@ -403,7 +403,7 @@ export class IndiaComponent implements OnInit {
 		];
 		this.scatterGraphGrowthStateOptions = {
 			scaleShowVerticalLines: false,
-			responsive: true,
+			responsive: false,
 			responsiveAnimationDuration: 0,
 			legend: {
 				display: false
