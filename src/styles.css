@@ -113,6 +113,7 @@ canvas {
 .router-links a {
   color: #008dc9;
   text-decoration: underline;
+  cursor: pointer;
   font-size: 13px;
   font-weight: 450;
   font-family: Helvetica;
